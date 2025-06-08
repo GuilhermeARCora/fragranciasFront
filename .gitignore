@@ -35,4 +35,4 @@ testem.log
 Thumbs.db
 
 # API urls
-environments
+/src/environments
