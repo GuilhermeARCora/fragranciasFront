@@ -1,1 +1,83 @@
-<p>register works!</p>
+<div class="container">
+
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+    <mat-card>
+
+        <mat-card-header>
+              <mat-card-title>Faça seu Cadastro</mat-card-title>
+              <mat-card-subtitle>Bem vindo!</mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          <mat-form-field floatLabel="always" appearance="outline" >
+
+            <input
+              type="text"
+              id="email"
+              formControlName="email"
+              matInput
+              placeholder="Insira seu E-mail"
+            >
+              <mat-label>E-mail</mat-label>
+              <mat-hint>exemplo&#64;exemplo.com</mat-hint>
+
+              <mat-error *ngIf="hasFormError(registerForm,'email','required')">
+                  E-mail é <strong>obrigatório!</strong>
+              </mat-error>
+
+              <mat-error *ngIf="hasFormError(registerForm,'email','email')">
+                  Insira um E-mail <strong>válido!</strong>
+              </mat-error>
+
+          </mat-form-field>
+
+          <mat-form-field floatLabel="always" appearance="outline" >
+
+            <input
+              type="text"
+              id="confirmEmail"
+              formControlName="confirmEmail"
+              matInput
+              placeholder="Insira seu E-mail novamente"
+            >
+              <mat-label>Confirmação - E-mail</mat-label>
+              <mat-hint>exemplo&#64;exemplo.com</mat-hint>
+
+              <mat-error *ngIf="hasFormError(registerForm,'confirmEmail','required')">
+                  E-mail é <strong>obrigatório!</strong>
+              </mat-error>
+
+              <mat-error *ngIf="hasFormError(registerForm,'confirmEmail','email')">
+                  Insira um E-mail <strong>válido!</strong>
+              </mat-error>
+
+              <mat-error *ngIf="hasFormError(registerForm,'confirmEmail','matchFieldsValidator')">
+                  Os E-mails não são <strong>iguais!</strong>
+              </mat-error>
+
+          </mat-form-field>
+
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button
+                class="btn-primary"
+                type="submit"
+                [disabled]="!registerForm.valid"
+                >
+                CADASTRAR
+            </button>
+        </mat-card-actions>
+
+        <mat-card-footer>
+            <a routerLink="/login">Login</a>
+            <a routerLink="/">Home</a>
+        </mat-card-footer>
+
+    </mat-card>
+
+  </form>
+
+</div>
