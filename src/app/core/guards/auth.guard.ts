@@ -4,11 +4,13 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
 import Swal from 'sweetalert2';
 import { environment } from '../../../environments/environment';
+import { AuthService } from '../services/auth/auth.service';
 
 export const AuthGuard: CanActivateFn = () => {
   const http = inject(HttpClient);
   const router = inject(Router);
   const apiUrl = environment.apiUrl;
+  const authService = inject(AuthService);
 
   const Toast = Swal.mixin({
         toast: true,
@@ -22,7 +24,7 @@ export const AuthGuard: CanActivateFn = () => {
         }
     });
 
-  return http.get(`${apiUrl}users/me`, { withCredentials: true }).pipe(
+  return authService.getMe().pipe(
     map(() => true), // success = authenticated
     catchError((err) => {
 

@@ -10,10 +10,15 @@ export interface AuthUser {
   _id: string;
   name: string;
   email: string;
-  role: 'client' | 'admin' | 'master';
+  role: 'admin' | 'client' | 'master';
 };
 
 export interface LoginPayload {
   email: string;
   password: string;
-}
+};
+
+export interface LoginResponse {
+  status: 'success';
+  token: string;
+};
