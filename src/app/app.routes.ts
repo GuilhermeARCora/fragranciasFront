@@ -5,11 +5,11 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { UserProfileComponent } from './pages/user-profile/user-profile.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
-import { authGuard } from './core/guards/auth.guard';
+import { AuthGuard } from './core/guards/auth.guard';
 
 const protectedRoutes:Routes = [
-  { path: 'userProfile', component: UserProfileComponent, canActivate: [authGuard] },
-  { path: 'passwordChange', component: ChangePasswordComponent, canActivate: [authGuard] },
+  { path: 'userProfile', component: UserProfileComponent, canActivate: [AuthGuard] },
+  { path: 'passwordChange', component: ChangePasswordComponent, canActivate: [AuthGuard] },
 ]
 
 export const routes: Routes = [

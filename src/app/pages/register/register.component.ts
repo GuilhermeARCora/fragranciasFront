@@ -9,6 +9,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { matchFieldsValidator } from '../../shared/validators/matchFields.validator';
 import { hasFormError } from '../../shared/utils/helpers';
 import { CommonModule } from '@angular/common';
+import { RegisterService } from '../../core/services/register/register.service';
 @Component({
   selector: 'app-register',
   imports: [
@@ -29,6 +30,7 @@ export class RegisterComponent implements OnInit {
     hasFormError = hasFormError;
     hide = signal(true);
     route = inject(Router);
+    registerService = inject(RegisterService);
 
     ngOnInit(): void {
         this.buildForm();
@@ -54,16 +56,24 @@ export class RegisterComponent implements OnInit {
 
     onSubmit(){
 
-      if(this.registerForm.valid){
-          console.log('Testing', this.registerForm.value);
-            this.Toast.fire({
+      if(this.registerForm.invalid) return;
+
+      const userData = this.registerForm.value;
+
+      this.registerService.register(userData).subscribe({
+        next: () =>{
+
+          this.Toast.fire({
               icon: "success",
               title: "Cadastro feito com sucesso.\nBem vindo a nossa loja!"
             });
           this.route.navigateByUrl('/home');
-      }else{
-          Swal.fire({icon: "error",title: "Erro de Cadastro",text: "Por favor tente novamente"});
-      };
+        },
+        error:(err) => {
+          const errorMessage = err?.error?.message;
+          Swal.fire({icon: "error",title:"Erro de Cadastro",text:`${errorMessage}`});
+        }
+      });
 
     };
 
@@ -77,7 +87,7 @@ export class RegisterComponent implements OnInit {
           toast: true,
           position: "top-end",
           showConfirmButton: false,
-          timer: 1500,
+          timer: 2500,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
