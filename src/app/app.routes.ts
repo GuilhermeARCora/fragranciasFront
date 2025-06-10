@@ -26,6 +26,5 @@ export const routes: Routes = [
   // 404 route
   { path: 'not-found', component: NotFoundComponent },
 
-  // Catch-all (must be last!)
   { path: '**', redirectTo: '/not-found' },
 ];

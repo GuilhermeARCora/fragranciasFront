@@ -3,10 +3,12 @@ import { CanActivateFn, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map, of } from 'rxjs';
 import Swal from 'sweetalert2';
+import { environment } from '../../../environments/environment';
 
 export const AuthGuard: CanActivateFn = () => {
   const http = inject(HttpClient);
   const router = inject(Router);
+  const apiUrl = environment.apiUrl;
 
   const Toast = Swal.mixin({
         toast: true,
@@ -20,14 +22,14 @@ export const AuthGuard: CanActivateFn = () => {
         }
     });
 
-  return http.get(`/api/v1/users/me`, { withCredentials: true }).pipe(
+  return http.get(`${apiUrl}users/me`, { withCredentials: true }).pipe(
     map(() => true), // success = authenticated
-    catchError(() => {
+    catchError((err) => {
 
       Toast.fire({
           icon: "error",
           title: "Acesso negado!",
-          text: "Faça login!"
+          text: err?.error?.message
        });
 
       router.navigate(['/login']);

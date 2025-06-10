@@ -13,7 +13,7 @@ export class RegisterService {
   http = inject(HttpClient);
 
   register(userData:UserForm): Observable<UserForm> {
-    return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData, {withCredentials:true});
+    return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData);
   };
 
 };
