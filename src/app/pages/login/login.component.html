@@ -1,1 +1,102 @@
-<p>login works!</p>
+<div class="container-fluid ">
+
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-flex">
+
+    <mat-card class="d-flex align-items-center m-auto h-auto p-5 shadow-lg" style="max-width: 600px; width: 100%;" >
+
+      <mat-card-header class="mb-4" >
+          <div class="d-flex flex-column gap-2 text-center w-100">
+            <mat-card-title class="fw-bold fs-2">Faça seu login</mat-card-title>
+            <mat-card-subtitle class="fw-semibold fs-5">Bem vindo de volta!</mat-card-subtitle>
+          </div>
+      </mat-card-header>
+
+      <mat-card-content class="w-100" >
+
+          <div class ="w-100 d-flex flex-column gap-3">
+
+            <div class="w-100">
+              <mat-form-field floatLabel="always" appearance="outline" class="w-100">
+
+                <input
+                  type="text"
+                  id="email"
+                  formControlName="email"
+                  matInput
+                  placeholder="Insira seu E-mail"
+
+                >
+                  <mat-label>E-mail</mat-label>
+                  <mat-hint>exemplo&#64;exemplo.com</mat-hint>
+
+                  <mat-error *ngIf="hasFormError(loginForm,'email','required')">
+                      E-mail é <strong>obrigatório!</strong>
+                  </mat-error>
+
+                  <mat-error *ngIf="hasFormError(loginForm,'email','email')">
+                      Insira um E-mail <strong>válido!</strong>
+                  </mat-error>
+
+              </mat-form-field>
+            </div>
+
+            <div class="w-100">
+              <mat-form-field floatLabel="always" appearance="outline" class="w-100">
+
+                <input
+                  [type]="hide() ? 'password' : 'text'"
+                  id="password"
+                  formControlName="password"
+                  matInput
+                  placeholder="Insira sua Senha"
+
+                >
+                  <button
+                    matSuffix
+                    (click)="clickEvent($event)"
+                    [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide()"
+                    style="margin-right: 0.4em;"
+                  >
+                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                  </button>
+
+                  <mat-label>Senha</mat-label>
+
+                  <mat-error *ngIf="hasFormError(loginForm,'password','required')">
+                      Senha é <strong>obrigatório!</strong>
+                  </mat-error>
+
+                  <mat-error *ngIf="hasFormError(loginForm,'password','minlength')">
+                      Senha precisa ter no mínimo <strong>6 caracteres!</strong>
+                  </mat-error>
+
+              </mat-form-field>
+            </div>
+
+          </div>
+
+      </mat-card-content>
+
+      <mat-card-actions class="mb-2">
+            <button
+                class="btn btn-success px-5 py-3"
+                type="submit"
+                [disabled]="!loginForm.valid"
+                >
+                <strong>LOGIN</strong>
+            </button>
+      </mat-card-actions>
+
+      <mat-card-footer>
+            <p>
+              Não possui uma Conta? Faça seu<a routerLink="/registration" class="text-decoration-none text-reset fw-medium"
+              > CADASTRO</a>
+            </p>
+      </mat-card-footer>
+
+    </mat-card>
+
+  </form>
+
+</div>

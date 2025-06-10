@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
@@ -7,6 +7,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { matchFieldsValidator } from '../../shared/validators/matchFields.validator';
 import { hasFormError } from '../../shared/utils/helpers';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-register',
   imports: [
@@ -15,7 +16,8 @@ import { hasFormError } from '../../shared/utils/helpers';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    CommonModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.scss'
@@ -24,6 +26,7 @@ export class RegisterComponent implements OnInit {
 
     registerForm!: FormGroup;
     hasFormError = hasFormError;
+    hide = signal(true);
 
     ngOnInit(): void {
         this.buildForm();
@@ -49,7 +52,12 @@ export class RegisterComponent implements OnInit {
 
     onSubmit(){
       console.log('Testing', this.registerForm.value);
-    }
+    };
 
+    clickEvent(event: MouseEvent) {
+      this.hide.update(value => !value);
+      event.preventDefault();
+      event.stopPropagation();
+    };
 
 };
