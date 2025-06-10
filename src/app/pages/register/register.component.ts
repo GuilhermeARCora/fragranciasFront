@@ -1,5 +1,6 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import Swal from 'sweetalert2';
+import { Component, inject, OnInit, signal } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
 import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
@@ -27,6 +28,7 @@ export class RegisterComponent implements OnInit {
     registerForm!: FormGroup;
     hasFormError = hasFormError;
     hide = signal(true);
+    route = inject(Router);
 
     ngOnInit(): void {
         this.buildForm();
@@ -51,7 +53,18 @@ export class RegisterComponent implements OnInit {
     };
 
     onSubmit(){
-      console.log('Testing', this.registerForm.value);
+
+      if(this.registerForm.valid){
+          console.log('Testing', this.registerForm.value);
+            this.Toast.fire({
+              icon: "success",
+              title: "Cadastro feito com sucesso.\nBem vindo a nossa loja!"
+            });
+          this.route.navigateByUrl('/home');
+      }else{
+          Swal.fire({icon: "error",title: "Erro de Cadastro",text: "Por favor tente novamente"});
+      };
+
     };
 
     clickEvent(event: MouseEvent) {
@@ -59,5 +72,17 @@ export class RegisterComponent implements OnInit {
       event.preventDefault();
       event.stopPropagation();
     };
+
+    Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 1500,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+    });
 
 };
