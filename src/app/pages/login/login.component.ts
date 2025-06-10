@@ -8,6 +8,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { hasFormError } from '../../shared/utils/helpers';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { LoginPayload } from '../../shared/types/User';
 @Component({
   selector: 'app-login',
   imports: [
@@ -27,12 +29,13 @@ export class LoginComponent implements OnInit{
   hasFormError = hasFormError;
   hide = signal(true);
   route = inject(Router);
+  authService = inject(AuthService);
 
   ngOnInit(): void {
     this.buildForm();
   };
 
-  buildForm(){
+  buildForm(): void{
        this.loginForm = new FormGroup({
             email: new FormControl('',[Validators.required, Validators.email]),
             password: new FormControl('',[Validators.required, Validators.minLength(6)]),
@@ -40,18 +43,25 @@ export class LoginComponent implements OnInit{
       );
   };
 
-  onSubmit(){
+  onSubmit(): void{
 
-    if(this.loginForm.valid){
-       console.log('Testing', this.loginForm.value);
-       this.Toast.fire({
+    if(this.loginForm.invalid) return;
+
+    const formValue = this.loginForm.value as LoginPayload;
+
+    this.authService.login(formValue).subscribe({
+      next:() => {
+        this.Toast.fire({
           icon: "success",
           title: "Logado com sucesso"
-       });
-       this.route.navigateByUrl('/home');
-    }else{
-      Swal.fire({icon: "error",title: "Erro de Login",text: "Por favor tente novamente"});
-    }
+        });
+        this.route.navigateByUrl('/home');
+      },
+      error:(err) => {
+        const errorMessage = err?.error?.message;
+        Swal.fire({icon: "error",title: "Erro de Login",text: errorMessage});
+      }
+    });
 
   };
 

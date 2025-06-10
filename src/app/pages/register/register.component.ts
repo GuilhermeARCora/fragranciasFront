@@ -9,7 +9,8 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { matchFieldsValidator } from '../../shared/validators/matchFields.validator';
 import { hasFormError } from '../../shared/utils/helpers';
 import { CommonModule } from '@angular/common';
-import { RegisterService } from '../../core/services/register/register.service';
+import { AuthService } from '../../core/services/auth/auth.service';
+import { UserForm } from '../../shared/types/User';
 @Component({
   selector: 'app-register',
   imports: [
@@ -30,13 +31,13 @@ export class RegisterComponent implements OnInit {
     hasFormError = hasFormError;
     hide = signal(true);
     route = inject(Router);
-    registerService = inject(RegisterService);
+    authService = inject(AuthService);
 
     ngOnInit(): void {
         this.buildForm();
     };
 
-    buildForm(){
+    buildForm(): void{
 
       this.registerForm = new FormGroup({
             name: new FormControl('', [Validators.required, Validators.minLength(2), Validators.maxLength(40)]),
@@ -54,13 +55,13 @@ export class RegisterComponent implements OnInit {
       );
     };
 
-    onSubmit(){
+    onSubmit(): void{
 
       if(this.registerForm.invalid) return;
 
-      const userData = this.registerForm.value;
+      const userData = this.registerForm.value as UserForm;
 
-      this.registerService.register(userData).subscribe({
+      this.authService.register(userData).subscribe({
         next: () =>{
 
           this.Toast.fire({
@@ -77,7 +78,7 @@ export class RegisterComponent implements OnInit {
 
     };
 
-    clickEvent(event: MouseEvent) {
+    clickEvent(event: MouseEvent): void {
       this.hide.update(value => !value);
       event.preventDefault();
       event.stopPropagation();

@@ -12,3 +12,8 @@ export interface AuthUser {
   email: string;
   role: 'client' | 'admin' | 'master';
 };
+
+export interface LoginPayload {
+  email: string;
+  password: string;
+}
