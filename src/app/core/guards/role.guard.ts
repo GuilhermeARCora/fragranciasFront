@@ -41,10 +41,6 @@ export class RoleGuard implements CanActivate {
     return this.authService.getMe().pipe(
       map(user => {
 
-         console.log('Authenticated user:', user);
-          console.log('User role:', user.role);
-          console.log('Expected roles:', expectedRoles);
-
         if (user && expectedRoles.includes(user.role)) {
           return true;
         }
