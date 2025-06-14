@@ -1,4 +1,4 @@
-<header class="p-3 bg-white">
+<header class="p-3 shadow-sm">
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-between">
 
@@ -34,7 +34,7 @@
               <img src="assets/icons/userIcon.webp" alt="default user" width="32" height="32" class="rounded-circle">
             </a>
             <ul class="dropdown-menu dropdown-menu-end text-small">
-              <li><a class="dropdown-item" href="#">Perfil</a></li>
+              <li><a class="dropdown-item" routerLink="/userProfile" >Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><button class="dropdown-item" (click)="logOut()">Deslogar</button></li>
             </ul>
