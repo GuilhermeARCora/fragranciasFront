@@ -34,7 +34,7 @@ export class AppComponent implements OnInit {
   };
 
   // Rotas que ocultam apenas o header
-  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/cadastro'];
+  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/registration'];
 
   // Rotas que ocultam apenas o footer
   private footerExcludedRoutes = ['/not-found', '/404'];

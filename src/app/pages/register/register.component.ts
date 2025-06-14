@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
     registerForm!: FormGroup;
     hasFormError = hasFormError;
     hide = signal(true);
-    route = inject(Router);
+    router = inject(Router);
     authService = inject(AuthService);
 
     ngOnInit(): void {
@@ -63,12 +63,13 @@ export class RegisterComponent implements OnInit {
 
       this.authService.register(userData).subscribe({
         next: () =>{
+          this.router.navigateByUrl('/home').then(()=>{
+            this.Toast.fire({
+                icon: "success",
+                title: "Cadastro feito com sucesso.\nBem vindo a nossa loja!"
+              });
+          });
 
-          this.Toast.fire({
-              icon: "success",
-              title: "Cadastro feito com sucesso.\nBem vindo a nossa loja!"
-            });
-          this.route.navigateByUrl('/home');
         },
         error:(err) => {
           const errorMessage = err?.error?.message;

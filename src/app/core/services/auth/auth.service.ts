@@ -1,6 +1,6 @@
 import {  Observable, of } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
-import { AuthUser, LoginPayload, LoginResponse, UserForm } from '../../../shared/types/User'; // Assuming this exists
+import { AuthUser, GetMeResponse, LoginPayload, LoginResponse, UserForm } from '../../../shared/types/User'; // Assuming this exists
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
@@ -28,9 +28,9 @@ export class AuthService {
   getMe(): Observable<AuthUser> {
     if (this.hasFetchedUser() && this._currentUser()) {
       return of(this._currentUser()!); // ✅ return cached user
-    }
+    };
 
-    return this.http.get<{ status: string, data: { user: AuthUser } }>(`${this.apiUrl}users/me`).pipe(
+    return this.http.get<GetMeResponse>(`${this.apiUrl}users/me`).pipe(
       map(res => res.data.user),
       tap(user => {
         this._currentUser.set(user);
@@ -47,16 +47,24 @@ export class AuthService {
   // ✅ 6. Clear user on logout
   clearUser() {
     this._currentUser.set(null);
+    this.hasFetchedUser.set(false);
   };
 
-  register(userData: UserForm): Observable<UserForm> {
-    return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData);
+  register(userData: UserForm): Observable<AuthUser> {
+    return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData).pipe(
+    switchMap(() => this.getMe())
+    );
   };
 
   login(payload: LoginPayload): Observable<AuthUser> {
     return this.http.post<{ token: string }>(`${this.apiUrl}users/login`, payload, { withCredentials: true }).pipe(
     switchMap(() => this.getMe()) // fetches and caches the user using cookie
     );
+  };
+
+  logout(): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}users/logout`).pipe(
+    tap(() => this.clearUser()));
   };
 
 };

@@ -1,51 +1,107 @@
-<header class="p-3">
-    <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
-          <img src="assets/img/logo.webp" alt="Logo" width="130" height="32" class="me-lg-5 me-sm-0">
-        </a>
+<header class="p-3 bg-white">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="#" class="nav-link px-2 text-dark">Home</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">Features</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">Pricing</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">FAQs</a></li>
-          <li><a href="#" class="nav-link px-2 text-dark">About</a></li>
+      <!-- Logo (always left) -->
+      <a routerLink="/home" class="d-flex align-items-center text-decoration-none">
+        <img src="assets/img/logo.webp" alt="Logo" width="130" height="32">
+      </a>
+
+      <!-- Navigation and icons -->
+      <div class="d-none d-lg-flex align-items-center justify-content-lg-end flex-grow-1 gap-4">
+        <!-- Nav links -->
+        <ul class="nav me-auto">
+          <li><a routerLink="" class="nav-link px-2 text-dark">Pricing</a></li>
+          <li><a routerLink="" class="nav-link px-2 text-dark">FAQs</a></li>
+          <li><a routerLink="" class="nav-link px-2 text-dark">About</a></li>
         </ul>
 
-       <div class="d-flex align-items-center gap-3 flex-wrap">
-          <form class="flex-grow-1 flex-shrink-1" role="search">
-            <div class="input-group">
-              <span class="input-group-text" style="cursor: pointer;" (click)="toggleSearch()">
-                <i class="bi bi-search"></i>
-              </span>
-              <input *ngIf="searchInputVisible()" @fade type="search" class="form-control" placeholder="Search...">
-            </div>
-          </form>
+        <!-- Search bar -->
+        <form class="" role="search">
+          <div class="input-group">
+            <span class="input-group-text" style="cursor: pointer;">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="search" class="form-control" placeholder="Search...">
+          </div>
+        </form>
 
+        <!-- Avatar + Cart -->
+        <div class="d-flex align-items-center gap-2">
           <!-- Avatar Dropdown -->
-          <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown text-end">
-            <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+          <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown">
+            <a class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="assets/icons/userIcon.webp" alt="default user" width="32" height="32" class="rounded-circle">
             </a>
-            <ul class="dropdown-menu text-small dropdown-menu-end">
-              <li><a class="dropdown-item" href="#">New project...</a></li>
-              <li><a class="dropdown-item" href="#">Settings</a></li>
-              <li><a class="dropdown-item" href="#">Profile</a></li>
+            <ul class="dropdown-menu dropdown-menu-end text-small">
+              <li><a class="dropdown-item" href="#">Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Sign out</a></li>
+              <li><button class="dropdown-item" (click)="logOut()">Deslogar</button></li>
             </ul>
           </div>
-          
+
+          <!-- Cart Button -->
+          <button class="btn btn-outline-dark">
+            <i class="bi bi-cart"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile-specific layout -->
+      <div class="d-lg-none w-100 mt-3">
+        <!-- Avatar + Cart + Mobile Menu Button -->
+        <div class="d-flex justify-content-between align-items-center mb-2">
+          <div class="d-flex align-items-center gap-2">
+            <!-- Avatar Dropdown -->
+            <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown">
+              <a class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="assets/icons/userIcon.webp" alt="default user" width="32" height="32" class="rounded-circle">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end text-small">
+                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><button class="dropdown-item" (click)="logOut()">Deslogar</button></li>
+              </ul>
+            </div>
+
+            <!-- Cart Button -->
+            <button class="btn btn-outline-dark">
+              <i class="bi bi-cart"></i>
+            </button>
+          </div>
+
+          <!-- Mobile Nav Dropdown -->
+          <div class="dropdown">
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-list"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a routerLink="" class="dropdown-item">Pricing</a></li>
+              <li><a routerLink="" class="dropdown-item">FAQs</a></li>
+              <li><a routerLink="" class="dropdown-item">About</a></li>
+            </ul>
+          </div>
         </div>
 
-        <ng-template #guestLinks>
-          <div class="text-end">
-            <button type="button" class="btn btn-outline-dark me-2">Login</button>
-            <button type="button" class="btn btn-warning">Sign-up</button>
+        <!-- Search bar (always shown on mobile below icons) -->
+        <form role="search">
+          <div class="input-group">
+            <span class="input-group-text">
+              <i class="bi bi-search"></i>
+            </span>
+            <input type="search" class="form-control" placeholder="Search...">
           </div>
-        </ng-template>
-
+        </form>
       </div>
+
+      <!-- Guest Buttons -->
+      <ng-template #guestLinks>
+        <div class="d-flex gap-2">
+          <button routerLink="/login" type="button" class="btn btn-outline-dark">Login</button>
+          <button routerLink="/registration" type="button" class="btn btn-warning">Cadastre-se</button>
+        </div>
+      </ng-template>
+
     </div>
-  </header>
+  </div>
+</header>

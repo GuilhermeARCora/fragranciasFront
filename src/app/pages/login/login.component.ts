@@ -28,7 +28,7 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   hasFormError = hasFormError;
   hide = signal(true);
-  route = inject(Router);
+  router = inject(Router);
   authService = inject(AuthService);
 
   ngOnInit(): void {
@@ -51,11 +51,14 @@ export class LoginComponent implements OnInit{
 
     this.authService.login(formValue).subscribe({
       next:() => {
-        this.Toast.fire({
-          icon: "success",
-          title: "Logado com sucesso"
+
+        this.router.navigateByUrl('/home').then(()=>{
+          this.Toast.fire({
+            icon: "success",
+            title: "Logado com sucesso"
+          });
         });
-        this.route.navigateByUrl('/home');
+
       },
       error:(err) => {
         const errorMessage = err?.error?.message;
