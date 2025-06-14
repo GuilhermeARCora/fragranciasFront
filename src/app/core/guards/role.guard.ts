@@ -7,7 +7,7 @@ import {
   Router
 } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
 import Swal from 'sweetalert2';
 
@@ -20,16 +20,16 @@ export class RoleGuard implements CanActivate {
   router = inject(Router);
 
   Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 1500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-      });
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 3500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -40,7 +40,6 @@ export class RoleGuard implements CanActivate {
 
     return this.authService.getMe().pipe(
       map(user => {
-
         if (user && expectedRoles.includes(user.role)) {
           return true;
         }
@@ -55,11 +54,10 @@ export class RoleGuard implements CanActivate {
         return false;
       }),
       catchError((err) => {
-
         this.Toast.fire({
           icon: "error",
           title: "Acesso negado!",
-          text: err?.error?.message
+          text: err?.error?.message || "Você não está autenticado."
         });
 
         this.router.navigate(['/login']);

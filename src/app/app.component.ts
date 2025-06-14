@@ -4,6 +4,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
+import { AuthService } from './core/services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -22,6 +23,15 @@ export class AppComponent implements OnInit {
 
   hideHeader = false;
   hideFooter = false;
+
+  constructor(private auth: AuthService) {
+    this.auth.getMe().subscribe({
+      next: () => {},
+      error: () => {
+        this.auth.clearUser(); // in case user was invalid
+      }
+    });
+  };
 
   // Rotas que ocultam apenas o header
   private headerExcludedRoutes = ['/login', '/not-found', '/404', '/cadastro'];

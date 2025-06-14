@@ -24,7 +24,7 @@
           </form>
 
           <!-- Avatar Dropdown -->
-          <div *ngIf="userLoggedIn()" class="dropdown text-end">
+          <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown text-end">
             <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
             </a>
@@ -36,13 +36,15 @@
               <li><a class="dropdown-item" href="#">Sign out</a></li>
             </ul>
           </div>
+          
         </div>
 
-
-        <div *ngIf="!userLoggedIn()" class="text-end">
-          <button type="button" class="btn btn-outline-dark me-2">Login</button>
-          <button type="button" class="btn btn-warning">Sign-up</button>
-        </div>
+        <ng-template #guestLinks>
+          <div class="text-end">
+            <button type="button" class="btn btn-outline-dark me-2">Login</button>
+            <button type="button" class="btn btn-warning">Sign-up</button>
+          </div>
+        </ng-template>
 
       </div>
     </div>

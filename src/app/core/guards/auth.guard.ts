@@ -1,35 +1,35 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
-import { catchError, map, of } from 'rxjs';
-import Swal from 'sweetalert2';
+import { toObservable } from '@angular/core/rxjs-interop';
+import { catchError, map, tap } from 'rxjs/operators';
 import { AuthService } from '../services/auth/auth.service';
+import Swal from 'sweetalert2';
+import { of } from 'rxjs';
 
 export const AuthGuard: CanActivateFn = () => {
   const router = inject(Router);
   const authService = inject(AuthService);
 
   const Toast = Swal.mixin({
-        toast: true,
-        position: "top-end",
-        showConfirmButton: false,
-        timer: 1500,
-        timerProgressBar: true,
-        didOpen: (toast) => {
-          toast.onmouseenter = Swal.stopTimer;
-          toast.onmouseleave = Swal.resumeTimer;
-        }
-    });
+    toast: true,
+    position: "top-end",
+    showConfirmButton: false,
+    timer: 1500,
+    timerProgressBar: true,
+    didOpen: (toast) => {
+      toast.onmouseenter = Swal.stopTimer;
+      toast.onmouseleave = Swal.resumeTimer;
+    }
+  });
 
   return authService.getMe().pipe(
-    map(() => true), // success = authenticated
-    catchError((err) => {
-
+    map(() => true),
+    catchError(err => {
       Toast.fire({
-          icon: "error",
-          title: "Acesso negado!",
-          text: err?.error?.message
-       });
-
+        icon: "error",
+        title: "Acesso negado!",
+        text: err?.error?.message ?? "Você precisa estar logado"
+      });
       router.navigate(['/login']);
       return of(false);
     })

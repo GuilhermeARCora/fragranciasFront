@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, ElementRef, HostListener, inject, signal } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { AuthService } from '../../../core/services/auth/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -21,14 +22,15 @@ import { trigger, transition, style, animate } from '@angular/animations';
 })
 export class HeaderComponent {
 
-  userLoggedIn = signal(true);
-  searchInputVisible = signal(false);
+  public searchInputVisible = signal(false);
+  private elementRef = inject(ElementRef);
+  private authService = inject(AuthService);
+
+  readonly userLoggedIn = this.authService.isLoggedIn;
 
   toggleSearch() {
     this.searchInputVisible.update(v => !v);
   };
-
-  elementRef = inject(ElementRef);
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
@@ -36,6 +38,6 @@ export class HeaderComponent {
     if (!clickedInside && this.searchInputVisible()) {
       this.searchInputVisible.set(false);
     }
-  }
+  };
 
-}
+};

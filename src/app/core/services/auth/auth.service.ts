@@ -1,44 +1,62 @@
-import { BehaviorSubject, Observable, of } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import {  Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { AuthUser, LoginPayload, LoginResponse, UserForm } from '../../../shared/types/User'; // Assuming this exists
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
 
-  private currentUser$ = new BehaviorSubject<AuthUser | null>(null);
+  // ✅ 1. Signal to hold current user
+  private _currentUser = signal<AuthUser | null>(null);
+
+  private hasFetchedUser = signal(false); // ✅ new flag
+
+  // ✅ 2. Expose observable version if needed
+  readonly currentUser$ = toObservable(this._currentUser);
+
+  // ✅ 3. Computed signal for login status
+  readonly isLoggedIn = computed(() => !!this._currentUser());
 
   getMe(): Observable<AuthUser> {
-    return this.http.get<{ status: string, data: { user: AuthUser } }>(`${this.apiUrl}users/me`)
-    .pipe(
-      map(res => res.data.user), // unwrap the user here
-      tap(user => this.currentUser$.next(user))
-    );
-  }
+    if (this.hasFetchedUser() && this._currentUser()) {
+      return of(this._currentUser()!); // ✅ return cached user
+    }
 
-  clearUserCache(): void {
-    this.currentUser$.next(null);
-  }
+    return this.http.get<{ status: string, data: { user: AuthUser } }>(`${this.apiUrl}users/me`).pipe(
+      map(res => res.data.user),
+      tap(user => {
+        this._currentUser.set(user);
+        this.hasFetchedUser.set(true); // ✅ set flag after fetch
+      })
+    );
+  };
+
+  // ✅ 5. Synchronous getter if needed
+  getCurrentUser(): AuthUser | null {
+    return this._currentUser();
+  };
+
+  // ✅ 6. Clear user on logout
+  clearUser() {
+    this._currentUser.set(null);
+  };
 
   register(userData: UserForm): Observable<UserForm> {
     return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData);
-  }
+  };
 
-  login(userData: LoginPayload): Observable<LoginResponse> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}users/login`, userData);
-  }
+  login(payload: LoginPayload): Observable<AuthUser> {
+    return this.http.post<{ token: string }>(`${this.apiUrl}users/login`, payload, { withCredentials: true }).pipe(
+    switchMap(() => this.getMe()) // fetches and caches the user using cookie
+    );
+  };
 
-  logout() {
-    this.clearUserCache();
-  }
-
-  authenticated() {
-    return this.getMe();
-  }
-}
+};
