@@ -2,12 +2,12 @@
   <div class="container">
     <div class="d-flex flex-wrap align-items-center justify-content-between">
 
-      <!-- Logo (always left) -->
+      <!-- Logo -->
       <a routerLink="/home" class="d-flex align-items-center text-decoration-none">
         <img src="assets/img/logo.webp" alt="Logo" width="130" height="32">
       </a>
 
-      <!-- Navigation and icons -->
+      <!-- Desktop Layout -->
       <div class="d-none d-lg-flex align-items-center justify-content-lg-end flex-grow-1 gap-4">
         <!-- Nav links -->
         <ul class="nav me-auto">
@@ -17,7 +17,7 @@
         </ul>
 
         <!-- Search bar -->
-        <form class="" role="search">
+        <form role="search">
           <div class="input-group">
             <span class="input-group-text" style="cursor: pointer;">
               <i class="bi bi-search"></i>
@@ -26,15 +26,14 @@
           </div>
         </form>
 
-        <!-- Avatar + Cart -->
+        <!-- Avatar or Guest Buttons -->
         <div class="d-flex align-items-center gap-2">
-          <!-- Avatar Dropdown -->
-          <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown">
+          <div *ngIf="userLoggedIn(); else guestButtons" class="dropdown">
             <a class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
               <img src="assets/icons/userIcon.webp" alt="default user" width="32" height="32" class="rounded-circle">
             </a>
             <ul class="dropdown-menu dropdown-menu-end text-small">
-              <li><a class="dropdown-item" routerLink="/userProfile" >Perfil</a></li>
+              <li><a class="dropdown-item" routerLink="/userProfile">Perfil</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><button class="dropdown-item" (click)="logOut()">Deslogar</button></li>
             </ul>
@@ -47,18 +46,17 @@
         </div>
       </div>
 
-      <!-- Mobile-specific layout -->
+      <!-- Mobile Layout -->
       <div class="d-lg-none w-100 mt-3">
-        <!-- Avatar + Cart + Mobile Menu Button -->
+        <!-- Top bar -->
         <div class="d-flex justify-content-between align-items-center mb-2">
           <div class="d-flex align-items-center gap-2">
-            <!-- Avatar Dropdown -->
-            <div *ngIf="userLoggedIn(); else guestLinks" class="dropdown">
+            <div *ngIf="userLoggedIn(); else guestButtons" class="dropdown">
               <a class="d-flex align-items-center text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                 <img src="assets/icons/userIcon.webp" alt="default user" width="32" height="32" class="rounded-circle">
               </a>
               <ul class="dropdown-menu dropdown-menu-end text-small">
-                <li><a class="dropdown-item" href="#">Perfil</a></li>
+                <li><a class="dropdown-item" routerLink="/userProfile">Perfil</a></li>
                 <li><hr class="dropdown-divider"></li>
                 <li><button class="dropdown-item" (click)="logOut()">Deslogar</button></li>
               </ul>
@@ -83,7 +81,7 @@
           </div>
         </div>
 
-        <!-- Search bar (always shown on mobile below icons) -->
+        <!-- Mobile Search -->
         <form role="search">
           <div class="input-group">
             <span class="input-group-text">
@@ -94,8 +92,8 @@
         </form>
       </div>
 
-      <!-- Guest Buttons -->
-      <ng-template #guestLinks>
+      <!-- Guest Buttons Template -->
+      <ng-template #guestButtons>
         <div class="d-flex gap-2">
           <button routerLink="/login" type="button" class="btn btn-outline-dark">Login</button>
           <button routerLink="/registration" type="button" class="btn btn-warning">Cadastre-se</button>

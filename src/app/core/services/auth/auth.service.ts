@@ -17,7 +17,8 @@ export class AuthService {
   // ✅ 1. Signal to hold current user
   private _currentUser = signal<AuthUser | null>(null);
 
-  private hasFetchedUser = signal(false); // ✅ new flag
+  private _hasFetchedUser = signal(false);
+  readonly hasFetchedUser = this._hasFetchedUser.asReadonly();
 
   // ✅ 2. Expose observable version if needed
   readonly currentUser$ = toObservable(this._currentUser);
@@ -34,7 +35,8 @@ export class AuthService {
       map(res => res.data.user),
       tap(user => {
         this._currentUser.set(user);
-        this.hasFetchedUser.set(true); // ✅ set flag after fetch
+        this._hasFetchedUser.set(true);
+        // ✅ set flag after fetch
       })
     );
   };
@@ -47,7 +49,7 @@ export class AuthService {
   // ✅ 6. Clear user on logout
   clearUser() {
     this._currentUser.set(null);
-    this.hasFetchedUser.set(false);
+    this._hasFetchedUser.set(false);
   };
 
   register(userData: UserForm): Observable<AuthUser> {

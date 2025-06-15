@@ -1,27 +1,18 @@
-// role.guard.ts
-import { inject, Injectable } from '@angular/core';
-import {
-  CanActivate,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  Router
-} from '@angular/router';
-import { Observable, of } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
+import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
 import Swal from 'sweetalert2';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class RoleGuard implements CanActivate {
+export const RoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
+  const authService = inject(AuthService);
+  const router = inject(Router);
 
-  authService = inject(AuthService);
-  router = inject(Router);
+  const allowedRoles = route.data['roles'] as string[];
+  const user = authService.getCurrentUser();
 
-  Toast = Swal.mixin({
+  const Toast = Swal.mixin({
     toast: true,
-    position: "top-end",
+    position: 'top-end',
     showConfirmButton: false,
     timer: 3500,
     timerProgressBar: true,
@@ -31,38 +22,19 @@ export class RoleGuard implements CanActivate {
     }
   });
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Observable<boolean> {
-
-    const expectedRoles: string[] = route.data['roles'];
-
-    return this.authService.getMe().pipe(
-      map(user => {
-        if (user && expectedRoles.includes(user.role)) {
-          return true;
-        }
-
-        this.Toast.fire({
-          icon: "error",
-          title: "Acesso negado!",
-          text: "Você não possui permissão para acessar essa rota!"
-        });
-
-        this.router.navigate(['/home']);
-        return false;
-      }),
-      catchError((err) => {
-        this.Toast.fire({
-          icon: "error",
-          title: "Acesso negado!",
-          text: err?.error?.message || "Você não está autenticado."
-        });
-
-        this.router.navigate(['/login']);
-        return of(false);
-      })
-    );
+  if (user && allowedRoles.includes(user.role)) {
+    return true;
   }
-}
+
+  // Show toast and redirect
+  Toast.fire({
+    icon: 'error',
+    title: 'Acesso negado!',
+    text: user
+      ? 'Você não possui permissão para acessar essa rota!'
+      : 'Você não está autenticado.'
+  });
+
+  router.navigate(['/home']);
+  return false;
+};

@@ -22,16 +22,16 @@ export const AuthGuard: CanActivateFn = () => {
     }
   });
 
-  return authService.getMe().pipe(
-    map(() => true),
-    catchError(err => {
-      Toast.fire({
-        icon: "error",
-        title: "Acesso negado!",
-        text: err?.error?.message ?? "Você precisa estar logado"
-      });
-      router.navigate(['/login']);
-      return of(false);
-    })
-  );
+  if (authService.isLoggedIn()) {
+    return true;
+  }
+
+  Toast.fire({
+    icon: "error",
+    title: "Acesso negado!",
+    text: "Você precisa estar logado"
+  });
+  router.navigate(['/login']);
+  return false;
+
 };

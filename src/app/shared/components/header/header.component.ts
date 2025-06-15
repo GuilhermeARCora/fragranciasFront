@@ -28,9 +28,7 @@ export class HeaderComponent {
   private elementRef = inject(ElementRef);
   private authService = inject(AuthService);
   private router = inject(Router);
-
-
-
+  readonly hasFetchedUser = this.authService.hasFetchedUser;
   readonly userLoggedIn = this.authService.isLoggedIn;
 
   toggleSearch(): void {
