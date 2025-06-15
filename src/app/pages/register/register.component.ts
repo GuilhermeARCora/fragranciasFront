@@ -11,6 +11,7 @@ import { hasFormError } from '../../shared/utils/helpers';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { UserForm } from '../../shared/types/User';
+import { ToastService } from '../../core/services/swal/toast.service';
 @Component({
   selector: 'app-register',
   imports: [
@@ -29,6 +30,7 @@ export class RegisterComponent implements OnInit {
 
     registerForm!: FormGroup;
     hasFormError = hasFormError;
+    toast = inject(ToastService);
     hide = signal(true);
     router = inject(Router);
     authService = inject(AuthService);
@@ -64,10 +66,7 @@ export class RegisterComponent implements OnInit {
       this.authService.register(userData).subscribe({
         next: () =>{
           this.router.navigateByUrl('/home').then(()=>{
-            this.Toast.fire({
-                icon: "success",
-                title: "Cadastro feito com sucesso.\nBem vindo a nossa loja!"
-              });
+            this.toast.success('Login bem sucedido!');
           });
 
         },
@@ -85,16 +84,5 @@ export class RegisterComponent implements OnInit {
       event.stopPropagation();
     };
 
-    Toast = Swal.mixin({
-          toast: true,
-          position: "top-end",
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-    });
 
 };

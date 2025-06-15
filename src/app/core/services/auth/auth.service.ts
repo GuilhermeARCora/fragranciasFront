@@ -20,9 +20,6 @@ export class AuthService {
   private _hasFetchedUser = signal(false);
   readonly hasFetchedUser = this._hasFetchedUser.asReadonly();
 
-  // ✅ 2. Expose observable version if needed
-  readonly currentUser$ = toObservable(this._currentUser);
-
   // ✅ 3. Computed signal for login status
   readonly isLoggedIn = computed(() => !!this._currentUser());
 
@@ -36,14 +33,8 @@ export class AuthService {
       tap(user => {
         this._currentUser.set(user);
         this._hasFetchedUser.set(true);
-        // ✅ set flag after fetch
       })
     );
-  };
-
-  // ✅ 5. Synchronous getter if needed
-  getCurrentUser(): AuthUser | null {
-    return this._currentUser();
   };
 
   // ✅ 6. Clear user on logout

@@ -1,11 +1,9 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs';
-import { AuthService } from './core/services/auth/auth.service';
-
 @Component({
   selector: 'app-root',
   imports: [
@@ -21,24 +19,14 @@ export class AppComponent implements OnInit {
 
   router = inject(Router);
 
-  hideHeader = false;
-  hideFooter = false;
-
-  constructor(private auth: AuthService) {
-    this.auth.getMe().subscribe({
-      next: () => {},
-      error: () => {
-        this.auth.clearUser(); // in case user was invalid
-      }
-    });
-  };
+  hideHeader = signal<boolean>(true);
+  hideFooter = signal<boolean>(true);
 
   // Rotas que ocultam apenas o header
   private headerExcludedRoutes = ['/login', '/not-found', '/404', '/registration'];
 
   // Rotas que ocultam apenas o footer
   private footerExcludedRoutes = ['/not-found', '/404'];
-
 
   ngOnInit() {
 
@@ -47,13 +35,14 @@ export class AppComponent implements OnInit {
       .subscribe((event: NavigationEnd) => {
         const url = event.urlAfterRedirects;
 
-        this.hideHeader = this.headerExcludedRoutes.some(route =>
-          url === route || url.startsWith(route + '/')
+        this.hideHeader.set(this.headerExcludedRoutes
+          .some(route => url === route || url.startsWith(route + '/'))
         );
 
-        this.hideFooter = this.footerExcludedRoutes.some(route =>
-          url === route || url.startsWith(route + '/')
+        this.hideFooter.set(this.footerExcludedRoutes
+          .some(route => url === route || url.startsWith(route + '/'))
         );
+
       });
   };
 

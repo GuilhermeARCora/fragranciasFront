@@ -10,6 +10,7 @@ import { Router, RouterLink } from '@angular/router';
 import { hasFormError } from '../../shared/utils/helpers';
 import { AuthService } from '../../core/services/auth/auth.service';
 import { LoginPayload } from '../../shared/types/User';
+import { ToastService } from '../../core/services/swal/toast.service';
 @Component({
   selector: 'app-login',
   imports: [
@@ -27,6 +28,7 @@ export class LoginComponent implements OnInit{
 
   loginForm!: FormGroup;
   hasFormError = hasFormError;
+  toast = inject(ToastService);
   hide = signal(true);
   router = inject(Router);
   authService = inject(AuthService);
@@ -53,10 +55,7 @@ export class LoginComponent implements OnInit{
       next:() => {
 
         this.router.navigateByUrl('/home').then(()=>{
-          this.Toast.fire({
-            icon: "success",
-            title: "Logado com sucesso"
-          });
+          this.toast.success('Login bem sucedido!');
         });
 
       },
@@ -73,17 +72,5 @@ export class LoginComponent implements OnInit{
       event.preventDefault();
       event.stopPropagation();
   };
-
-  Toast = Swal.mixin({
-      toast: true,
-      position: "top-end",
-      showConfirmButton: false,
-      timer: 1500,
-      timerProgressBar: true,
-      didOpen: (toast) => {
-        toast.onmouseenter = Swal.stopTimer;
-        toast.onmouseleave = Swal.resumeTimer;
-      }
-  });
 
 };
