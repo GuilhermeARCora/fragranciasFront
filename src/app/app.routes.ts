@@ -12,7 +12,6 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 import { IndividualProductComponent } from './pages/individual-product/individual-product.component';
 
-
 const protectedRoutes:Routes = [
   { path: 'userProfile/:id', component: UserProfileComponent, canActivate: [AuthGuard] },
   { path: 'passwordChange', component: ChangePasswordComponent, canActivate: [AuthGuard] },
@@ -24,10 +23,12 @@ const adminRoutes:Routes = [
     loadComponent: () => import('./pages/admin/admin-home/admin-home.component')
     .then(c => c.AdminHomeComponent),
     canActivate:[RoleGuard],
+    canActivateChild: [RoleGuard],
     data:{roles: ['admin','master']},
     children: [
         {
           path:'createEditProduct/:id',
+          data: { roles: ['admin', 'master'] },
           loadComponent: () => import('./pages/admin/create-and-edit-product/create-and-edit-product.component')
           .then(c => c.CreateAndEditProductComponent)
         }

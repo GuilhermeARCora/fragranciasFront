@@ -1,24 +1,34 @@
 import { CanActivateFn, Router, ActivatedRouteSnapshot } from '@angular/router';
 import { inject } from '@angular/core';
 import { AuthService } from '../services/auth/auth.service';
-import Swal from 'sweetalert2';
 import { ToastService } from '../services/swal/toast.service';
 
 export const RoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
-  const authService = inject(AuthService);
-  const router = inject(Router);
-
-  const allowedRoles = route.data['roles'] as string[];
 
   const toast = inject(ToastService);
 
-  // if (user && allowedRoles.includes(user.role)) {
-  //   return true;
-  // }
+  const authService = inject(AuthService);
+  const user = authService.currentUser();
+  const router = inject(Router);
 
-  router.navigate(['/home']).then(() => {
-    toast.error('Você não possui permissão!');
-  });
+  const allowedRoles = route.data['roles'] as string[] | undefined;
 
-  return false;
+  if(!user){
+    toast.error('Você não está logado!');
+    return router.createUrlTree(['/login']);
+  };
+
+  // Defensive: if no roles defined, deny access
+  if (!allowedRoles || allowedRoles.length === 0) {
+    console.warn('No roles specified for this route.');
+    toast.error('Rota sem permissão configurada.');
+    return router.createUrlTree(['/login']);
+  };
+
+  if (user && allowedRoles.includes(user.role)) {
+    return true;
+  };
+
+  toast.error('Você não possui permissão!');
+  return router.createUrlTree(['/login']);
 };
