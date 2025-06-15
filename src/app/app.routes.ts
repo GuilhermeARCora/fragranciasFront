@@ -24,14 +24,14 @@ const adminRoutes:Routes = [
     loadComponent: () => import('./pages/admin/admin-home/admin-home.component')
     .then(c => c.AdminHomeComponent),
     canActivate:[RoleGuard],
-    data:{roles: ['admin','master']}
-  },
-  {
-    path:'createEditProduct/:id',
-    loadComponent: () => import('./pages/admin/create-and-edit-product/create-and-edit-product.component')
-    .then(c => c.CreateAndEditProductComponent),
-    canActivate:[RoleGuard],
-    data:{roles: ['admin','master']}
+    data:{roles: ['admin','master']},
+    children: [
+        {
+          path:'createEditProduct/:id',
+          loadComponent: () => import('./pages/admin/create-and-edit-product/create-and-edit-product.component')
+          .then(c => c.CreateAndEditProductComponent)
+        }
+    ]
   }
 ];
 

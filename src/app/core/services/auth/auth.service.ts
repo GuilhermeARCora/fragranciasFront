@@ -1,10 +1,9 @@
-import {  Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
-import { AuthUser, GetMeResponse, LoginPayload, LoginResponse, UserForm } from '../../../shared/types/User'; // Assuming this exists
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { toObservable } from '@angular/core/rxjs-interop';
+import { AuthUser, LoginPayload, LoginResponse, MeResponse, RegisterPayload, RegisterResponse } from '../../../shared/types/User';
+import { Observable, of } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -14,50 +13,57 @@ export class AuthService {
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
 
-  // ✅ 1. Signal to hold current user
-  private _currentUser = signal<AuthUser | null>(null);
+  currentUser = signal<AuthUser | null>(null);
 
-  private _hasFetchedUser = signal(false);
-  readonly hasFetchedUser = this._hasFetchedUser.asReadonly();
+  loggedInUser = computed(() => !!this.currentUser);
 
-  // ✅ 3. Computed signal for login status
-  readonly isLoggedIn = computed(() => !!this._currentUser());
-
-  getMe(): Observable<AuthUser> {
-    if (this.hasFetchedUser() && this._currentUser()) {
-      return of(this._currentUser()!); // ✅ return cached user
-    };
-
-    return this.http.get<GetMeResponse>(`${this.apiUrl}users/me`).pipe(
-      map(res => res.data.user),
-      tap(user => {
-        this._currentUser.set(user);
-        this._hasFetchedUser.set(true);
+  signup(formData:RegisterPayload): Observable<RegisterResponse> {
+    return this.http.post<RegisterResponse>(`${this.apiUrl}users/signup`, formData)
+    .pipe(
+      tap(response => {
+        this.currentUser.set(response.data.user)
       })
     );
   };
 
-  // ✅ 6. Clear user on logout
-  clearUser() {
-    this._currentUser.set(null);
-    this._hasFetchedUser.set(false);
-  };
-
-  register(userData: UserForm): Observable<AuthUser> {
-    return this.http.post<UserForm>(`${this.apiUrl}users/signup`, userData).pipe(
-    switchMap(() => this.getMe())
+  login(formData: LoginPayload): Observable<AuthUser> {
+    return this.http.post<LoginResponse>(`${this.apiUrl}users/login`, formData)
+    .pipe(
+      switchMap(() =>this.checkUserAuth())
     );
   };
 
-  login(payload: LoginPayload): Observable<AuthUser> {
-    return this.http.post<{ token: string }>(`${this.apiUrl}users/login`, payload, { withCredentials: true }).pipe(
-    switchMap(() => this.getMe()) // fetches and caches the user using cookie
+  checkUserAuth(): Observable<AuthUser> {
+    if(this.currentUser()){
+      return of(this.currentUser()!);
+    };
+
+    return this.http.get<MeResponse>(`${this.apiUrl}users/me`).pipe(
+      tap(response => {
+        this.currentUser.set(response.data.user);
+      }),
+      map(response => response.data.user)
     );
   };
 
-  logout(): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}users/logout`).pipe(
-    tap(() => this.clearUser()));
+  getCurrentUser(): AuthUser | null {
+    return this.currentUser();
+  };
+
+  isAuthenticated(): boolean {
+    return !!this.currentUser();
+  };
+
+  logout(): Observable<any>{
+    return  this.http.delete<any>(`${this.apiUrl}users/logout`).pipe(
+      tap(()=>{
+        this.clearUser()
+      })
+    )
+  };
+
+  clearUser(): void{
+    this.currentUser.set(null);
   };
 
 };

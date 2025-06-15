@@ -10,7 +10,7 @@ import { matchFieldsValidator } from '../../shared/validators/matchFields.valida
 import { hasFormError } from '../../shared/utils/helpers';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { UserForm } from '../../shared/types/User';
+import { RegisterPayload } from '../../shared/types/User';
 import { ToastService } from '../../core/services/swal/toast.service';
 @Component({
   selector: 'app-register',
@@ -61,9 +61,9 @@ export class RegisterComponent implements OnInit {
 
       if(this.registerForm.invalid) return;
 
-      const userData = this.registerForm.value as UserForm;
+      const userData = this.registerForm.value as RegisterPayload;
 
-      this.authService.register(userData).subscribe({
+      this.authService.signup(userData).subscribe({
         next: () =>{
           this.router.navigateByUrl('/home').then(()=>{
             this.toast.success('Login bem sucedido!');
