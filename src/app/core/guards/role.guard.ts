@@ -15,14 +15,13 @@ export const RoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
 
   if(!user){
     toast.error('Você não está logado!');
-    return router.createUrlTree(['/login']);
+    return router.createUrlTree(['/home']);
   };
 
   // Defensive: if no roles defined, deny access
   if (!allowedRoles || allowedRoles.length === 0) {
-    console.warn('No roles specified for this route.');
-    toast.error('Rota sem permissão configurada.');
-    return router.createUrlTree(['/login']);
+    toast.error('Permissão negada.');
+    return router.createUrlTree(['/home']);
   };
 
   if (user && allowedRoles.includes(user.role)) {
@@ -30,5 +29,5 @@ export const RoleGuard: CanActivateFn = (route: ActivatedRouteSnapshot) => {
   };
 
   toast.error('Você não possui permissão!');
-  return router.createUrlTree(['/login']);
+  return router.createUrlTree(['/home']);
 };

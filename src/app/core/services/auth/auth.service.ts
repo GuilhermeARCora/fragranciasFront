@@ -46,6 +46,7 @@ export class AuthService {
     );
   };
 
+  //is this function necessary?
   getCurrentUser(): AuthUser | null {
     return this.currentUser();
   };

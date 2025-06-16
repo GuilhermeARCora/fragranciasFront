@@ -14,6 +14,6 @@ export const AuthGuard: CanActivateFn = () => {
   }
 
   toast.error('Você precisa estar logado!');
-  return router.createUrlTree(['/login']);
+  return router.createUrlTree(['/home']);
 
 };

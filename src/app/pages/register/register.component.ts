@@ -70,9 +70,8 @@ export class RegisterComponent implements OnInit {
           });
 
         },
-        error:(err) => {
-          const errorMessage = err?.error?.message;
-          Swal.fire({icon: "error",title:"Erro de Cadastro",text:`${errorMessage}`});
+        error:() => {
+          Swal.fire({icon: "error",title:"Erro de Cadastro",text:'Tente novamente!'});
         }
       });
 

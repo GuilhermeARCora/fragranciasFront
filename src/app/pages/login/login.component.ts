@@ -59,15 +59,14 @@ export class LoginComponent implements OnInit{
         });
 
       },
-      error:(err) => {
-        const errorMessage = err?.error?.message;
-        Swal.fire({icon: "error",title: "Erro de Login",text: errorMessage});
+      error:() => {
+        Swal.fire({icon: "error",title: "Erro de Login",text: "Tente novamente!"});
       }
     });
 
   };
 
-  clickEvent(event: MouseEvent) {
+  clickEvent(event: MouseEvent): void {
       this.hide.update(value => !value);
       event.preventDefault();
       event.stopPropagation();
