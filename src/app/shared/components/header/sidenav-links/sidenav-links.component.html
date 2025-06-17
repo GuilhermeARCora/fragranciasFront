@@ -1,0 +1,15 @@
+<!-- Toggle Button (in header) -->
+<button mat-icon-button (click)="clickEvent($event)">
+  <mat-icon>menu</mat-icon>
+</button>
+
+<!-- Slide-in Menu Overlay -->
+<div class="custom-menu-overlay " *ngIf="isMenuOpen()" (click)="clickEvent($event)">
+  <div class="custom-menu p-4 shadow">
+    <button class="btn-close mb-3" (click)="clickEvent($event)"></button>
+
+    <a routerLink="/home" class="d-block mb-2" (click)="clickEvent($event)" style="cursor: pointer;">Home</a>
+    <a routerLink="/about" class="d-block mb-2" (click)="clickEvent($event)" style="cursor: pointer;">Sobre nós</a>
+    <!-- Add more links here -->
+  </div>
+</div>
