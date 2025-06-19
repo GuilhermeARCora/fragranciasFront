@@ -1,14 +1,14 @@
-import { Component, HostListener, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import { CommonModule } from '@angular/common';
-
+import { MatRippleModule } from '@angular/material/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav-links',
-  imports: [MatSidenavModule,MatIconModule,MatToolbarModule, MatListModule, CommonModule],
+  imports: [MatIconModule,MatToolbarModule, MatListModule, CommonModule,MatRippleModule, RouterLink],
   templateUrl: './sidenav-links.component.html',
   styleUrl: './sidenav-links.component.scss'
 })
@@ -16,17 +16,17 @@ export class SidenavLinksComponent {
 
     isMenuOpen = signal(false);
 
-    clickEvent(event:MouseEvent){
-      this.isMenuOpen.update(v => !v);
-      event.stopPropagation();
+    menuVisible = signal(false);
+    menuClass = signal<'slide-in' | 'slide-out'>('slide-in');
+
+    openMenu() {
+      this.menuClass.set('slide-in');
+      this.menuVisible.set(true);
     };
 
-    @HostListener('document:keydown.escape', ['$event'])
-     onEscapeKey(event: KeyboardEvent) {
-      if (this.isMenuOpen()) {
-        this.isMenuOpen.update(v => !v);
-        event.stopPropagation();
-      };
+    closeMenu() {
+      this.menuClass.set('slide-out');
+      setTimeout(() => this.menuVisible.set(false), 300);
     };
 
 };

@@ -1,15 +1,32 @@
-<!-- Toggle Button (in header) -->
-<button mat-icon-button (click)="clickEvent($event)">
-  <mat-icon>menu</mat-icon>
-</button>
+<!-- Toggle Button sm (in header) -->
+<div class="d-md-none">
 
-<!-- Slide-in Menu Overlay -->
-<div class="custom-menu-overlay " *ngIf="isMenuOpen()" (click)="clickEvent($event)">
-  <div class="custom-menu p-4 shadow">
-    <button class="btn-close mb-3" (click)="clickEvent($event)"></button>
+    <button
+       mat-icon-button
+       (click)="openMenu()"
+       aria-label="Abrir menu"
+       class="shadow-sm d-flex align-items-center justify-content-center p-1"
+    >
+        <mat-icon>menu</mat-icon>
+    </button>
 
-    <a routerLink="/home" class="d-block mb-2" (click)="clickEvent($event)" style="cursor: pointer;">Home</a>
-    <a routerLink="/about" class="d-block mb-2" (click)="clickEvent($event)" style="cursor: pointer;">Sobre nós</a>
-    <!-- Add more links here -->
+  <!-- Slide-in Menu Overlay -->
+  <div class="custom-menu-overlay"  *ngIf="menuVisible()" (click)="closeMenu()">
+    <div class="custom-menu p-4 shadow" [ngClass]="menuClass()" (click)="$event.stopPropagation()">
+      <button class="btn-close mb-3" (click)="closeMenu()"></button>
+
+        <a matRipple [matRippleCentered]="true" routerLink="/about" class="d-block mb-2 nav-link" (click)="closeMenu()" style="max-width: fit-content;">Sobre nós</a>
+
+    </div>
   </div>
+
+</div>
+
+<!-- Links md and large (in header) -->
+<div class="d-none d-md-block">
+
+  <div class="d-flex flex-column">
+    <a routerLink="/about" class="nav-link fw-semibold" style="max-width: fit-content;">SOBRE NÓS</a>
+  </div>
+
 </div>

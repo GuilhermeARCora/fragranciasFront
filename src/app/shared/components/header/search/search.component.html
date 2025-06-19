@@ -1,0 +1,89 @@
+<!-- ✅ MOBILE VERSION -->
+<section class="d-lg-none">
+  <div >
+    <button
+      mat-icon-button
+      (click)="openMenu()"
+      aria-label="Abrir menu"
+      class="shadow-sm d-flex align-items-center justify-content-center p-1"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div
+    class="custom-menu-overlay"
+    *ngIf="menuVisible()"
+    (click)="closeMenu()"
+  >
+    <div
+      class="custom-menu p-4"
+      (click)="$event.stopPropagation()"
+    >
+      <button class="btn-close mb-3" (click)="closeMenu()"></button>
+
+      <form>
+        <mat-form-field class="w-100">
+          <mat-label>Buscar...</mat-label>
+          <input
+            type="text"
+            placeholder="Buscar..."
+            aria-label="Busca"
+            matInput
+            [formControl]="myControl"
+            [matAutocomplete]="auto"
+            #searchInput
+          />
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option
+              *ngFor="let option of filteredOptions | async"
+              [value]="option"
+            >
+              {{ option }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ✅ DESKTOP VERSION -->
+<section class="d-none d-lg-flex align-items-center gap-2">
+  <div *ngIf="!showSearchInput()">
+    <button
+      mat-icon-button
+      (click)="toogleOpenAnimation()"
+      aria-label="Abrir busca"
+      class="shadow-sm d-flex align-items-center justify-content-center p-1"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <form
+    *ngIf="showSearchInput()"
+    class="search-wrapper open"
+  >
+    <mat-form-field class="w-75" appearance="outline">
+      <mat-label>Buscar...</mat-label>
+      <input
+        type="text"
+        placeholder="Buscar..."
+        aria-label="Busca"
+        matInput
+        [formControl]="myControl"
+        [matAutocomplete]="auto"
+        #searchInput
+      />
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option
+          *ngFor="let option of filteredOptions | async"
+          [value]="option"
+        >
+          {{ option }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form>
+</section>

@@ -15,7 +15,7 @@ export class AuthService {
 
   currentUser = signal<AuthUser | null>(null);
 
-  loggedInUser = computed(() => !!this.currentUser);
+  loggedInUser = computed(() => !!this.currentUser());
 
   signup(formData:RegisterPayload): Observable<RegisterResponse> {
     return this.http.post<RegisterResponse>(`${this.apiUrl}users/signup`, formData)
@@ -46,9 +46,10 @@ export class AuthService {
     );
   };
 
-  //is this function necessary?
-  getCurrentUser(): AuthUser | null {
-    return this.currentUser();
+  getCurrentUserName(): string{
+    const userName = this.currentUser()?.name ?? '';
+
+    return userName;
   };
 
   isAuthenticated(): boolean {
@@ -64,7 +65,7 @@ export class AuthService {
   };
 
   clearUser(): void{
-    this.currentUser.set(null);
+    return this.currentUser.set(null);
   };
 
 };

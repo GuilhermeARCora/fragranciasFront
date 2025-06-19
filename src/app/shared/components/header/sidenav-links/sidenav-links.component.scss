@@ -1,6 +1,6 @@
 .custom-menu-overlay {
   position: fixed;
-  inset: 0; /* top: 0; right: 0; bottom: 0; left: 0 */
+  inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 1050;
 }
@@ -10,12 +10,26 @@
   top: 0;
   left: 0;
   width: 50vw;
-  height: 50vh;
+  height: 100vh;
   background-color: white;
-  animation: slideIn 0.3s ease-out;
+  animation-duration: 0.3s;
+  animation-fill-mode: forwards;
+}
+
+.slide-in {
+  animation-name: slideIn;
+}
+
+.slide-out {
+  animation-name: slideOut;
 }
 
 @keyframes slideIn {
   from { transform: translateX(-100%); }
   to { transform: translateX(0); }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
 }

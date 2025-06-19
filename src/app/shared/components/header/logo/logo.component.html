@@ -1,6 +1,14 @@
 
 <div class="">
 
-  <img src="assets/img/logo.webp" alt="logo" class="">
+  <a
+  routerLink="/home" matRipple
+  [matRippleCentered]="false"
+  [matRippleColor]="'rgba(0,0,0,0.1)'"
+  [matRippleAnimation]="{ enterDuration: 250, exitDuration: 150 }"
+  class="contain-rippler-effect"
+  >
+    <img src="assets/img/logo.webp" alt="logo" class="logo" style="cursor: pointer;">
+  </a>
 
 </div>

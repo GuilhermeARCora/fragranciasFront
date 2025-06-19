@@ -1,22 +1,73 @@
 
-<button matIconButton [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+<section class="" *ngIf="displaySection()">
+
+<button
+    matIconButton
+    [matMenuTriggerFor]="menu"
+    aria-label="Ícone de usuario"
+    class="shadow-sm d-flex align-items-center justify-content-center p-1"
+>
   <mat-icon>account_circle</mat-icon>
 </button>
+
 <mat-menu #menu="matMenu">
-  <button mat-menu-item>
-    <mat-icon>login</mat-icon>
-    <span>Login</span>
-  </button>
-  <button mat-menu-item>
-    <mat-icon>person_add_alt</mat-icon>
-    <span>Cadastre-se</span>
-  </button>
-<mat-divider></mat-divider>
-  <button mat-menu-item>
-    <mat-icon>logout</mat-icon>
-    <span>Logout</span>
-  </button>
+
+  <div *ngIf="!isUserLoggedin()">
+    <button mat-menu-item routerLink="/login">
+      <mat-icon>login</mat-icon>
+      <span>Login</span>
+    </button>
+  </div>
+
+  <div *ngIf="!isUserLoggedin()">
+    <button mat-menu-item routerLink="/registration">
+      <mat-icon>person_add_alt</mat-icon>
+      <span>Cadastre-se</span>
+    </button>
+  </div>
+
+  <div *ngIf="isUserLoggedin()" >
+    <button mat-menu-item>
+      <mat-icon>account_box</mat-icon>
+      <span>Perfil</span>
+    </button>
+  </div>
+
+  <mat-divider *ngIf="isUserLoggedin()"></mat-divider>
+
+  <div *ngIf="isUserLoggedin()" >
+    <button
+      mat-menu-item
+      (click)="logOut()"
+    >
+      <mat-icon>logout</mat-icon>
+      <span>Logout</span>
+    </button>
+  </div>
+
 </mat-menu>
 
+</section>
 
+<section class="d-none d-md-block ms-md-3" *ngIf="!isUserLoggedin()" >
+
+  <div class="d-flex flex-row gap-2">
+
+    <div>
+        <button class="btn btn-outline-primary d-flex gap-1" routerLink="/login">
+          <mat-icon>login</mat-icon>
+          <span>Login</span>
+        </button>
+    </div>
+
+    <div>
+        <button class="btn btn-warning d-flex gap-1" routerLink="/registration">
+          <mat-icon>person_add_alt</mat-icon>
+          <span>Cadastre-se</span>
+        </button>
+    </div>
+
+  </div>
+
+</section>
 
