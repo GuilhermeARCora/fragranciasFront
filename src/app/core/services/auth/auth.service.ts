@@ -26,7 +26,7 @@ export class AuthService {
     );
   };
 
-  login(formData: LoginPayload): Observable<AuthUser> {
+  login(formData: LoginPayload): Observable<any> {
     return this.http.post<LoginResponse>(`${this.apiUrl}users/login`, formData)
     .pipe(
       switchMap(() =>this.checkUserAuth())
