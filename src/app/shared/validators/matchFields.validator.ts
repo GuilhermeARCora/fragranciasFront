@@ -12,7 +12,7 @@ export function matchFieldsValidator(field1: string, field2: string): ValidatorF
 
     if (value1 !== value2) {
       control2.setErrors({ ...control2.errors, matchFieldsValidator: true });
-      return { matchFieldsValidator: true }; // optional group-level error
+      return { matchFieldsValidator: true };
     }
 
     // Clear only the match error if it was previously set
