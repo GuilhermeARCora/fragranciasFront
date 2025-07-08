@@ -2,8 +2,7 @@ export interface AuthUser {
   _id: string;
   name: string;
   email: string;
-  role: 'admin' | 'client' | 'master';
-  __v?: number;
+  role: 'admin' | 'client';
   active?: boolean;
 };
 export interface RegisterPayload {

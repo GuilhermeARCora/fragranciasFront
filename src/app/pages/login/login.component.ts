@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
 import { hasFormError } from '../../shared/utils/helpers';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { LoginPayload } from '../../shared/types/User';
+import { LoginPayload } from '../../core/types/User';
 import { ToastService } from '../../core/services/swal/toast.service';
 @Component({
   selector: 'app-login',

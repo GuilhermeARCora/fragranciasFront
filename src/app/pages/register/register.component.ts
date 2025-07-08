@@ -10,7 +10,7 @@ import { matchFieldsValidator } from '../../shared/validators/matchFields.valida
 import { hasFormError } from '../../shared/utils/helpers';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth/auth.service';
-import { RegisterPayload } from '../../shared/types/User';
+import { RegisterPayload } from '../../core/types/User';
 import { ToastService } from '../../core/services/swal/toast.service';
 @Component({
   selector: 'app-register',

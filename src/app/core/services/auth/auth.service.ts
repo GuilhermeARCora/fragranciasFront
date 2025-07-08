@@ -1,9 +1,9 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { AuthUser, LoginPayload, LoginResponse, MeResponse, RegisterPayload, RegisterResponse } from '../../../shared/types/User';
-import { Observable, of } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { AuthUser, LoginPayload, LoginResponse, MeResponse, RegisterPayload, RegisterResponse } from '../../types/User';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { map, shareReplay, switchMap, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -13,59 +13,30 @@ export class AuthService {
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
 
-  currentUser = signal<AuthUser | null>(null);
+  private currentUser$ = new BehaviorSubject<AuthUser | null> (null);
 
-  loggedInUser = computed(() => !!this.currentUser());
+  public user$:Observable<AuthUser | null> = this.currentUser$.asObservable();
+  public isLoggedIn$:Observable<boolean> = this.currentUser$.asObservable().pipe(map(v => !!v));
+  public isAdmin$:Observable<boolean> = this.user$.pipe(map(u => u?.role === 'admin'));
 
-  signup(formData:RegisterPayload): Observable<RegisterResponse> {
-    return this.http.post<RegisterResponse>(`${this.apiUrl}users/signup`, formData)
-    .pipe(
-      tap(response => {
-        this.currentUser.set(response.data.user)
-      })
-    );
-  };
-
-  login(formData: LoginPayload): Observable<any> {
-    return this.http.post<LoginResponse>(`${this.apiUrl}users/login`, formData)
-    .pipe(
-      switchMap(() =>this.checkUserAuth())
-    );
-  };
-
-  checkUserAuth(): Observable<AuthUser> {
-    if(this.currentUser()){
-      return of(this.currentUser()!);
-    };
-
-    return this.http.get<MeResponse>(`${this.apiUrl}users/me`).pipe(
-      tap(response => {
-        this.currentUser.set(response.data.user);
-      }),
-      map(response => response.data.user)
-    );
-  };
-
-  getCurrentUserName(): string{
-    const userName = this.currentUser()?.name ?? '';
-
-    return userName;
-  };
-
-  isAuthenticated(): boolean {
-    return !!this.currentUser();
-  };
-
-  logout(): Observable<any>{
-    return  this.http.delete<any>(`${this.apiUrl}users/logout`).pipe(
-      tap(()=>{
-        this.clearUser()
+  login(form:LoginPayload): Observable<LoginResponse>{
+    return this.http.post<LoginResponse>(`${this.apiUrl}login`, form).pipe(
+      tap(() => {
+        switchMap(() => this.fetchAndStoreUser())
       })
     )
   };
 
-  clearUser(): void{
-    return this.currentUser.set(null);
+  fetchAndStoreUser(): Observable<AuthUser> {
+    return this.http.get<MeResponse>(`${this.apiUrl}me`).pipe(
+        map(res => res.data.user),
+        tap(user => this.currentUser$.next(user))
+      );
   };
+
+  get userName(): string {
+    return this.currentUser$.value?.name ?? 'Visitante';
+  }
+
 
 };
