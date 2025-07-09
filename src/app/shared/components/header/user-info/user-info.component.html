@@ -1,5 +1,5 @@
 
-<section class="" *ngIf="displaySection()">
+<section class="" *ngIf="displaySection$ | async">
 
 <button
     matIconButton
@@ -12,30 +12,30 @@
 
 <mat-menu #menu="matMenu">
 
-  <div *ngIf="!isUserLoggedin()">
+  <div *ngIf="!(isUserLoggedIn$ | async)">
     <button mat-menu-item routerLink="/login">
       <mat-icon>login</mat-icon>
       <span>Login</span>
     </button>
   </div>
 
-  <div *ngIf="!isUserLoggedin()">
+  <div *ngIf="!(isUserLoggedIn$ | async)">
     <button mat-menu-item routerLink="/registration">
       <mat-icon>person_add_alt</mat-icon>
       <span>Cadastre-se</span>
     </button>
   </div>
 
-  <div *ngIf="isUserLoggedin()" >
+  <div *ngIf="isUserLoggedIn$ | async" >
     <button mat-menu-item>
       <mat-icon>account_box</mat-icon>
       <span>Perfil</span>
     </button>
   </div>
 
-  <mat-divider *ngIf="isUserLoggedin()"></mat-divider>
+  <mat-divider *ngIf="isUserLoggedIn$ | async"></mat-divider>
 
-  <div *ngIf="isUserLoggedin()" >
+  <div *ngIf="isUserLoggedIn$ | async" >
     <button
       mat-menu-item
       (click)="logOut()"
@@ -49,7 +49,7 @@
 
 </section>
 
-<section class="d-none d-md-block ms-md-3" *ngIf="!isUserLoggedin()" >
+<section class="d-none d-md-block ms-md-3" *ngIf="!(isUserLoggedIn$ | async)" >
 
   <div class="d-flex flex-row gap-2">
 

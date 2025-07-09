@@ -6,6 +6,7 @@ import { AuthService } from '../../../../core/services/auth/auth.service';
 import { Router, RouterLink } from '@angular/router';
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { CommonModule } from '@angular/common';
+import { combineLatest, map } from 'rxjs';
 
 @Component({
   selector: 'app-user-info',
@@ -18,10 +19,16 @@ export class UserInfoComponent implements OnInit{
   authService = inject(AuthService);
   private router = inject(Router);
   private toast = inject(ToastService);
-  isUserLoggedin = this.authService.loggedInUser;
-  currentUser = this.authService.currentUser;
+  isUserLoggedIn$ = this.authService.isLoggedIn$;
+  currentUser$    = this.authService.user$;
 
   isMobile: boolean = window.innerWidth < 768;
+
+  displaySection$ = combineLatest([
+    this.isUserLoggedIn$,
+  ]).pipe(
+    map(([loggedIn]) => loggedIn || this.isMobile)
+  );
 
   @HostListener('window:resize', ['$event'])
   onResize(event: UIEvent): void {
@@ -39,12 +46,6 @@ export class UserInfoComponent implements OnInit{
     });
   };
 
-  displaySection(): boolean{
-    if(this.isUserLoggedin() || this.isMobile){
-      return true
-    }else{
-      return false
-    }
-  };
+
 
 }

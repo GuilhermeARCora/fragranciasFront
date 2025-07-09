@@ -63,7 +63,7 @@ export class RegisterComponent implements OnInit {
 
       const userData = this.registerForm.value as RegisterPayload;
 
-      this.authService.signup(userData).subscribe({
+      this.authService.register(userData).subscribe({
         next: () =>{
           this.router.navigateByUrl('/home').then(()=>{
             this.toast.success('Login bem sucedido!');

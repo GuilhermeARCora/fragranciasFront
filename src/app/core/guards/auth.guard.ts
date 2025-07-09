@@ -2,6 +2,7 @@ import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { AuthService } from '../services/auth/auth.service';
 import { ToastService } from '../services/swal/toast.service';
+import { take, tap, map } from 'rxjs';
 
 export const AuthGuard: CanActivateFn = () => {
 
@@ -9,11 +10,15 @@ export const AuthGuard: CanActivateFn = () => {
   const authService = inject(AuthService);
   const toast = inject(ToastService);
 
-  if (authService.loggedInUser()) {
-    return true;
-  }
-
-  toast.error('Você precisa estar logado!');
-  return router.createUrlTree(['/home']);
+  return authService.isLoggedIn$.pipe(
+    take(1), // only need the latest value once
+    tap(ok => {
+      if (!ok) toast.error('Você não está autenticado!');
+    }),
+    map(ok => ok
+      ? true
+      : router.createUrlTree(['/'])
+    )
+  );
 
 };
