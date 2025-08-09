@@ -21,6 +21,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/individual-product/individual-product.component')
     .then(c => c.IndividualProductComponent)
   },
+  {
+    path: 'cart',
+    loadComponent: () => import('./pages/cart/cart.component').then(c => c.CartComponent)
+  },
 
   // Protected routes
   ...adminRoutes,
