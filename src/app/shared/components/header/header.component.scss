@@ -1,0 +1,50 @@
+::ng-deep .mat-badge-accent .mat-badge-content {
+  background-color: var(--green) !important;
+  color: white !important;
+}
+
+.banner {
+  background: var(--pink);
+  color: var(--white);
+  overflow: hidden;
+  white-space: nowrap;
+  text-align: center;
+  font-family: var(--mer);
+  font-weight: 700;
+  font-style: bold;
+  font-size: 13px;
+}
+
+/* Track for scrolling text */
+.banner-track {
+  display: inline-flex;
+  gap: 1.2rem;
+  will-change: transform;
+}
+
+/* Text spans */
+.banner-track span {
+  white-space: nowrap;
+}
+
+/* Animation only for small screens (< 576px) */
+@media (max-width: 576px) {
+  .banner-track {
+    animation: marquee 12s linear infinite;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+}
+
+/* Accessibility: stop animation if user prefers reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .banner-track {
+    animation: none !important;
+  }
+}
+
+
+

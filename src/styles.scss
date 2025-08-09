@@ -1,4 +1,47 @@
 @use './reset.scss' as *;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
+
+/* Variables will be placed here, being able to be used in all css files (as long as they are linked here).
+All fonts and colors must be placed here for organization purpose. */
+:root {
+    --pop: "Poppins", sans-serif;
+    --mer: "Merriweather", sans-serif;
+    --rob: "Roboto", sans-serif;
+    --lat: "Lato", sans-serif;
+
+    --blue: #2B2D80;
+    --blue-hover: #2e30a4;
+    --gray: #333333;
+    --black: #000000;
+    --orange: #EB9B00;
+    --white: #FFFFFF;
+    --dark-orange: #ED6F22;
+    --green: #0F877B;
+    --pink: #b71c5c;
+}
+
+* {
+  /* Tira o contorno azul dos cliques no mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+body {
+  background-color: var(--white);
+}
+
+a {
+  text-decoration: none;
+}
+
+.btn{
+  cursor: pointer;
+}
