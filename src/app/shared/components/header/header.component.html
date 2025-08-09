@@ -1,0 +1,41 @@
+<header style="background-color: #FFFFFF;" class="d-flex flex-column gap-4 shadow-sm">
+
+  <div class="banner" role="region" aria-label="promoções">
+    <div class="banner-track">
+      <span>Cupom BEMVINDO ganhe 10% • Frete grátis a partir de R$300</span>
+      <span aria-hidden="true" class="d-md-none">Cupom BEMVINDO ganhe 10% • Frete grátis a partir de R$300</span>
+    </div>
+  </div>
+
+  <div class="d-flex align-items-center position-relative pb-4">
+
+    <div class="position-absolute start-50 translate-middle-x">
+      <a
+        matTooltip="Ir para a página inicial"
+        matTooltipPosition="below"
+        routerLink="/"
+        style="display: inline-block"
+      >
+        <img
+          src="assets/img/logo.webp"
+          alt="Logo Fragrâncias Decor"
+          style="display: block"
+        />
+      </a>
+    </div>
+
+    <div class="d-flex ms-auto pe-4">
+      <button
+        class="btn"
+        aria-label="Open cart"
+        [matBadge]="(cartCount$ | async) || 0"
+        matBadgeColor="accent"
+        (click)="redirectCart()"
+      >
+      <mat-icon fontSet="material-symbols-outlined">shopping_bag</mat-icon>
+    </button>
+    </div>
+
+  </div>
+
+</header>
