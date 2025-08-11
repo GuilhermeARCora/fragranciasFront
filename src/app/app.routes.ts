@@ -15,7 +15,7 @@ export const routes: Routes = [
   // Public routes
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'product/:id',
     loadComponent: () => import('./pages/individual-product/individual-product.component')

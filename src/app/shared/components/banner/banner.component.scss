@@ -1,0 +1,12 @@
+.banner {
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+}
+
+.banner img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Preenche mantendo proporção */
+  object-position: center; /* Centraliza a área visível */
+}
