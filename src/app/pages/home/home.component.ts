@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { BannerComponent } from "../../shared/components/banner/banner.component";
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  imports: [BannerComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
