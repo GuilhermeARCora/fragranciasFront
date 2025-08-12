@@ -15,7 +15,7 @@ export const routes: Routes = [
   // Public routes
   { path: 'home', component: HomeComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'registration', component: RegisterComponent },
+  { path: 'register', component: RegisterComponent },
   {
     path: 'product/:id',
     loadComponent: () => import('./pages/individual-product/individual-product.component')
@@ -24,6 +24,18 @@ export const routes: Routes = [
   {
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then(c => c.CartComponent)
+  },
+  {
+    path: 'category/aromatizadores',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
+  },
+  {
+    path: 'category/autoCuidado',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
+  },
+  {
+    path: 'category/casaEBemEstar',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
   },
 
   // Protected routes

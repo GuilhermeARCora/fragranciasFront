@@ -16,7 +16,7 @@ All fonts and colors must be placed here for organization purpose. */
     --rob: "Roboto", sans-serif;
     --lat: "Lato", sans-serif;
 
-    --blue: #2B2D80;
+    --blue: linear-gradient(to right,rgba(143, 227, 223, 1),rgba(105, 187, 183, 1));
     --blue-hover: #2e30a4;
     --gray: #333333;
     --black: #000000;
@@ -42,6 +42,6 @@ a {
   text-decoration: none;
 }
 
-.btn{
+.btn a{
   cursor: pointer;
 }
