@@ -1,2 +1,23 @@
 <app-banner></app-banner>
+
+<div class="container my-4">
+
+  <div class="mb-4 text-start" style="font-family: var(--mer); font-size: 19px;font-weight: 700;">
+    <h1>Nossos produtos</h1>
+  </div>
+
+  <div class="d-flex justify-content-center gap-3 ">
+
+      <app-category-card
+        *ngFor="let category of listaDeCategorias"
+        [imgUrl]="category.url"
+        [titleCategory]="category.name"
+        [thick]="category.thick"
+        [tall]="category.tall"
+      ></app-category-card>
+
+  </div>
+
+</div>
+
 <p>home works!</p>

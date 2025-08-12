@@ -25,6 +25,18 @@ export const routes: Routes = [
     path: 'cart',
     loadComponent: () => import('./pages/cart/cart.component').then(c => c.CartComponent)
   },
+  {
+    path: 'category/aromatizadores',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
+  },
+  {
+    path: 'category/autoCuidado',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
+  },
+  {
+    path: 'category/casaEBemEstar',
+    loadComponent: () => import('./pages/category/category.component').then(c => c.CategoryComponent)
+  },
 
   // Protected routes
   ...adminRoutes,
