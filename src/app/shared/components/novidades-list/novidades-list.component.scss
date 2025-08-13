@@ -1,0 +1,11 @@
+.novidades-swiper {
+  --swiper-pagination-bottom: -5px;
+  --swiper-pagination-color: var(--strong-pink);
+  --swiper-pagination-bullet-size: 10px;
+}
+
+:host ::ng-deep swiper-container::part(pagination) {
+  position: relative !important;
+}
+
+
