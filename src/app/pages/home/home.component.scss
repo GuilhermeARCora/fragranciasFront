@@ -1,0 +1,29 @@
+.panel-title{
+  font-family: var(--mer);
+  font-weight: 700;
+  font-style: bold;
+  font-size: 1rem;
+}
+
+::ng-deep mat-expansion-panel {
+  box-shadow: none !important;
+  border: none !important;
+  background-color: transparent !important;
+}
+
+::ng-deep mat-expansion-panel-header {
+  padding: 0 16px;
+  min-height: 48px;
+  background-color: transparent !important;
+}
+
+::ng-deep mat-expansion-panel:not(:last-of-type) {
+  border-bottom: none !important;
+}
+
+::ng-deep mat-expansion-panel-header .mat-expansion-indicator svg {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+
+

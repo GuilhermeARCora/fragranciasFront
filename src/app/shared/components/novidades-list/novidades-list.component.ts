@@ -59,8 +59,8 @@ export class NovidadesListComponent implements OnInit{
     fullPrice:"R$41,00",
     currentPrice:"R$32,90",
     pixPrice:"R$31,00",
-    isInPromo:false,
-    promoPorcentage:0,
+    isInPromo:true,
+    promoPorcentage:5,
   }
 
   product5:ProductView = {
