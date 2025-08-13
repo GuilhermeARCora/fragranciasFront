@@ -4,10 +4,10 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryCardComponent } from "../../shared/components/category-card/category-card.component";
 import { CategoryBanner } from '../../shared/types/banner';
-
+import { NovidadesListComponent } from "../../shared/components/novidades-list/novidades-list.component";
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, BannerComponent, RouterModule, CategoryCardComponent],
+  imports: [CommonModule, BannerComponent, RouterModule, CategoryCardComponent, NovidadesListComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

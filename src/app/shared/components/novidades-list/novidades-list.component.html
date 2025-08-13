@@ -1,0 +1,13 @@
+<swiper-container
+  #swiperEl
+  slides-per-view="1.5"
+  speed="500"
+  navigation="false"
+  pagination="true"
+  autoplay="true"
+  class="novidades-swiper"
+>
+  <swiper-slide *ngFor="let produto of (products$ | async)">
+    <app-product-card [product]="produto" />
+  </swiper-slide>
+</swiper-container>
