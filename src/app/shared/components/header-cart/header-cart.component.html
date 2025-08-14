@@ -1,0 +1,9 @@
+  <button
+      class="btn"
+      aria-label="Open cart"
+      [matBadge]="(cartCount$ | async) || 0"
+      matBadgeColor="accent"
+      (click)="redirectCart()"
+    >
+    <mat-icon fontSet="material-symbols-outlined">shopping_bag</mat-icon>
+  </button>

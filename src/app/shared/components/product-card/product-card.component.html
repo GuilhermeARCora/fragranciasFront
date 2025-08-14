@@ -4,26 +4,38 @@
     <p>PROMOÇÃO</p>
   </div>
 
-  <div class="product-image mb-2">
-    <img [src]="product.imgUrl" alt="Difusor tomada" class="img-fluid" />
-  </div>
+  <div [ngClass]="isCategory() ? 'product-card-category' : ''">
 
-  <p class="product-title">
-    {{product.name}}
-  </p>
-
-  <div class="d-flex flex-column gap-1">
-    <h4 class="old-price">{{product.fullPrice}}</h4>
-
-    <div class="d-flex flex-row gap-1" >
-      <h1 class="main-price">{{product.currentPrice}}</h1>
-      <div class="porcentagemPromo" *ngIf="product.isInPromo">
-        <p>{{product.promoPorcentage}}% OFF</p>
-      </div>
+    <div class="product-image mb-2">
+      <img [src]="product.imgUrl" alt="Difusor tomada"/>
     </div>
 
-    <h4 class="pix-price">{{product.pixPrice}} <span class="via-pix">Via Pix</span></h4>
+    <div class="product-info">
+
+      <p class="product-title">
+        {{product.name}}
+      </p>
+
+      <div class="d-flex flex-column gap-1">
+        <h4 class="old-price">{{product.fullPrice}}</h4>
+
+        <div class="d-flex flex-row gap-1" >
+          <h1 class="main-price">{{product.currentPrice}}</h1>
+          <div class="porcentagemPromo" *ngIf="product.isInPromo">
+            <p>{{product.promoPorcentage}}% OFF</p>
+          </div>
+        </div>
+
+        <div class="pix-price-container">
+          <span class="pix-price">{{product.pixPrice}}</span>
+          <span class="via-pix">Via Pix</span>
+        </div>
+      </div>
+
+      <button class="btn btn-add mt-2 w-100" style="font-family: var(--rob);" (click)="addCart($event)">ADICIONAR</button>
+
+    </div>
+
   </div>
 
-  <button class="btn btn-add mt-2 w-100" style="font-family: var(--rob);" (click)="addCart($event)">ADICIONAR</button>
 </div>

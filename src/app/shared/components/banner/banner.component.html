@@ -1,4 +1,4 @@
-<div class="banner">
+<div class="banner" [ngClass]="isCategory() ? 'bannerSmall' : 'banner'">
   <img [src]="imgUrl | async" alt="Banner">
 </div>
 
