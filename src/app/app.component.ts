@@ -22,28 +22,25 @@ export class AppComponent implements OnInit {
   hideHeader = signal<boolean>(true);
   hideFooter = signal<boolean>(true);
 
-  // Rotas que ocultam apenas o header
-  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/registration'];
+  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/register', '/category'];
 
-  // Rotas que ocultam apenas o footer
   private footerExcludedRoutes = ['/not-found', '/404'];
 
   ngOnInit() {
+    this.verifyWhichRouteIsGettingAccessed();
+  };
 
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const url = event.urlAfterRedirects;
+  verifyWhichRouteIsGettingAccessed():void{
 
-        this.hideHeader.set(this.headerExcludedRoutes
-          .some(route => url === route || url.startsWith(route + '/'))
-        );
+     this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)).subscribe(
+        (event: NavigationEnd) => {
+          const url = event.urlAfterRedirects;
 
-        this.hideFooter.set(this.footerExcludedRoutes
-          .some(route => url === route || url.startsWith(route + '/'))
-        );
+          this.hideHeader.set(this.headerExcludedRoutes.some(route => url.startsWith(route + '/')));
 
-      });
+          this.hideFooter.set(this.footerExcludedRoutes.some(route => url.startsWith(route + '/')));
+        });
   };
 
 };

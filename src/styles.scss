@@ -21,6 +21,7 @@ All fonts and colors must be placed here for organization purpose. */
     --light-green: linear-gradient(to right,rgba(143, 227, 223, 1),rgba(105, 187, 183, 1));
     --black: rgba(20, 20, 20, 1);
     --white: #FFFFFF;
+    --grey: rgb(122, 122, 122);
     --green: rgba(15, 135, 123, 1);
     --pink: #b71c5c;
     --strong-pink:rgba(183, 36, 92, 1);
@@ -40,6 +41,7 @@ body {
 
 a {
   text-decoration: none;
+  color: var(--black);
 }
 
 .btn a{
