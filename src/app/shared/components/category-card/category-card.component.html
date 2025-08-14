@@ -2,7 +2,7 @@
 <div class="d-flex flex-column text-center">
   <div class="retangulo mb-1" [class.retangulo--thick]="thick" [class.retangulo--tall]="tall">
 
-    <a [routerLink]="route">
+    <a [routerLink]="route" [id]=`${route}`>
       <img [src]="imgUrl" alt="Logo da Categoria">
     </a>
 
