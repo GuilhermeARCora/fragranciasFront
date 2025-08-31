@@ -6,9 +6,9 @@ import { CategoryCardComponent } from "../../shared/components/category-card/cat
 import { CategoryBanner } from '../../shared/types/banner';
 import { NovidadesListComponent } from "../../shared/components/novidades-list/novidades-list.component";
 import { MatExpansionModule } from '@angular/material/expansion';
-import { SobreNosComponent } from "../sobre-nos/sobre-nos.component";
-import { PoliticasComponent } from "../politicas/politicas.component";
-import { AtendimentoAoClienteComponent } from "../atendimento-ao-cliente/atendimento-ao-cliente.component";
+import { SobreNosComponent } from "./sobre-nos/sobre-nos.component";
+import { PoliticasComponent } from "./politicas/politicas.component";
+import { AtendimentoAoClienteComponent } from "./atendimento-ao-cliente/atendimento-ao-cliente.component";
 @Component({
   selector: 'app-home',
   imports: [CommonModule, BannerComponent, RouterModule, CategoryCardComponent, NovidadesListComponent, MatExpansionModule, SobreNosComponent, PoliticasComponent, AtendimentoAoClienteComponent],
