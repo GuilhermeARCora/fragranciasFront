@@ -34,5 +34,3 @@ testem.log
 .DS_Store
 Thumbs.db
 
-# API urls
-/src/environments
