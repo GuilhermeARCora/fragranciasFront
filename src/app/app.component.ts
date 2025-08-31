@@ -1,9 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from './shared/components/header/header.component';
 import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { filter } from 'rxjs';
+import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs';
 @Component({
   selector: 'app-root',
   imports: [
@@ -11,39 +11,39 @@ import { filter } from 'rxjs';
     FooterComponent,
     RouterOutlet,
     CommonModule
-  ],
+],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })
-export class AppComponent implements OnInit {
+export class AppComponent{
 
-  router = inject(Router);
+  private router = inject(Router);
 
-  hideHeader = signal<boolean>(true);
-  hideFooter = signal<boolean>(true);
+  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/category'];
+  private footerExcludedRoutes = ['/login', '/not-found', '/404'];
 
-  // Rotas que ocultam apenas o header
-  private headerExcludedRoutes = ['/login', '/not-found', '/404', '/registration'];
+  readonly url$ = this.router.events.pipe(
+    filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+    map(e => e.urlAfterRedirects),
+    startWith(this.router.url),
+    distinctUntilChanged(),
+    shareReplay({ bufferSize: 1, refCount: true })
+  );
 
-  // Rotas que ocultam apenas o footer
-  private footerExcludedRoutes = ['/not-found', '/404'];
+  private matches(url: string, route: string) {
+    return url === route || url.startsWith(route + '/');
+  }
 
-  ngOnInit() {
+  readonly isAdmin$ = this.url$.pipe(
+    map(url => url === '/admin' || url.startsWith('/admin/'))
+  );
 
-    this.router.events
-      .pipe(filter(event => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const url = event.urlAfterRedirects;
+  readonly hideHeader$ = this.url$.pipe(
+    map(url => this.headerExcludedRoutes.some(r => this.matches(url, r)))
+  );
 
-        this.hideHeader.set(this.headerExcludedRoutes
-          .some(route => url === route || url.startsWith(route + '/'))
-        );
-
-        this.hideFooter.set(this.footerExcludedRoutes
-          .some(route => url === route || url.startsWith(route + '/'))
-        );
-
-      });
-  };
+  readonly hideFooter$ = this.url$.pipe(
+    map(url => this.footerExcludedRoutes.some(r => this.matches(url, r)))
+  );
 
 };

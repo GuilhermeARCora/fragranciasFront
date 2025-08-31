@@ -74,4 +74,4 @@ export class NovidadesListComponent implements OnInit{
     promoPorcentage:0,
   }
 
-}
+};

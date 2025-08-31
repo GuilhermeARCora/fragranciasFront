@@ -1,0 +1,39 @@
+<mat-drawer-container class="sidenav-container" autosize>
+
+      <mat-drawer #drawer [mode]="(isSmall$ | async) ? 'over' : 'side'" style="background: var(--light-green);">
+        <app-admin-header/>
+      </mat-drawer>
+
+      <mat-drawer-content>
+
+        <header style="background-color: var(--white);" class="container-fluid shadow-sm p-4">
+
+          <div class="d-flex align-items-center justify-content-between py-3 position-relative">
+            <button class="border-0 bg-transparent ms-3" (click)="drawer.toggle()">
+              <mat-icon>menu</mat-icon>
+            </button>
+
+            <div class="position-absolute top-50 start-50 translate-middle">
+              <a matTooltip="Ir para a página inicial de admin"
+                 matTooltipPosition="below"
+                 routerLink="/admin"
+                 style="display:inline-block"
+              >
+                <img
+                  src="assets/img/logo.webp"
+                  alt="Logo Fragrâncias Decor"
+                  style="display:block"
+                />
+              </a>
+            </div>
+
+          </div>
+        </header>
+
+        <main class="container-fluid py-3">
+          <router-outlet></router-outlet>
+        </main>
+
+      </mat-drawer-content>
+
+</mat-drawer-container>

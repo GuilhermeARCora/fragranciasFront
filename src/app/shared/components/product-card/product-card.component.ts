@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject, input, Input } from '@angular/core';
 import { ProductView } from '../../types/Product';
 import { CommonModule } from '@angular/common';
 import { ShoppingCartService } from '../../../core/services/shoppingCart/shopping-cart.service';
@@ -21,6 +21,8 @@ export class ProductCardComponent {
     isInPromo: false,
     promoPorcentage: 0,
   };
+
+  isCategory = input<boolean>(false);
 
   cartService = inject(ShoppingCartService);
 

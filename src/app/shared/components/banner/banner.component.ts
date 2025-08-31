@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, input, signal } from '@angular/core';
 import { Observable, of } from 'rxjs';
 
 @Component({
@@ -11,5 +11,6 @@ import { Observable, of } from 'rxjs';
 export class BannerComponent {
 
   imgUrl: Observable<string> = of('assets/img/banner.webp');
+  isCategory = input<boolean>(false);
 
 };
