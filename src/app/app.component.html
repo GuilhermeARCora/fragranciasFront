@@ -1,3 +1,9 @@
+<div class="loading-overlay" *ngIf="isLoading$ | async">
+  <div class="spinner-wrap">
+    <div class="css-spinner"></div>
+  </div>
+</div>
+
 <app-header *ngIf="!(hideHeader$ | async) && !(isAdmin$ | async)" />
 <router-outlet/>
 <app-footer *ngIf="!(hideFooter$ | async)" />

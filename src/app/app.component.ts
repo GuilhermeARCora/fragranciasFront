@@ -4,6 +4,7 @@ import { FooterComponent } from './shared/components/footer/footer.component';
 import { NavigationEnd, Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs';
+import { LoadingService } from './core/services/loading/loading.service';
 @Component({
   selector: 'app-root',
   imports: [
@@ -17,10 +18,13 @@ import { distinctUntilChanged, filter, map, shareReplay, startWith } from 'rxjs'
 })
 export class AppComponent{
 
-  private router = inject(Router);
+  loadingService = inject(LoadingService);
+  isLoading$ = this.loadingService.isLoading$;
+
+  router = inject(Router);
 
   private headerExcludedRoutes = ['/login', '/not-found', '/404', '/category'];
-  private footerExcludedRoutes = ['/login', '/not-found', '/404'];
+  private footerExcludedRoutes = ['/login', '/not-found', '/404', '/category'];
 
   readonly url$ = this.router.events.pipe(
     filter((e): e is NavigationEnd => e instanceof NavigationEnd),

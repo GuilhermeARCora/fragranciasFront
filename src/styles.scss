@@ -10,8 +10,6 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 
-/* Variables will be placed here, being able to be used in all css files (as long as they are linked here).
-All fonts and colors must be placed here for organization purpose. */
 :root {
     --pop: "Poppins", sans-serif;
     --mer: "Merriweather", sans-serif;
@@ -29,7 +27,6 @@ All fonts and colors must be placed here for organization purpose. */
 }
 
 * {
-  /* Tira o contorno azul dos cliques no mobile */
   -webkit-tap-highlight-color: transparent;
 }
 
@@ -42,8 +39,75 @@ body {
 a {
   text-decoration: none;
   color: var(--black);
-}
-
-.btn a{
   cursor: pointer;
 }
+
+.btn button{
+  cursor: pointer;
+}
+
+@keyframes spinner-rotate {
+  to { transform: rotate(360deg); }
+}
+
+.css-spinner {
+  width: 64px;
+  height: 64px;
+  border: 6px solid rgba(255,255,255,.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  display: block;
+  animation-name: spinner-rotate !important;
+  animation-duration: 0.8s !important;
+  animation-timing-function: linear !important;
+  animation-iteration-count: infinite !important;
+  will-change: transform;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0,0,0,.35);
+}
+
+.spinner-wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.btn-padrao {
+  background-color: var(--green);
+  color: var(--white);
+  font-weight: 500;
+  border-radius: 24px;
+  padding: 8px 0;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  width: 200px;
+  text-align: center;
+
+  &:hover {
+    background-color: #006a59;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: #3e887b;  // cinza neutro
+    color: #ded3d3;             // texto mais apagado
+    cursor: not-allowed !important;
+    opacity: 0.7;
+    pointer-events: none;       // garante que não clique
+  }
+}
+
+@media (max-width: 600px) {
+  .btn-padrao {
+    width: 60%;
+    font-size: 0.9rem;
+    padding: 10px 0;
+    border-radius: 12px;
+  }
+}
+
