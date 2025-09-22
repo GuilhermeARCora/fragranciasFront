@@ -1,4 +1,3 @@
-import Swal from 'sweetalert2';
 import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -6,15 +5,16 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
-import { Router, RouterLink } from '@angular/router';
-import { hasFormError } from '../../shared/utils/helpers';
-import { AuthService } from '../../core/services/auth/auth.service';
-import { LoginPayload } from '../../shared/types/User';
-import { ToastService } from '../../core/services/swal/toast.service';
+import { Router } from '@angular/router';
+import { hasFormError } from '../../../shared/utils/helpers';
+import { AuthService } from '../../../core/services/auth/auth.service';
+import { ToastService } from '../../../core/services/swal/toast.service';
+import { LoginPayload } from '../../../shared/types/Authentication';
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-login',
   imports: [
-    RouterLink,
     ReactiveFormsModule,
     MatCardModule,
     MatFormFieldModule,
@@ -53,10 +53,8 @@ export class LoginComponent implements OnInit{
 
     this.authService.login(formValue).subscribe({
       next:() => {
-
-        this.router.navigateByUrl('/home').then(()=>{
-          this.toast.success('Login bem sucedido!');
-        });
+        this.router.navigateByUrl('/admin/home');
+        this.toast.success('Login bem sucedido!');
 
       },
       error:() => {

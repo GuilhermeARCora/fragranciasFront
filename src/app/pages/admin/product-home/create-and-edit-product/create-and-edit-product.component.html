@@ -1,0 +1,216 @@
+@let isSmall = breakPointService.isHandset$ | async;
+
+<section class="container-fluid py-3">
+
+  <div>
+
+    <h1 class="mb-3">{{ title() }}</h1>
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+      <div class="col d-flex flex-column flex-md-row gap-md-3">
+        <div class="row w-100">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Nome</mat-label>
+            <input
+              matInput
+              type="text"
+              id="input-name"
+              formControlName="name"
+              placeholder="Digite o nome do produto"
+            >
+          </mat-form-field>
+
+          <mat-error *ngIf="hasFormError(productForm,'name','required')" >
+            O nome é <strong>OBRIGATÓRIO</strong>
+          </mat-error>
+
+        </div>
+
+        <div class="row w-100">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Preço cheio</mat-label>
+            <input
+              matInput
+              type="text"
+              id="input-fullPrice"
+              formControlName="fullPrice"
+              appCurrencyMask
+              placeholder="Digite o preço cheio do produto"
+            >
+          </mat-form-field>
+
+          <mat-error *ngIf="hasFormError(productForm,'fullPrice','required')" >
+            O preço cheio é <strong>OBRIGATÓRIO</strong>
+          </mat-error>
+
+          <mat-error *ngIf="hasFormError(productForm,'fullPrice','min')" >
+            O preço cheio minímo é <strong>1</strong>
+          </mat-error>
+
+          <mat-error *ngIf="productForm.get('fullPrice')?.hasError('notNumber')">
+            O valor deve ser um número válido
+          </mat-error>
+
+        </div>
+      </div>
+
+      <div class="col d-flex flex-column flex-md-row gap-md-3">
+        <div class="row w-100">
+
+        <mat-form-field appearance="outline">
+          <mat-label>Porcentagem da Promoção</mat-label>
+          <input
+            matInput
+            type="text"
+            id="input-promoPercentage"
+            formControlName="promoPercentage"
+            appPercentageSufix
+            placeholder="Digite a porcentagem de promoção do produto"
+          >
+        </mat-form-field>
+
+        </div>
+
+        <div class="row w-100">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Código</mat-label>
+            <input
+              matInput
+              type="number"
+              id="input-cod"
+              formControlName="cod"
+              (keydown)="preventNegative($event)"
+              min="1"
+              step="1"
+              placeholder="Digite o código do produto"
+            >
+          </mat-form-field>
+
+          <mat-error *ngIf="hasFormError(productForm,'cod','min')">
+            O código deve ser maior ou igual a 1
+          </mat-error>
+
+        </div>
+      </div>
+
+      <div class="col">
+        <div class="row" [class.w-100]="isSmall">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Descrição</mat-label>
+            <textarea
+              matInput
+              id="input-description"
+              formControlName="description"
+              rows="3"
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="3"
+              cdkAutosizeMaxRows="8"
+              placeholder="Digite a descrição do produto"
+            >
+            </textarea>
+          </mat-form-field>
+
+          <mat-error *ngIf="hasFormError(productForm,'description','required')">
+            A descrição é <strong>OBRIGATÓRIA</strong>
+          </mat-error>
+
+          <mat-error *ngIf="hasFormError(productForm,'description','minlength')">
+            A descrição deve ter pelo menos 10 caracteres
+          </mat-error>
+
+          <mat-error *ngIf="hasFormError(productForm,'description','maxlength')">
+            A descrição pode ter no máximo 500 caracteres
+          </mat-error>
+
+          <mat-error *ngIf="hasFormError(productForm,'description','pattern')">
+            Caracteres inválidos foram usados
+          </mat-error>
+
+        </div>
+      </div>
+
+      <div class="col d-flex flex-column flex-md-row gap-3 my-3" [class.align-items-center]="!isSmall">
+
+        <div class="row w-100">
+            <app-input-file
+              (fileSelected)="onFileSelected($event)"
+              [file]="productForm.get('image')?.value"
+              >
+            </app-input-file>
+        </div>
+
+        <div class="row w-100">
+
+            <div class="d-flex flex-column" [class.align-items-center]="!isSmall">
+
+              <mat-label>Escolha uma ou mais categorias!</mat-label>
+
+              <div>
+
+                @for (cat of allCategories; track cat) {
+                  <mat-checkbox
+                    [value]="cat"
+                    [checked]="productForm.get('categories')?.value?.includes(cat)"
+                    (change)="onCheckboxChange($event)">
+                    <strong>{{ cat | displayCategory }}</strong>
+                  </mat-checkbox>
+                }
+
+              </div>
+
+              <div class="custom-mat-error" *ngIf="productForm.get('categories')?.hasError('required') && productForm.get('categories')?.touched">
+                Deve escolher pelo menos 1 categoria!
+              </div>
+
+            </div>
+
+         </div>
+
+      </div>
+
+      <div class=" d-flex flex-column flex-md-row gap-3 pt-3" [class.justify-content-between]="!isSmall">
+
+        <button
+          class="btn btn-warning px-5 py-3 rounded-5"
+          style="font-family: var(--rob); min-width: 200px;"
+          type="button"
+          (click)="goBack()"
+        >
+          Voltar
+        </button>
+
+        <div class="d-flex flex-column flex-md-row gap-3">
+
+          <button
+            class="btn btn-info px-5 py-3 rounded-5"
+            style="font-family: var(--rob); min-width: 200px;"
+            type="button"
+            (click)="resetForm()"
+          >
+            Limpar
+          </button>
+
+          <button
+            class="btn btn-success px-5 py-3 rounded-5"
+            style="font-family: var(--rob); min-width: 200px;"
+            type="submit"
+            [disabled]="productForm.invalid"
+          >
+            Salvar
+          </button>
+
+        </div>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</section>

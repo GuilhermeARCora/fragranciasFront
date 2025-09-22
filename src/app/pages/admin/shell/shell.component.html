@@ -1,6 +1,6 @@
 <mat-drawer-container class="sidenav-container" autosize>
 
-      <mat-drawer #drawer [mode]="(isSmall$ | async) ? 'over' : 'side'" style="background: var(--light-green);">
+      <mat-drawer #drawer [mode]="(breakpoint.isHandset$ | async) ? 'over' : 'side'" style="background: var(--light-green);">
         <app-admin-header/>
       </mat-drawer>
 
@@ -16,7 +16,7 @@
             <div class="position-absolute top-50 start-50 translate-middle">
               <a matTooltip="Ir para a página inicial de admin"
                  matTooltipPosition="below"
-                 routerLink="/admin"
+                 routerLink="/admin/home"
                  style="display:inline-block"
               >
                 <img
@@ -31,7 +31,7 @@
         </header>
 
         <main class="container-fluid py-3">
-          <router-outlet></router-outlet>
+          <app-layout></app-layout>
         </main>
 
       </mat-drawer-content>
