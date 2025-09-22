@@ -7,6 +7,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminHeaderComponent } from "../admin-header/admin-header.component";
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { map } from 'rxjs';
+import { LayoutComponent } from "./layout/layout.component";
+import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 
 @Component({
   selector: 'app-shell',
@@ -17,17 +19,14 @@ import { map } from 'rxjs';
     MatTooltipModule,
     RouterLink,
     RouterModule,
-    AdminHeaderComponent
-  ],
+    AdminHeaderComponent,
+    LayoutComponent
+],
   templateUrl: './shell.component.html',
   styleUrl: './shell.component.scss'
 })
 export class ShellComponent {
 
-  breakpoint = inject(BreakpointObserver);
-
-  isSmall$ = this.breakpoint.observe([Breakpoints.Handset, Breakpoints.Tablet]).pipe(
-    map(r => r.matches)
-  );
+  breakpoint = inject(BreakPointService);
 
 };

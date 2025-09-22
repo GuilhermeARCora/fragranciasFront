@@ -14,7 +14,7 @@
         (click)="redirectCreateProduct()"
       >
         <mat-icon fontSet="material-symbols-outlined">add_circle</mat-icon>
-        <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="(isSmall$ | async)">Adicionar Produto</span>
+        <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="(breakpoint.isHandset$ | async)">Adicionar Produto</span>
       </button>
 
     </div>

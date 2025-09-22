@@ -1,21 +1,21 @@
-<div class="container-fluid ">
+<div class="container-fluid h-100 d-flex justify-content-center align-items-center" style=" background: var(--light-green); font-family: var(--lat);">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="d-flex">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
 
-    <mat-card class="d-flex align-items-center m-auto h-auto p-5 shadow-lg" style="max-width: 600px; width: 100%;" >
+    <mat-card class="d-flex align-items-center p-5 shadow-lg" style="max-width: 600px; width: 100%;">
 
-      <mat-card-header class="mb-4" >
+      <mat-card-header class="mb-4 px-5">
           <div class="d-flex flex-column gap-2 text-center w-100">
-            <mat-card-title class="fw-bold fs-2">Faça seu login</mat-card-title>
-            <mat-card-subtitle class="fw-semibold fs-5">Bem vindo de volta!</mat-card-subtitle>
+            <mat-card-title class="fw-bold fs-2" style="font-family: var(--lat);" >Faça seu login</mat-card-title>
+            <mat-card-subtitle class="fw-semibold fs-5" style="font-family: var(--lat);" >Bem vindo de volta!</mat-card-subtitle>
           </div>
       </mat-card-header>
 
-      <mat-card-content class="w-100" >
+      <mat-card-content class="w-100 px-5" >
 
           <div class ="w-100 d-flex flex-column gap-3">
 
-            <div class="w-100">
+            <div class="w-100 ">
               <mat-form-field floatLabel="always" appearance="outline" class="w-100">
 
                 <input
@@ -24,7 +24,7 @@
                   formControlName="email"
                   matInput
                   placeholder="Insira seu E-mail"
-
+                  style="font-family: var(--lat);"
                 >
                   <mat-label>E-mail</mat-label>
                   <mat-hint>exemplo&#64;exemplo.com</mat-hint>
@@ -49,7 +49,7 @@
                   formControlName="password"
                   matInput
                   placeholder="Insira sua Senha"
-
+                  style="font-family: var(--lat);"
                 >
                   <button
                     matSuffix
@@ -57,6 +57,7 @@
                     [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide()"
                     style="margin-right: 0.4em;"
+                    class="bg-transparent border-0 pe-2"
                   >
                     <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
@@ -88,13 +89,6 @@
                 <strong>LOGIN</strong>
             </button>
       </mat-card-actions>
-
-      <mat-card-footer>
-            <p>
-              Não possui uma Conta? Faça seu<a routerLink="/register" class="text-decoration-none text-reset fw-medium"
-              > CADASTRO</a>
-            </p>
-      </mat-card-footer>
 
     </mat-card>
 

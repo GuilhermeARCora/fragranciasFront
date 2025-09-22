@@ -1,18 +1,22 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class LoadingService {
-  private activeRequests = signal(0);
 
-  readonly isLoading = signal(false);
+  private count = 0;
+  private readonly loading = new BehaviorSubject<boolean>(false);
+  public readonly isLoading$ = this.loading.asObservable().pipe(
+    distinctUntilChanged(),
+    debounceTime(100)
+  );
 
-  show() {
-    this.activeRequests.update(n => n + 1);
-    this.isLoading.set(true);
-  }
+  show(): void {
+    if (++this.count === 1) this.loading.next(true);
+  };
 
-  hide() {
-    this.activeRequests.update(n => Math.max(n - 1, 0));
-    if (this.activeRequests() === 0) this.isLoading.set(false);
-  }
-}
+  hide(): void {
+    if (this.count > 0 && --this.count === 0) this.loading.next(false);
+  };
+
+};
