@@ -1,9 +1,8 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
-import { map, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Product, ProductAllRes, ProductForm, ProductResponse } from '../../../shared/types/Product';
-
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +11,9 @@ export class ProductsService {
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
   path = 'products';
+
+  private productsSubject = new BehaviorSubject<Product[]>([]);
+  public readonly products$ = this.productsSubject.asObservable();
 
   createProduct(product :ProductForm):Observable<ProductResponse>{
 
@@ -63,8 +65,17 @@ export class ProductsService {
     return this.http.delete<void>(`${this.apiUrl}${this.path}/${id}`)
   };
 
-  changeStatusProduct(status:boolean, id:string):Observable<ProductResponse>{
-    return this.http.patch<ProductResponse>(`${this.apiUrl}${this.path}/changeStatus/${id}`, status)
+  changeStatusProduct(status:boolean, id:string):Observable<Product>{
+    return this.http.patch<ProductResponse>(`${this.apiUrl}${this.path}/changeStatus/${id}`, {active : status}).pipe(
+      map(v => v.product),
+      tap(updatedProduct => {
+        const current = this.productsSubject.value ?? [];
+        const novaLista = current.map(prod =>
+          prod._id === updatedProduct._id ? updatedProduct : prod
+        );
+        this.productsSubject.next(novaLista);
+      })
+    )
   };
 
   getOneProduct(id: string | null):Observable<Product>{
@@ -73,8 +84,11 @@ export class ProductsService {
     )
   };
 
-  getAllProducts():Observable<ProductAllRes>{
-    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/`)
+  getAllProducts():Observable<Product[]>{
+    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/`).pipe(
+      map((res: ProductAllRes): Product[] => res.products),
+      tap(p => this.productsSubject.next(p))
+    )
   };
 
 };
