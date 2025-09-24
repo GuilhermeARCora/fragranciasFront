@@ -1,6 +1,17 @@
-<section class="container-fluid p-3">
+<section class="container-fluid p-3 d-flex flex-column justify-content-between gap-5">
 
-  <div class="d-flex justify-content-between">
+  <div class="d-flex justify-content-between mt-2">
+
+    <div class="d-flex">
+      <button
+        class="btn d-flex align-items-center gap-2 px-4 py-2 shadow-sm rounded-pill"
+        style="background: var(--green); color: white;"
+        routerLink="/admin/home"
+      >
+        <mat-icon fontSet="material-symbols-outlined">home</mat-icon>
+        <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="(breakpoint.isHandset$ | async)">Voltar para Home</span>
+      </button>
+    </div>
 
     <div>
       <h1 style="font-family: var(--mer); font-size: 3rem;font-weight: 700;">Produtos</h1>
@@ -26,7 +37,13 @@
   </div>
 
   <div>
-    aqui vai uma tabela
+    <app-data-table
+        [data$]="productService.products$"
+        [displayedColumns]="columns"
+        (edit)="redirectEditProduct($event)"
+        (status)="changeStatus($event)"
+      >
+    </app-data-table>
   </div>
 
 

@@ -10,9 +10,9 @@ import { InputFileComponent } from "../../../../shared/components/input-file/inp
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { ProductForm } from '../../../../shared/types/Product';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CurrencyMaskDirective } from '../../../../shared/directives/currency/currency-mask.directive';
+import { CurrencyMask } from '../../../../shared/controlValueAcessor/currency/currency-mask.cva';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { PercentageSufixDirective } from '../../../../shared/directives/percentage-sufix/percentage-sufix.directive';
+import { PercentageSuffix } from '../../../../shared/controlValueAcessor/percentage-sufix/percentage-sufix.cva';
 import { DisplayCategoryPipe } from "../../../../shared/pipes/display-category/display-category.pipe";
 import { numberValidator } from '../../../../shared/validators/isNumber.validator';
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
@@ -26,8 +26,8 @@ import { BreakPointService } from '../../../../core/services/breakPoint/break-po
     MatFormFieldModule,
     MatCheckboxModule,
     InputFileComponent,
-    CurrencyMaskDirective,
-    PercentageSufixDirective,
+    CurrencyMask,
+    PercentageSuffix,
     TextFieldModule,
     DisplayCategoryPipe
 ],
