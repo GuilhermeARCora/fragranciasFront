@@ -1,0 +1,114 @@
+<div class="filter-container">
+  <mat-form-field class="filter-field" appearance="outline">
+    <mat-label>Filtrar</mat-label>
+    <input
+      matInput
+      (ngModelChange)="applyFilter()"
+      [(ngModel)]="filterValue"
+      placeholder="Buscar..."
+      id="input-filter"
+    />
+
+    <button
+      *ngIf="filterValue"
+      mat-icon-button
+      matSuffix
+      aria-label="Clear"
+      (click)="clearFilter()"
+      class="border-0 bg-transparent pe-3"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div class="table-wrapper shadow-lg">
+
+  <div class="table-container">
+    <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+      <!-- Colunas dinâmicas -->
+      @for (column of columnsToDisplay; track column.key; let i = $index) {
+        <ng-container [matColumnDef]="column.key">
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            mat-sort-header
+            sticky
+            [id]="'header-' + column.key"
+            [class]="'header-col-' + column.key"
+          >
+            {{ column.label }}
+          </th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [id]="'cell-' + column.key + '-' + element._id"
+            [class]="'cell-col-' + column.key"
+          >
+            {{ formatValue(column, element[column.key]) }}
+          </td>
+        </ng-container>
+      }
+
+      <!-- Coluna de ações -->
+      <ng-container matColumnDef="actions">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          sticky
+          id="header-actions"
+          class="header-col-actions"
+        >
+          Ações
+        </th>
+        <td
+          mat-cell
+          *matCellDef="let element"
+          [id]="'cell-actions-' + element._id"
+          class="cell-col-actions px-2"
+        >
+          <button
+            mat-icon-button
+            color="primary"
+            (click)="onEdit(element)"
+            [id]="'edit-' + element._id"
+            class="btn border-0 bg-transparent p-0"
+          >
+            <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
+          </button>
+          <button
+            mat-icon-button
+            color="warn"
+            (click)="onChangeStatus(element)"
+            [id]="'delete-' + element._id"
+            class="btn border-0 bg-transparent p-0"
+          >
+          @if(element.active === true){
+            <mat-icon fontSet="material-symbols-outlined">check_circle</mat-icon>
+          } @else{
+            <mat-icon fontSet="material-symbols-outlined">cancel</mat-icon>
+          }
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Headers e Rows -->
+      <tr
+        mat-header-row
+        *matHeaderRowDef="columnKeys.concat(['actions']); sticky: true"
+        id="header-row"
+      ></tr>
+
+      <tr
+        mat-row
+        *matRowDef="let row; columns: columnKeys.concat(['actions'])"
+        [id]="'row-' + row._id"
+        [class]="'data-row-' + row._id"
+      ></tr>
+
+    </table>
+  </div>
+
+  <mat-paginator [pageSizeOptions]="[10, 15, 20]" showFirstLastButtons></mat-paginator>
+</div>

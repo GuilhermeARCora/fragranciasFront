@@ -41,5 +41,5 @@ export interface ProductResponse{
 
 export interface ProductAllRes{
   message:string;
-  product: Product[];
+  products: Product[];
 };

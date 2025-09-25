@@ -1,0 +1,107 @@
+@use '@angular/material' as mat;
+
+:host {
+  /* Estilos da tabela via design tokens */
+  @include mat.table-overrides((
+    background-color: #fff,
+    header-headline-color: #fff,
+    row-item-label-text-color: #333,
+    row-item-outline-color: #e0e0e0,
+    row-item-outline-width: 1px,
+    header-container-height: 50px,
+    row-item-container-height: 46px
+  ));
+
+  /* Estilos do paginator via design tokens */
+  @include mat.paginator-overrides((
+    container-background-color: var(--green),
+    container-text-color: #fff,
+    enabled-icon-color: #fff,
+    disabled-icon-color: rgba(255, 255, 255, 0.4)
+  ));
+
+  /* Select dentro do paginator */
+  @include mat.select-overrides((
+    panel-background-color: var(--green),
+    enabled-trigger-text-color: #fff,
+    enabled-arrow-color: #fff,
+    disabled-arrow-color: rgba(255, 255, 255, 0.4),
+    focused-arrow-color: #fff,
+    invalid-arrow-color: #fff
+  ));
+
+  .mat-mdc-paginator {
+    @include mat.form-field-overrides((
+      outline-color: #fff,
+      outline-width: 1px
+    ));
+  }
+
+  /* Wrapper que engloba tabela + paginator */
+  .table-wrapper {
+    border: 6px solid var(--green);
+    overflow: hidden;
+
+    .table-container {
+      max-height: 500px;
+      overflow: auto;
+      margin-top: 0;
+
+      .mat-mdc-table {
+        border: none;
+        width: 100%;
+      }
+
+      /* Cabeçalho verde */
+      .mat-mdc-header-row,
+      .mat-mdc-header-cell {
+        background-color: var(--green) !important;
+        color: #fff !important;
+        font-weight: 600;
+      }
+
+      /* Zebra rows */
+      .mat-mdc-row:nth-child(even) {
+        background-color: #fafafa;
+      }
+      .mat-mdc-row:nth-child(odd) {
+        background-color: #fff;
+      }
+
+      /* Hover suave */
+      .mat-mdc-row:hover {
+        background-color: #eaf5ea;
+        transition: background-color 0.2s ease;
+      }
+    }
+  }
+
+  /* Container do filtro */
+  .filter-container {
+    display: flex;
+    justify-content: flex-end;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Campo de filtro */
+  .filter-field {
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 300px;
+    display: inline-block;
+
+    ::ng-deep .mat-mdc-form-field-subscript-wrapper {
+      margin: 0 !important;
+      height: 0 !important;
+    }
+  }
+}
+
+.btn {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+}
