@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
 import { Product, ProductAllRes, ProductForm, ProductResponse } from '../../../shared/types/Product';
 @Injectable({
@@ -67,14 +67,7 @@ export class ProductsService {
 
   changeStatusProduct(status:boolean, id:string):Observable<Product>{
     return this.http.patch<ProductResponse>(`${this.apiUrl}${this.path}/changeStatus/${id}`, {active : status}).pipe(
-      map(v => v.product),
-      tap(updatedProduct => {
-        const current = this.productsSubject.value ?? [];
-        const novaLista = current.map(prod =>
-          prod._id === updatedProduct._id ? updatedProduct : prod
-        );
-        this.productsSubject.next(novaLista);
-      })
+      map(v => v.product)
     )
   };
 
@@ -84,8 +77,10 @@ export class ProductsService {
     )
   };
 
-  getAllProducts():Observable<Product[]>{
-    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/`).pipe(
+  getAllProducts(filters: any):Observable<Product[]>{
+    const params = new HttpParams({fromObject:filters});
+
+    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/`, { params }).pipe(
       map((res: ProductAllRes): Product[] => res.products),
       tap(p => this.productsSubject.next(p))
     )
