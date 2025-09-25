@@ -66,14 +66,14 @@
           mat-cell
           *matCellDef="let element"
           [id]="'cell-actions-' + element._id"
-          class="cell-col-actions"
+          class="cell-col-actions px-2"
         >
           <button
             mat-icon-button
             color="primary"
             (click)="onEdit(element)"
             [id]="'edit-' + element._id"
-            class="border-0 bg-transparent"
+            class="btn border-0 bg-transparent p-0"
           >
             <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
           </button>
@@ -82,7 +82,7 @@
             color="warn"
             (click)="onChangeStatus(element)"
             [id]="'delete-' + element._id"
-            class="border-0 bg-transparent"
+            class="btn border-0 bg-transparent p-0"
           >
           @if(element.active === true){
             <mat-icon fontSet="material-symbols-outlined">check_circle</mat-icon>

@@ -31,16 +31,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Imagens nunca maiores que o container */
-img,
-picture,
-video,
-canvas,
-svg {
-  display: block;
-  max-width: 100%;
-}
-
 /* Remove estilos padrão de inputs/buttons */
 input,
 button,
