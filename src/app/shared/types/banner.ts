@@ -3,4 +3,4 @@ export interface CategoryBanner {
   thick: boolean,
   tall:boolean,
   name:string
-}
+};

@@ -1,8 +1,12 @@
 <swiper-container
   #swiperEl
-  slides-per-view="1.5"
+  [breakpoints]="{
+    '0': { 'slidesPerView': 1.5 },
+    '768': { 'slidesPerView': 3.1 },
+    '1200': { 'slidesPerView': 5 }
+  }"
   navigation="false"
-  pagination="true"
+  pagination='{"clickable": true}'
   class="novidades-swiper"
 >
   <swiper-slide *ngFor="let produto of (products$ | async)">
