@@ -1,0 +1,15 @@
+.about h2 {
+  font-weight: 600;
+}
+
+.about p.lead {
+  color: #555;
+}
+
+.card{
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+}

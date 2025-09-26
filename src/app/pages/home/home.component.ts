@@ -9,12 +9,24 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SobreNosComponent } from "./sobre-nos/sobre-nos.component";
 import { PoliticasComponent } from "./politicas/politicas.component";
 import { AtendimentoAoClienteComponent } from "./atendimento-ao-cliente/atendimento-ao-cliente.component";
+import { LayoutComponent } from '../../shared/components/layout/layout.component';
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, BannerComponent, RouterModule, CategoryCardComponent, NovidadesListComponent, MatExpansionModule, SobreNosComponent, PoliticasComponent, AtendimentoAoClienteComponent],
+  imports: [
+    CommonModule,
+    BannerComponent,
+    RouterModule,
+    CategoryCardComponent,
+    NovidadesListComponent,
+    MatExpansionModule,
+    SobreNosComponent,
+    PoliticasComponent,
+    AtendimentoAoClienteComponent,
+    LayoutComponent
+],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
 
@@ -22,31 +34,31 @@ export class HomeComponent implements OnInit {
   readonly panelOpenState = signal(false);
 
   ngOnInit(): void {
-    this.preencherListaDeUrls();
+    this.preencherListaDeCategorias();
   };
 
-  preencherListaDeUrls(){
+  preencherListaDeCategorias(): void{
 
     this.listaDeCategorias.push({
       url:'assets/img/aromatizadores.webp',
       tall:false,
       thick: false,
       name: "Aromatizadores"
-    })
+    });
 
     this.listaDeCategorias.push({
       url:'assets/img/autoCuidado.webp',
       tall:false,
       thick: true,
       name: "Autocuidado"
-    })
+    });
 
     this.listaDeCategorias.push({
       url:'assets/img/casaEBemEstar.webp',
       tall:true,
       thick: false,
       name: "Casa e Bem estar"
-    })
+    });
   };
 
-}
+};

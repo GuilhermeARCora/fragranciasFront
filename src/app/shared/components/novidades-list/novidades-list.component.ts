@@ -6,7 +6,10 @@ import { ProductView } from '../../types/Product';
 
 @Component({
   selector: 'app-novidades-list',
-  imports: [CommonModule,ProductCardComponent],
+  imports: [
+    CommonModule,
+    ProductCardComponent
+  ],
   templateUrl: './novidades-list.component.html',
   styleUrl: './novidades-list.component.scss',
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
@@ -16,7 +19,7 @@ export class NovidadesListComponent implements OnInit{
   products$!: Observable<ProductView[]>;
 
   ngOnInit(): void {
-    this.products$ = of([this.product1, this.product2, this.product3, this.product4, this.product5]);
+    this.products$ = of([this.product1, this.product2, this.product3, this.product4, this.product5, this.product1]);
   };
 
   product1:ProductView = {

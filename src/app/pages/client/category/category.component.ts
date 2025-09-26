@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { BannerComponent } from '../../../shared/components/banner/banner.component';
 import { HeaderCartComponent } from '../../../shared/components/header-cart/header-cart.component';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import { ProductView } from '../../../shared/types/Product';
@@ -17,7 +16,6 @@ import { ProductView } from '../../../shared/types/Product';
     MatTooltipModule,
     MatIconModule,
     RouterModule,
-    BannerComponent,
     ProductCardComponent
   ],
   templateUrl: './category.component.html',

@@ -4,13 +4,17 @@
 }
 
 .retangulo{
-  width: clamp(6rem, 28vw, 12rem); /* fluid */
-  aspect-ratio: 110 / 172;         /* fixes shape */
+  width: clamp(6rem, 28vw, 12rem);
+  aspect-ratio: 110 / 172;
   height: auto;
   background: var(--light-green);
   border-radius: 24px;
   overflow: hidden;
   position: relative;
+
+  @media (min-width: 1201px) {
+    width: clamp(6rem, 28vw, 15rem);
+  }
 }
 
 .retangulo img{
@@ -42,3 +46,4 @@
   font-size:0.8rem;
   font-weight: 400s;
 }
+
