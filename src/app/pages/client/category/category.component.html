@@ -1,4 +1,4 @@
-<header style="background-color: var(--white);">
+<header style="background-color: var(--white);" class="sticky-top">
 
   <div class="d-flex align-items-center justify-content-between px-4 py-3">
 
@@ -24,28 +24,34 @@
 
 <body>
 
-  <!-- <div>
-    <app-banner [isCategory]=true></app-banner>
-  </div> -->
-
-  <div class="d-flex flex-column p-4">
+  <app-layout>
 
     <div>
-      <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
-        28 produtos
-      </h1>
+      <app-banner [name]="'home'"></app-banner>
     </div>
 
-    <div *ngFor="let produto of (products$ | async)">
-      <app-product-card [product]="produto" [isCategory]=true></app-product-card>
-      <hr>
+    <div class="d-flex flex-column p-4">
+
+      <div>
+        <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
+          28 produtos
+        </h1>
+      </div>
+
+      <div *ngFor="let produto of (products$ | async)">
+        <app-product-card [product]="produto" [isCategory]=true></app-product-card>
+        <hr>
+      </div>
+
+      <div class="d-flex align-items-center justify-content-center flex-column gap-2 py-3">
+        <h3 class="contagem">5 de 28 produtos</h3>
+        <button class="btn btn-outline-info">MOSTRAR MAIS PRODUTOS</button>
+      </div>
+
     </div>
 
-    <div class="d-flex align-items-center justify-content-center flex-column gap-2 py-3">
-      <h3 class="contagem">5 de 28 produtos</h3>
-      <button class="btn btn-outline-info">MOSTRAR MAIS PRODUTOS</button>
-    </div>
+  </app-layout>
 
-  </div>
+
 
 </body>

@@ -1,0 +1,38 @@
+.scroll-top-btn {
+  position: fixed;
+  bottom: 80px;
+  right: 10px;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: var(--green);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.2s, opacity 0.3s ease-in-out;
+  z-index: 1000;
+
+  i {
+    font-size: 1.2rem;
+  }
+
+  &:hover {
+    background-color: #00664d;
+    transform: translateY(-2px);
+  }
+}
+
+@media (max-width: 768px) {
+  .scroll-top-btn {
+    right: 0;
+    bottom: 60px;
+    width: 50px;
+    height: 50px;
+    border-radius: 0.3rem;
+    opacity: 0.9;
+  }
+}
