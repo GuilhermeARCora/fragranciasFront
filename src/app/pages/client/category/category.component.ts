@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderCartComponent } from '../../../shared/components/header-cart/header-cart.component';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import { ProductView } from '../../../shared/types/Product';
+import { BannerComponent } from "../../../shared/components/banner/banner.component";
+import { LayoutComponent } from '../../../shared/components/layout/layout.component';
 
 @Component({
   selector: 'app-category',
@@ -16,8 +18,10 @@ import { ProductView } from '../../../shared/types/Product';
     MatTooltipModule,
     MatIconModule,
     RouterModule,
-    ProductCardComponent
-  ],
+    ProductCardComponent,
+    BannerComponent,
+    LayoutComponent
+],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
 })

@@ -8,7 +8,7 @@ import { CommonModule, Location } from '@angular/common';
 import { ProductsService } from '../../../../core/services/products/products.service';
 import { InputFileComponent } from "../../../../shared/components/input-file/input-file.component";
 import { ToastService } from '../../../../core/services/swal/toast.service';
-import { ProductForm } from '../../../../shared/types/Product';
+import { Product, ProductForm } from '../../../../shared/types/Product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyMask } from '../../../../shared/controlValueAcessor/currency/currency-mask.cva';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -63,11 +63,18 @@ export class CreateAndEditProductComponent implements OnInit{
     if(this.id()){
       this.isEdit.set(true);
       this.title.set("Edite um Produto!");
+      const productState = history.state['product'] as Product | undefined;
 
-      this.productService.getOneProduct(this.id()).subscribe((res) => {
-        this.productForm.patchValue(res);
+      if(productState){
+        this.productForm.patchValue(productState);
         this.productForm.updateValueAndValidity();
-      })
+      }else{
+        this.productService.getOneProduct(this.id()).subscribe((res) => {
+          this.productForm.patchValue(res);
+          this.productForm.updateValueAndValidity();
+        });
+      };
+
     };
 
   };

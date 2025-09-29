@@ -128,7 +128,7 @@ export class ProductHomeComponent implements OnInit{
 
     this.productService.getAllProducts(filters).subscribe({
       next: () => {
-        this.toaster.success("Busca feita!");
+        this.toaster.success("Produtos listados!");
       },
       error: (err) => {
         this.toaster.error(err.error.message);

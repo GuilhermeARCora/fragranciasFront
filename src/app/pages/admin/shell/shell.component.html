@@ -1,6 +1,6 @@
 <mat-drawer-container class="sidenav-container" autosize>
 
-      <mat-drawer #drawer [mode]="(breakpoint.isHandset$ | async) ? 'over' : 'side'" style="background: var(--light-green);">
+      <mat-drawer #drawer [mode]="(breakpoint.isHandset$ | async) ? 'over' : 'side'" style="background: var(--green);">
         <app-admin-header/>
       </mat-drawer>
 
@@ -9,7 +9,7 @@
         <header style="background-color: var(--white);" class="container-fluid shadow-sm p-4">
 
           <div class="d-flex align-items-center justify-content-between py-3 position-relative">
-            <button class="border-0 bg-transparent ms-3" (click)="drawer.toggle()">
+            <button class="border-0 bg-transparent ms-md-3" (click)="drawer.toggle()">
               <mat-icon>menu</mat-icon>
             </button>
 

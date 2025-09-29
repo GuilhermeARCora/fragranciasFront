@@ -10,6 +10,7 @@ import { SobreNosComponent } from "./sobre-nos/sobre-nos.component";
 import { PoliticasComponent } from "./politicas/politicas.component";
 import { AtendimentoAoClienteComponent } from "./atendimento-ao-cliente/atendimento-ao-cliente.component";
 import { LayoutComponent } from '../../shared/components/layout/layout.component';
+import { AutoScrollOnOpenDirective } from '../../shared/directives/autoScrollOnOpen/auto-scroll-on-open.directive';
 @Component({
   selector: 'app-home',
   imports: [
@@ -22,7 +23,8 @@ import { LayoutComponent } from '../../shared/components/layout/layout.component
     SobreNosComponent,
     PoliticasComponent,
     AtendimentoAoClienteComponent,
-    LayoutComponent
+    LayoutComponent,
+    AutoScrollOnOpenDirective
 ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
