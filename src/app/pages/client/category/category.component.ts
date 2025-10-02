@@ -1,26 +1,27 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatIconModule } from '@angular/material/icon';
-import { Router, RouterModule } from '@angular/router';
-import { Observable, of } from 'rxjs';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { HeaderCartComponent } from '../../../shared/components/header-cart/header-cart.component';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
-import { ProductView } from '../../../shared/types/Product';
 import { BannerComponent } from "../../../shared/components/banner/banner.component";
 import { LayoutComponent } from '../../../shared/components/layout/layout.component';
+import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
+import { CategoryHeaderComponent } from "./category-header/category-header.component";
+import { Product } from '../../../shared/types/Product';
+import { ProductsService } from '../../../core/services/products/products.service';
+import { ToastService } from '../../../core/services/swal/toast.service';
 
 @Component({
   selector: 'app-category',
   imports: [
     CommonModule,
-    HeaderCartComponent,
     MatTooltipModule,
     MatIconModule,
-    RouterModule,
     ProductCardComponent,
     BannerComponent,
-    LayoutComponent
+    LayoutComponent,
+    CategoryHeaderComponent
 ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
@@ -28,23 +29,30 @@ import { LayoutComponent } from '../../../shared/components/layout/layout.compon
 export class CategoryComponent implements OnInit{
 
   router = inject(Router);
+  productService = inject(ProductsService);
+  toaster = inject(ToastService);
+  breakPointService = inject(BreakPointService);
+
   title = signal<string>('Categoria');
+  page = 1;
+
+  products = signal<Product[]>([]);
+  amount = signal<number>(0);
+
   categories:string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
-  products$!: Observable<ProductView[]>;
+  categoryFromURl!:string;
 
   ngOnInit(): void {
+    this.getCategoryFromUrl();
+    this.setProducts();
     this.setTitle();
-    this.products$ = of([this.product1, this.product2, this.product3, this.product4, this.product5]);
   };
 
   setTitle():void{
-    const currentUrl = this.router.url;
-    const lastSlash = currentUrl.lastIndexOf('/');
-    const category = currentUrl.slice(lastSlash+1);
 
-    if(category === 'aromatizadores'){
+    if(this.categoryFromURl === 'aromatizadores'){
       this.title.set('Aromatizadores')
-    }else if(category === 'autoCuidado'){
+    }else if(this.categoryFromURl === 'autoCuidado'){
       this.title.set('Autocuidado')
     }else{
       this.title.set('Casa e Bem estar')
@@ -52,59 +60,28 @@ export class CategoryComponent implements OnInit{
 
   };
 
-    product1:ProductView = {
-      _id:'1',
-      imgUrl: 'assets/img/difusorTomada.webp',
-      name:"Difusor Aromatizador Elétrico Bivolt Standard - Via AromaAAAAAAAAA",
-      fullPrice:"R$41,00",
-      currentPrice:"R$32,90",
-      pixPrice:"R$31,00",
-      isInPromo:false,
-      promoPorcentage:0,
-    }
+  getCategoryFromUrl():void{
+    const currentUrl = this.router.url;
+    const lastSlash = currentUrl.lastIndexOf('/');
+    this.categoryFromURl = currentUrl.slice(lastSlash+1);
+  };
 
-    product2:ProductView = {
-      _id:'2',
-      imgUrl: 'assets/img/aguaPerfumada.webp',
-      name:"Água Perfumada Lavanda Aromatherapy Via Aroma - 250ml",
-      fullPrice:"R$41,00",
-      currentPrice:"R$30,00",
-      pixPrice:"R$28,00",
-      isInPromo:true,
-      promoPorcentage:8,
-    }
+  setProducts(page = 1):void{
+    this.productService.getProductsByCategory(this.categoryFromURl, page).subscribe(v => {
+        const products = v.products;
+        if(products.length === 0)return this.toaster.info("Todos os produtos já foram listados");
 
-    product3:ProductView = {
-      _id:'3',
-      imgUrl: 'assets/img/aguaPerfumada.webp',
-      name:"Água Perfumada Lavanda Aromatherapy Via Aroma - 250ml",
-      fullPrice:"R$41,00",
-      currentPrice:"R$30,00",
-      pixPrice:"R$28,00",
-      isInPromo:false,
-      promoPorcentage:0,
-    }
+        const currentProducts = this.products();
+        this.products.set([...currentProducts,...products]);
 
-    product4:ProductView = {
-      _id:'4',
-      imgUrl: 'assets/img/difusorTomada.webp',
-      name:"Difusor Aromatizador Elétrico Bivolt Standard - Via Aroma",
-      fullPrice:"R$41,00",
-      currentPrice:"R$32,90",
-      pixPrice:"R$31,00",
-      isInPromo:true,
-      promoPorcentage:5,
-    }
+        const amount = v.amount;
+        const currentAmount = this.amount();
+        this.amount.set(amount + currentAmount);
+      });
+  };
 
-    product5:ProductView = {
-      _id:'5',
-      imgUrl: 'assets/img/aguaPerfumada.webp',
-      name:"Água Perfumada Lavanda Aromatherapy Via Aroma - 250ml",
-      fullPrice:"R$41,00",
-      currentPrice:"R$30,00",
-      pixPrice:"R$28,00",
-      isInPromo:false,
-      promoPorcentage:0,
-    }
+  showMoreProducts():void{
+    this.setProducts(++this.page);
+  };
 
 };
