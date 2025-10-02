@@ -3,11 +3,6 @@ import { Routes } from "@angular/router";
 export const ClientRoutes:Routes = [
 
   {
-    path: 'product/:id',
-    loadComponent: () => import('../pages/client/individual-product/individual-product.component')
-    .then(c => c.IndividualProductComponent)
-  },
-  {
     path: 'cart',
     loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent)
   },

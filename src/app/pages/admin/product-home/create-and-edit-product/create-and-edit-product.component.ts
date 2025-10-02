@@ -95,7 +95,7 @@ export class CreateAndEditProductComponent implements OnInit{
       }),
       image: new FormControl<File | null>(null),
       categories: new FormControl<string[]>([], { nonNullable: true, validators: [Validators.required] }),
-      promoPercentage: new FormControl<number | null>(null),
+      promoPercentage: new FormControl<number | null>(0),
       cod: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(1)] }),
     });
 
