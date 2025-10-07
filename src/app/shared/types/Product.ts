@@ -38,3 +38,8 @@ export interface ProductByCategoryRes{
   products: Product[];
   amount:number;
 };
+export interface SearchAutocomplete{
+  message:string;
+  products: Product[];
+  amount:number;
+};

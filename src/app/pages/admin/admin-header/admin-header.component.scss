@@ -12,8 +12,8 @@
   transition: background-color 0.2s, transform 0.2s;
 
   &:hover {
-    background-color: rgba(255, 255, 255, 0.1); // leve destaque
-    transform: translateX(4px); // desliza um pouco
+    background-color: rgba(255, 255, 255, 0.1);
+    transform: translateX(4px);
     text-decoration: none;
   }
 

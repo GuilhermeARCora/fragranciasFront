@@ -13,3 +13,25 @@
 .card:hover {
   transform: translateY(-4px);
 }
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.card-body img {
+  height: 100px;
+  object-fit: contain;
+}
+
+.card-title {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.card-text {
+  font-size: 0.9rem;
+  color: #333;
+}
