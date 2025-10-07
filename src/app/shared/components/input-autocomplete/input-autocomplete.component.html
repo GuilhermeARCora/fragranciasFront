@@ -1,0 +1,55 @@
+<section class="search-container">
+
+  <div class="search-header">
+    <h1>
+      Busque um produto
+    </h1>
+  </div>
+
+  <form>
+    <mat-form-field class="search-field" appearance="outline">
+      <input
+        #input
+        id="input-autocomplete"
+        matInput
+        placeholder="Busque..."
+        aria-label="Produtos"
+        [matAutocomplete]="auto"
+        [formControl]="prodCtrl"
+      >
+
+      @if(prodCtrl.value){
+      <button
+        mat-icon-button
+        matSuffix
+        aria-label="Clear"
+        (click)="clearFilter($event)"
+        id="button-clear"
+        class="border-0 bg-transparent pe-3"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+      }
+
+      @if(!prodCtrl.value){
+      <mat-icon
+        matSuffix
+        class="icon-search"
+        style="cursor: pointer;"
+      >
+       search
+      </mat-icon>
+      }
+      <mat-autocomplete #auto="matAutocomplete" class="custom-autocomplete" class="d-flex flex-column gap-2 ">
+        @for (data of  (filtered$ | async); track data._id) {
+          <mat-option [value]="data.name" [id]="'option-' + data._id">
+            <img alt="Product image" class="option-img" [src]="data.image" height="65">
+            <span class="option-name" >{{data.name}}</span>
+          </mat-option>
+        }
+      </mat-autocomplete>
+
+    </mat-form-field>
+  </form>
+
+</section>

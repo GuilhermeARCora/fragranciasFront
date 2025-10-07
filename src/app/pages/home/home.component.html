@@ -12,7 +12,7 @@
 
     <div class="d-flex justify-content-center gap-3 mb-4">
 
-      @for(category of listaDeCategorias; track category.name){
+      @for(category of categories; track category.name){
         <app-category-card
           [imgUrl]="category.url"
           [titleCategory]="category.name"

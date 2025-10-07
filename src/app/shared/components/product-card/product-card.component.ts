@@ -4,13 +4,15 @@ import { CommonModule } from '@angular/common';
 import { ShoppingCartService } from '../../../core/services/shoppingCart/shopping-cart.service';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { FormsModule } from '@angular/forms';
+import { StandardBtnComponent } from "../standard-btn/standard-btn.component";
 
 @Component({
   selector: 'app-product-card',
   imports: [
     CommonModule,
-    FormsModule
-  ],
+    FormsModule,
+    StandardBtnComponent
+],
   templateUrl: './product-card.component.html',
   styleUrl: './product-card.component.scss'
 })

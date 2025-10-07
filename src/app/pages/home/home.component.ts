@@ -25,37 +25,38 @@ import { AutoScrollOnOpenDirective } from '../../shared/directives/autoScrollOnO
     AtendimentoAoClienteComponent,
     LayoutComponent,
     AutoScrollOnOpenDirective
-],
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent implements OnInit {
 
-  listaDeCategorias: CategoryBanner[] = [];
+  categories: CategoryBanner[] = [];
+
   readonly panelOpenState = signal(false);
 
   ngOnInit(): void {
-    this.preencherListaDeCategorias();
+    this.categoriesList();
   };
 
-  preencherListaDeCategorias(): void{
+  categoriesList(): void{
 
-    this.listaDeCategorias.push({
+    this.categories.push({
       url:'assets/img/aromatizadores.webp',
       tall:false,
       thick: false,
       name: "Aromatizadores"
     });
 
-    this.listaDeCategorias.push({
+    this.categories.push({
       url:'assets/img/autoCuidado.webp',
       tall:false,
       thick: true,
       name: "Autocuidado"
     });
 
-    this.listaDeCategorias.push({
+    this.categories.push({
       url:'assets/img/casaEBemEstar.webp',
       tall:true,
       thick: false,
