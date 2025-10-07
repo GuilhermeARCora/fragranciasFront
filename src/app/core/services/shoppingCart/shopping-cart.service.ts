@@ -1,14 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, map, switchMap, tap } from 'rxjs';
-import { ProductView } from '../../../shared/types/Product';
 import { ToastService } from '../swal/toast.service';
+import { Product } from '../../../shared/types/Product';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShoppingCartService {
 
-  private _cart = new BehaviorSubject<ProductView[]>(this.getCartFromLocalStorage());
+  private _cart = new BehaviorSubject<Product[]>(this.getCartFromLocalStorage());
   readonly cart$ = this._cart.asObservable();
   readonly cartLength = this.cart$.pipe(map(v => v.length));
 
@@ -23,7 +23,7 @@ export class ShoppingCartService {
     ).subscribe();
   };
 
-  private getCartFromLocalStorage(): ProductView[] {
+  private getCartFromLocalStorage(): Product[] {
     try {
       const raw = localStorage.getItem('cart');
       return raw ? JSON.parse(raw) : [];
@@ -32,7 +32,7 @@ export class ShoppingCartService {
     }
   };
 
-  addProductToCart(product: ProductView): void {
+  addProductToCart(product: Product): void {
     const currentCart = this._cart.value;
     const alreadyInCart = currentCart.some(v => v._id === product._id);
 

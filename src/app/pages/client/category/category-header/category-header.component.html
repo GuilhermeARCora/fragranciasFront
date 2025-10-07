@@ -1,0 +1,23 @@
+<header style="background-color: var(--white);" class="sticky-top shadow-sm">
+
+  <div class="d-flex align-items-center justify-content-between px-4 py-3">
+
+    <div>
+     <a class="d-flex" style="padding: 6px 12px;" routerLink="/">
+       <mat-icon>arrow_back</mat-icon>
+     </a>
+    </div>
+
+    <div>
+      <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
+        {{ title() }}
+      </h1>
+    </div>
+
+    <div class="d-flex me-5" [class.me-5]='!(breakPointService.isHandset$ | async)'>
+      <app-header-cart/>
+    </div>
+
+  </div>
+
+</header>

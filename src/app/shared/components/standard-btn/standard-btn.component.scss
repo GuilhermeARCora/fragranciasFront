@@ -1,0 +1,40 @@
+.btn-padrao {
+  background-color: var(--green);
+  color: var(--white);
+  font-weight: 500;
+  border-radius: 24px;
+  padding: 8px 0;
+  transition: background-color 0.3s ease, opacity 0.3s ease;
+  width: 200px;
+  text-align: center;
+
+  &:hover {
+    background-color: #006a59;
+  }
+
+  &:disabled,
+  &[disabled] {
+    background-color: #3e887b;
+    color: #ded3d3;
+    cursor: not-allowed !important;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+}
+
+.btn {
+  transition: transform 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-4px);
+}
+
+@media (max-width: 600px) {
+  .btn-padrao {
+    width: 60%;
+    font-size: 0.9rem;
+    padding: 10px 0;
+    border-radius: 12px;
+  }
+}

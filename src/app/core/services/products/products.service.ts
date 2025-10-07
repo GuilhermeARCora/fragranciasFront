@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { Product, ProductAllRes, ProductForm, ProductResponse } from '../../../shared/types/Product';
+import { Product, ProductAllRes, ProductByCategoryRes, ProductForm, ProductResponse, SearchAutocomplete } from '../../../shared/types/Product';
 @Injectable({
   providedIn: 'root'
 })
@@ -84,6 +84,28 @@ export class ProductsService {
       map((res: ProductAllRes): Product[] => res.products),
       tap(p => this.productsSubject.next(p))
     )
+  };
+
+  getLastAddedProducts():Observable<Product[]>{
+    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/novidades`).pipe(
+      map((res: ProductAllRes): Product[] => res.products)
+    );
+  };
+
+  getProductsByCategory(category: string, page = 1): Observable<ProductByCategoryRes> {
+    const params = new HttpParams()
+    .set('category', category)
+    .set('page', page);
+
+    return this.http.get<ProductByCategoryRes>(`${this.apiUrl}${this.path}/productsByCategory`, { params });
+  };
+
+  searchAutoComplete(filter : string): Observable<Product[]>{
+    const params = new HttpParams().set('q', filter);
+
+    return this.http.get<SearchAutocomplete>(`${this.apiUrl}${this.path}/searchAutoComplete`, { params }).pipe(
+      map(v => v.products)
+    );
   };
 
 };

@@ -1,13 +1,13 @@
 <div class="product-card p-3">
 
-  <div class="promo" *ngIf="product.isInPromo">
+  <div class="promo" *ngIf="product.promoPercentage">
     <p>PROMOÇÃO</p>
   </div>
 
-  <div [ngClass]="isCategory() ? 'product-card-category' : ''">
+  <div [ngClass]="(isCategory() && (breakPointService.isHandset$ | async)) ? 'product-card-category' : ''">
 
     <div class="product-image mb-2">
-      <img [src]="product.imgUrl" alt="Difusor tomada"/>
+      <img [src]="product.image" alt="Produto"/>
     </div>
 
     <div class="product-info">
@@ -17,22 +17,27 @@
       </p>
 
       <div class="d-flex flex-column gap-1">
-        <h4 class="old-price">{{product.fullPrice}}</h4>
+        <h4 class="old-price">{{product.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</h4>
 
         <div class="d-flex flex-row gap-1" >
-          <h1 class="main-price">{{product.currentPrice}}</h1>
-          <div class="porcentagemPromo" *ngIf="product.isInPromo">
-            <p>{{product.promoPorcentage}}% OFF</p>
+          <h1 class="main-price">{{product.currentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</h1>
+          @if(product.promoPercentage !== 0){
+          <div class="porcentagemPromo">
+            <p>{{product.promoPercentage}}% OFF</p>
           </div>
+          }
         </div>
 
         <div class="pix-price-container">
-          <span class="pix-price">{{product.pixPrice}}</span>
+          <span class="pix-price">{{product.pixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
           <span class="via-pix">Via Pix</span>
         </div>
       </div>
 
-      <button class="btn btn-padrao mt-2 w-100" style="font-family: var(--rob);" (click)="addCart($event)">ADICIONAR</button>
+      <app-standard-btn
+        [title]="'ADICIONAR'"
+        (event)="addCart(product)"
+      />
 
     </div>
 

@@ -1,52 +1,58 @@
-<app-banner></app-banner>
+<app-layout>
 
-<div class="container my-4 d-flex flex-column gap-3">
+  <app-banner
+    [name]="'home'"
+  ></app-banner>
 
-  <div class="text-start">
-    <h1 style="font-family: var(--mer); font-size: 19px;font-weight: 700;">Nossos produtos</h1>
+  <div class="container my-4 d-flex flex-column gap-3">
+
+    <div class="text-start">
+      <h1 style="font-family: var(--mer); font-size: 19px;font-weight: 700;">Nossos produtos</h1>
+    </div>
+
+    <div class="d-flex justify-content-center gap-3 mb-4">
+
+      @for(category of categories; track category.name){
+        <app-category-card
+          [imgUrl]="category.url"
+          [titleCategory]="category.name"
+          [thick]="category.thick"
+          [tall]="category.tall"
+        ></app-category-card>
+      }
+    </div>
+
+    <div class=" text-start">
+      <h1 style="font-family: var(--mer); font-size: 19px;font-weight: 700;">Novidades</h1>
+    </div>
+
+    <app-novidades-list></app-novidades-list>
+
+      <hr class="mx-3">
+
+      <mat-accordion class="mb-3">
+        <mat-expansion-panel autoScrollOnOpen >
+          <mat-expansion-panel-header>
+            <mat-panel-title class="panel-title">SOBRE NÓS</mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-sobre-nos></app-sobre-nos>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel autoScrollOnOpen >
+          <mat-expansion-panel-header>
+            <mat-panel-title class="panel-title">POLÍTICAS</mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-politicas></app-politicas>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel autoScrollOnOpen >
+          <mat-expansion-panel-header>
+            <mat-panel-title class="panel-title">ATENDIMENTO AO CLIENTE</mat-panel-title>
+          </mat-expansion-panel-header>
+          <app-atendimento-ao-cliente></app-atendimento-ao-cliente>
+        </mat-expansion-panel>
+      </mat-accordion>
+
   </div>
 
-  <div class="d-flex justify-content-center gap-3 mb-4">
-
-      <app-category-card
-        *ngFor="let category of listaDeCategorias"
-        [imgUrl]="category.url"
-        [titleCategory]="category.name"
-        [thick]="category.thick"
-        [tall]="category.tall"
-      ></app-category-card>
-
-  </div>
-
-  <div class=" text-start">
-    <h1 style="font-family: var(--mer); font-size: 19px;font-weight: 700;">Novidades</h1>
-  </div>
-
-  <app-novidades-list></app-novidades-list>
-
-    <hr class="mx-3">
-
-    <mat-accordion class="mb-3">
-      <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="panel-title">SOBRE NÓS</mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-sobre-nos></app-sobre-nos>
-
-      </mat-expansion-panel>
-      <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="panel-title">POLÍTICAS</mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-politicas></app-politicas>
-      </mat-expansion-panel>
-      <mat-expansion-panel (opened)="panelOpenState.set(true)" (closed)="panelOpenState.set(false)">
-        <mat-expansion-panel-header>
-          <mat-panel-title class="panel-title">ATENDIMENTO AO CLIENTE</mat-panel-title>
-        </mat-expansion-panel-header>
-        <app-atendimento-ao-cliente></app-atendimento-ao-cliente>
-      </mat-expansion-panel>
-    </mat-accordion>
-
-</div>
-
+</app-layout>

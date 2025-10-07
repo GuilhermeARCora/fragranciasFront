@@ -1,4 +1,29 @@
-<div class="banner" [ngClass]="isCategory() ? 'bannerSmall' : 'banner'">
-  <img [src]="imgUrl | async" alt="Banner">
+
+<div class="banner">
+  <picture>
+
+    <!-- Large screens (desktop, >1200px) -->
+    <source [srcset]="imgUrlLg" media="(min-width: 1201px)" type="image/webp">
+
+
+    <!-- Medium screens (tablet, 601px–1200px) -->
+    <source [srcset]="imgUrlMd" media="(min-width: 601px)" type="image/webp">
+
+
+    <!-- Small screens (mobile, <=600px) -->
+    <source [srcset]="imgUrlSm" media="(max-width: 600px)" type="image/webp">
+
+
+    <img
+      [src]="imgUrlLg"
+      alt="Banner"
+      width="1200"
+      height="300"
+    >
+  </picture>
 </div>
+
+
+
+
 

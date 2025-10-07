@@ -32,8 +32,8 @@
 
   .mat-mdc-paginator {
     @include mat.form-field-overrides((
-      outline-color: #fff,
-      outline-width: 1px
+      outlined-outline-color: #fff,
+      outlined-outline-width: 1px
     ));
   }
 
