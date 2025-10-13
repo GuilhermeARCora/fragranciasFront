@@ -1,0 +1,59 @@
+@let itemCurrentPrice = itemCurrentPrice$ | async;
+@let itemFullPrice = itemFullPrice$ | async;
+
+<div class="product-card">
+
+  <div class="product-image mb-2">
+    <img [src]="product.image" alt="Produto"/>
+  </div>
+
+  <div class="d-flex flex-column gap-4">
+
+    <div>
+
+      <p class="product-title">
+        {{product.name}}
+      </p>
+
+      <div class="d-flex flex-column">
+
+        <div class="main-price">
+          {{itemCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        </div>
+
+        @if(inPromo()){
+        <div class="old-price">
+            {{itemFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        </div>
+        }
+
+      </div>
+
+    </div>
+
+    @if(!isModoView){
+    <div class="d-flex gap-3">
+
+      <div class="quantity-selector">
+        <button type="button" (click)="decrease()">-</button>
+        <span>{{ amount }}</span>
+        <button type="button" (click)="increase()">+</button>
+      </div>
+
+      <div>
+        <button
+          type="button"
+          id="btn-remove"
+          (click)="removeItem(product)"
+          class="btn btn-danger d-flex p-2"
+        >
+          <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
+        </button>
+      </div>
+
+    </div>
+    }
+
+  </div>
+
+</div>

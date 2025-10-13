@@ -1,8 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
-import { Product, ProductAllRes, ProductByCategoryRes, ProductForm, ProductResponse, SearchAutocomplete } from '../../../shared/types/Product';
+import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
+import { Product, ProductForm, ProductsList } from '../../../shared/types/Product';
+import { ResponseData } from '../../../shared/types/ResponseData';
 @Injectable({
   providedIn: 'root'
 })
@@ -15,7 +16,7 @@ export class ProductsService {
   private productsSubject = new BehaviorSubject<Product[]>([]);
   public readonly products$ = this.productsSubject.asObservable();
 
-  createProduct(product :ProductForm):Observable<ProductResponse>{
+  createProduct(product :ProductForm):Observable<ResponseData<Product>>{
 
     const formData = new FormData();
 
@@ -35,10 +36,10 @@ export class ProductsService {
       formData.append('image', product.image);
     };
 
-    return this.http.post<ProductResponse>(`${this.apiUrl}${this.path}/`, formData)
+    return this.http.post<ResponseData<Product>>(`${this.apiUrl}${this.path}/`, formData)
   };
 
-  editProduct(product:ProductForm, id: string | null):Observable<ProductResponse>{
+  editProduct(product:ProductForm, id: string | null):Observable<ResponseData<Product>>{
 
     const formData = new FormData();
 
@@ -58,53 +59,52 @@ export class ProductsService {
       formData.append('image', product.image);
     };
 
-    return this.http.patch<ProductResponse>(`${this.apiUrl}${this.path}/${id}`, formData)
+    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}`, formData)
   };
 
-  deleteProduct(id:string):Observable<void>{
-    return this.http.delete<void>(`${this.apiUrl}${this.path}/${id}`)
+  deleteProduct(id:string):Observable<ResponseData<{}>>{
+    return this.http.delete<ResponseData<{}>>(`${this.apiUrl}${this.path}/${id}`)
   };
 
   changeStatusProduct(status:boolean, id:string):Observable<Product>{
-    return this.http.patch<ProductResponse>(`${this.apiUrl}${this.path}/changeStatus/${id}`, {active : status}).pipe(
-      map(v => v.product)
+    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}/status`, {active : status}).pipe(
+      map(v => v.data)
     )
   };
 
   getOneProduct(id: string | null):Observable<Product>{
-    return this.http.get<ProductResponse>(`${this.apiUrl}${this.path}/${id}`).pipe(
-      map((v) => v.product)
+    return this.http.get<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}`).pipe(
+      map((v) => v.data)
     )
   };
 
-  getAllProducts(filters: any):Observable<Product[]>{
+  getAllProducts(filters: Partial<Product>):Observable<Product[]>{
     const params = new HttpParams({fromObject:filters});
 
-    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/`, { params }).pipe(
-      map((res: ProductAllRes): Product[] => res.products),
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/`, { params }).pipe(
+      map((res) => res.data.products),
       tap(p => this.productsSubject.next(p))
-    )
-  };
-
-  getLastAddedProducts():Observable<Product[]>{
-    return this.http.get<ProductAllRes>(`${this.apiUrl}${this.path}/novidades`).pipe(
-      map((res: ProductAllRes): Product[] => res.products)
     );
   };
 
-  getProductsByCategory(category: string, page = 1): Observable<ProductByCategoryRes> {
-    const params = new HttpParams()
-    .set('category', category)
-    .set('page', page);
+  getLastAddedProducts():Observable<Product[]>{
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/novidades`).pipe(
+      map( res => res.data.products),
+      shareReplay(1)
+    );
+  };
 
-    return this.http.get<ProductByCategoryRes>(`${this.apiUrl}${this.path}/productsByCategory`, { params });
+  getProductsByCategory(category: string, page = 1): Observable<ResponseData<ProductsList>> {
+    const params = new HttpParams().set('page', page);
+
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/category/${category}`, { params });
   };
 
   searchAutoComplete(filter : string): Observable<Product[]>{
     const params = new HttpParams().set('q', filter);
 
-    return this.http.get<SearchAutocomplete>(`${this.apiUrl}${this.path}/searchAutoComplete`, { params }).pipe(
-      map(v => v.products)
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/searchAutoComplete`, { params }).pipe(
+      map(v => v.data.products)
     );
   };
 

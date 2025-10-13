@@ -7,11 +7,14 @@
 
   <mat-icon class="upload-icon">cloud_upload</mat-icon>
 
-  <p *ngIf="!fileName">Arraste e solte um arquivo aqui<br>ou</p>
+  @if(!fileName){
+  <p>Arraste e solte um arquivo aqui<br>ou</p>
+  }
 
   <div class="d-flex gap-2" *ngIf="fileName">
     <p ><strong>{{ fileName }}</strong></p>
     <button
+      id="btn-delete"
       type="button"
       class="border-0 bg-transparent d-flex"
       (click)="removeFile($event)"
@@ -23,10 +26,17 @@
     </button>
   </div>
 
-  <button mat-raised-button class="botao" (click)="fileInput.click()">
+  <button
+    mat-raised-button
+    class="botao"
+    (click)="fileInput.click()"
+    type="button"
+    id="btn-select"
+  >
     Selecionar Arquivo
   </button>
   <input
+    id="input-file"
     #fileInput
     type="file"
     hidden

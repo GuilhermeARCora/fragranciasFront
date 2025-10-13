@@ -22,9 +22,11 @@
             >
           </mat-form-field>
 
-          <mat-error *ngIf="hasFormError(productForm,'name','required')" >
+          @if(hasFormError(productForm,'name','required')){
+          <mat-error>
             O nome é <strong>OBRIGATÓRIO</strong>
           </mat-error>
+          }
 
         </div>
 
@@ -42,17 +44,23 @@
             >
           </mat-form-field>
 
-          <mat-error *ngIf="hasFormError(productForm,'fullPrice','required')" >
+          @if (hasFormError(productForm,'fullPrice','required')) {
+          <mat-error>
             O preço cheio é <strong>OBRIGATÓRIO</strong>
           </mat-error>
+          }
 
-          <mat-error *ngIf="hasFormError(productForm,'fullPrice','min')" >
+          @if (hasFormError(productForm,'fullPrice','min')) {
+          <mat-error>
             O preço cheio minímo é <strong>1</strong>
           </mat-error>
+          }
 
-          <mat-error *ngIf="productForm.get('fullPrice')?.hasError('notNumber')">
+          @if (productForm.get('fullPrice')?.hasError('notNumber')) {
+          <mat-error>
             O valor deve ser um número válido
           </mat-error>
+          }
 
         </div>
       </div>
@@ -90,9 +98,11 @@
             >
           </mat-form-field>
 
-          <mat-error *ngIf="hasFormError(productForm,'cod','min')">
+          @if(hasFormError(productForm,'cod','min')){
+          <mat-error>
             O código deve ser maior ou igual a 1
           </mat-error>
+          }
 
         </div>
       </div>
@@ -116,21 +126,29 @@
             </textarea>
           </mat-form-field>
 
-          <mat-error *ngIf="hasFormError(productForm,'description','required')">
+          @if(hasFormError(productForm,'description','required')){
+          <mat-error>
             A descrição é <strong>OBRIGATÓRIA</strong>
           </mat-error>
+          }
 
-          <mat-error *ngIf="hasFormError(productForm,'description','minlength')">
+          @if(hasFormError(productForm,'description','minlength')){
+          <mat-error>
             A descrição deve ter pelo menos 10 caracteres
           </mat-error>
+          }
 
-          <mat-error *ngIf="hasFormError(productForm,'description','maxlength')">
+          @if(hasFormError(productForm,'description','maxlength')){
+          <mat-error>
             A descrição pode ter no máximo 500 caracteres
           </mat-error>
+          }
 
-          <mat-error *ngIf="hasFormError(productForm,'description','pattern')">
+          @if(hasFormError(productForm,'description','pattern')){
+          <mat-error>
             Caracteres inválidos foram usados
           </mat-error>
+          }
 
         </div>
       </div>
@@ -164,9 +182,11 @@
 
               </div>
 
-              <div class="custom-mat-error" *ngIf="productForm.get('categories')?.hasError('required') && productForm.get('categories')?.touched">
+              @if(productForm.get('categories')?.hasError('required') && productForm.get('categories')?.touched){
+              <div class="custom-mat-error">
                 Deve escolher pelo menos 1 categoria!
               </div>
+              }
 
             </div>
 
@@ -174,13 +194,14 @@
 
       </div>
 
-      <div class=" d-flex flex-column flex-md-row gap-3 pt-3" [class.justify-content-between]="!isSmall">
+      <div class="d-flex flex-column flex-md-row gap-3 pt-3" [class.justify-content-between]="!isSmall">
 
         <button
           class="btn btn-warning px-5 py-3 rounded-5"
           style="font-family: var(--rob); min-width: 200px;"
           type="button"
           (click)="goBack()"
+          id="btn-back"
         >
           Voltar
         </button>
@@ -191,6 +212,7 @@
             class="btn btn-info px-5 py-3 rounded-5"
             style="font-family: var(--rob); min-width: 200px;"
             type="button"
+            id="btn-reset"
             (click)="resetForm()"
           >
             Limpar
@@ -200,6 +222,7 @@
             class="btn btn-success px-5 py-3 rounded-5"
             style="font-family: var(--rob); min-width: 200px;"
             type="submit"
+            id="btn-save"
             [disabled]="productForm.invalid"
           >
             Salvar

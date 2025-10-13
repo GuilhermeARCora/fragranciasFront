@@ -5,9 +5,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { AdminHeaderComponent } from "../admin-header/admin-header.component";
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { map } from 'rxjs';
-import { LayoutComponent } from "./layout/layout.component";
+import { LayoutComponent } from "./admin-layout/admin-layout.component";
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 
 @Component({

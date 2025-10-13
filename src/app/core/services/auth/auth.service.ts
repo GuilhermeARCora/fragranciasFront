@@ -5,7 +5,8 @@ import { Router } from '@angular/router';
 import { ToastService } from '../swal/toast.service';
 import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
 import { User } from '../../../shared/types/User';
-import { LoginPayload, LoginResponse, MeResponse } from '../../../shared/types/Authentication';
+import { LoginPayload } from '../../../shared/types/Authentication';
+import { ResponseData } from '../../../shared/types/ResponseData';
 
 @Injectable({
   providedIn: 'root'
@@ -22,22 +23,22 @@ export class AuthService {
   public readonly user$ = this.userSubject.asObservable();
 
   login(form: LoginPayload): Observable<User> {
-    return this.http.post<LoginResponse>(`${this.url}${this.route}/login`, form).pipe(
+    return this.http.post<ResponseData<string>>(`${this.url}${this.route}/login`, form).pipe(
       switchMap(() => this.loggedUser())
     );
   };
 
   loggedUser(): Observable<User> {
-    return this.http.get<MeResponse>(`${this.url}${this.route}/me`).pipe(
-      map(v => v.data.user),
+    return this.http.get<ResponseData<User>>(`${this.url}${this.route}/me`).pipe(
+      map(v => v.data),
       tap(user => {
         this.userSubject.next(user);
       })
     );
   };
 
-  logout():Observable<void> {
-    return this.http.post<void>(`${this.url}${this.route}/logout`, null).pipe(
+  logout():Observable<ResponseData<{}>> {
+    return this.http.post<ResponseData<{}>>(`${this.url}${this.route}/logout`, null).pipe(
       tap(() => {
         this.userSubject.next(null);
         this.router.navigateByUrl('/login');

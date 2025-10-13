@@ -5,6 +5,7 @@
   border-radius: 24px;
   padding: 8px 0;
   transition: background-color 0.3s ease, opacity 0.3s ease;
+  will-change: background-color, opacity;
   width: 200px;
   text-align: center;
 
@@ -24,6 +25,7 @@
 
 .btn {
   transition: transform 0.3s ease;
+  will-change: transform;
 }
 
 .btn:hover {
@@ -32,9 +34,20 @@
 
 @media (max-width: 600px) {
   .btn-padrao {
-    width: 60%;
+    max-width: 75%;
     font-size: 0.9rem;
-    padding: 10px 0;
+    padding: 10px 0px;
     border-radius: 12px;
+  }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .btn-padrao,
+  .btn,
+  .btn:hover,
+  .btn-padrao:hover {
+    transition: none !important;
+    transform: none !important;
+    will-change: auto !important;
   }
 }

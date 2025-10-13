@@ -1,0 +1,73 @@
+.btn-outline-info{
+  border-radius: 16px;
+  color: var(--green);
+  border-color: var(--green);
+}
+
+.cart-info {
+  position: static;
+  height: fit-content;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e5e7eb;
+  z-index: 10;
+  font-family: 'Inter', system-ui, sans-serif;
+
+  h2, h5 {
+    margin: 0;
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+
+  h5 {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #555;
+  }
+
+  p {
+    margin: 0;
+    font-weight: 500;
+    color: #333;
+  }
+
+  .pix-price {
+    color: var(--green);
+    font-weight: 700;
+  }
+
+  hr {
+    margin: 1rem 0;
+  }
+
+  @media (max-width: 767px) {
+    position: sticky;
+    bottom: 0;
+    border-radius: 12px 12px 0 0;
+    box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.08);
+    margin: 0;
+    padding: 1rem 1.25rem;
+  }
+
+  @media (min-width: 768px) {
+    position: sticky;
+    top: 7rem;
+    align-self: flex-start;
+    min-width: 22rem;
+  }
+}
+
+.card-items{
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem;
+  margin: 1rem 0;
+  border: 1px solid #e5e7eb;
+}
