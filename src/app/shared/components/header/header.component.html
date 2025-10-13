@@ -1,30 +1,56 @@
-<header style="background-color: var(--white);" class="d-flex flex-column gap-4 shadow-sm sticky-top">
+@let isHome = isHome$ | async;
+@let isHandset = breakpointService.isHandset$ | async;
 
+<header class="d-flex justify-content-center flex-column gap-4 shadow-sm sticky-top bg-white" [class.header-border-bottom]="!isHome">
+
+  @if(isHome){
   <div class="banner" role="region" aria-label="promoções">
     <div class="banner-track">
       <span>Cupom BEMVINDO ganhe 10% • Frete grátis a partir de R$300</span>
       <span aria-hidden="true" class="d-md-none">Cupom BEMVINDO ganhe 10% • Frete grátis a partir de R$300</span>
     </div>
   </div>
+  }
 
-  <div class="d-flex align-items-center position-relative pb-4">
+  <div class="d-flex justify-content-between align-items-center position-relative" [ngClass]="{'pb-4':isHome, 'my-3': !isHome}">
 
+    @if(!isHome){
+    <div class="ms-4 ps-md-5 ms-md-5">
+     <a
+      id="link-back"
+      (click)="back()"
+     >
+        <mat-icon>arrow_back</mat-icon>
+     </a>
+    </div>
+    }
+
+    @if(isHome){
     <div class="position-absolute start-50 translate-middle-x">
       <a
-        matTooltip="Ir para a página inicial"
+        [matTooltip]="(breakpointService.isHandset$ | async) ? null : 'Ir para a página inicial'"
         matTooltipPosition="below"
         routerLink="/"
         style="display: inline-block"
+        id="link-home"
       >
         <img
           src="assets/img/logo.webp"
           alt="Logo Fragrâncias Decor"
           style="display: block"
+          [class.imgSmall]="isHandset"
         />
       </a>
     </div>
+    }@else{
+      <div class="position-absolute start-50 translate-middle-x">
+        <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
+          {{ title() }}
+        </h1>
+      </div>
+    }
 
-    <div class="d-flex ms-auto pe-md-5 me-md-5">
+    <div class="d-flex ms-auto me-3 pe-md-5 me-md-5" [class.me-4]="!isHome">
       <app-header-cart/>
     </div>
 

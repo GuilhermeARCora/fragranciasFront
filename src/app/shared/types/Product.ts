@@ -23,23 +23,7 @@ export interface ProductForm {
   promoPercentage?:number;
 };
 
-export interface ProductResponse{
-  message:string;
-  product: Product;
-};
-
-export interface ProductAllRes{
-  message:string;
-  products: Product[];
-};
-
-export interface ProductByCategoryRes{
-  message:string;
-  products: Product[];
-  amount:number;
-};
-export interface SearchAutocomplete{
-  message:string;
-  products: Product[];
-  amount:number;
+export interface ProductsList{
+  products: Product[],
+  amount: number
 };

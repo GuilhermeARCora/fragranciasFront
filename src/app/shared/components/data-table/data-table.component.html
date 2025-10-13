@@ -9,16 +9,19 @@
       id="input-filter"
     />
 
+    @if(filterValue){
     <button
-      *ngIf="filterValue"
       mat-icon-button
       matSuffix
       aria-label="Clear"
       (click)="clearFilter()"
       class="border-0 bg-transparent pe-3"
+      type="button"
+      id="btn-close"
     >
       <mat-icon>close</mat-icon>
     </button>
+   }
   </mat-form-field>
 </div>
 

@@ -1,0 +1,17 @@
+::ng-deep .mat-badge-accent .mat-badge-content {
+  background-color: var(--green) !important;
+  color: white !important;
+  transform-origin: center;
+}
+
+/* aplica a animação quando o botão tem .badge-glow */
+.badge-glow ::ng-deep .mat-badge-content {
+  animation: badgeGlow 450ms ease;
+}
+
+/* animação com brilho e leve “pulse” */
+@keyframes badgeGlow {
+  0%   { filter: drop-shadow(0 0 0 rgba(255, 215, 0, 0)); transform: scale(1); }
+  35%  { filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9)); transform: scale(1.06); }
+  100% { filter: drop-shadow(0 0 0 rgba(255, 215, 0, 0)); transform: scale(1); }
+}

@@ -28,9 +28,9 @@ export class CategoryCardComponent implements OnInit {
     let lastSlash = this.imgUrl.lastIndexOf('/');
     let dot = this.imgUrl.indexOf('.');
 
-    let category = this.imgUrl.slice(lastSlash+1, dot);
+    let categoria = this.imgUrl.slice(lastSlash+1, dot);
 
-    this.route = `/category/${category}`;
+    this.route = `/categoria/${categoria}`;
   };
 
 };

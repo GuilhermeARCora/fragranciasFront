@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, EventEmitter, inject, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
@@ -37,7 +38,7 @@ export interface ColumnDef {
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
-export class DataTableComponent<T extends Record<string, any>> implements OnInit, AfterViewInit, OnDestroy {
+export class DataTableComponent<T extends Record<string, any>> implements OnInit, AfterViewInit {
 
   @Input({required:true}) data$!: Observable<T[]>;
   @Input() displayedColumns: ColumnDef[] = [];
@@ -51,7 +52,7 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  destroy$ = new Subject<void>();
+  destroyRef = inject(DestroyRef);
   filterValue: string = '';
 
   pipeRegistry = inject(PipeRegistryService);
@@ -62,7 +63,7 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
 
   getData(): void{
     this.data$
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
         this.dataSource.data = data ?? [];
 
@@ -82,7 +83,7 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
     this.dataSource.sort = this.sort;
 
     // If the user changes the sort order, reset back to the first page.
-    this.sort.sortChange.pipe(takeUntil(this.destroy$)).subscribe(() => (this.paginator.pageIndex = 0));
+    this.sort.sortChange.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => (this.paginator.pageIndex = 0));
   };
 
   get columnsToDisplay(): ColumnDef[] {
@@ -119,11 +120,6 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
 
   onChangeStatus(element: object):void {
     this.status.emit(element);
-  };
-
-  ngOnDestroy(): void {
-    this.destroy$.next();
-    this.destroy$.complete();
   };
 
 };

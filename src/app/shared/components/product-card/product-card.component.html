@@ -1,8 +1,10 @@
 <div class="product-card p-3">
 
-  <div class="promo" *ngIf="product.promoPercentage">
+  @if(product.promoPercentage){
+  <div class="promo">
     <p>PROMOÇÃO</p>
   </div>
+  }
 
   <div [ngClass]="(isCategory() && (breakPointService.isHandset$ | async)) ? 'product-card-category' : ''">
 
@@ -35,7 +37,8 @@
       </div>
 
       <app-standard-btn
-        [title]="'ADICIONAR'"
+        class="btn-padrao"
+        [title]="added() ? '🛒 Adicionado!' : 'ADICIONAR'"
         (event)="addCart(product)"
       />
 
