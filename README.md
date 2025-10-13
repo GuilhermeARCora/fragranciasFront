@@ -1,6 +1,6 @@
 # Fragrancias Front
 
-**Fragrancias Front** is a real web application focused creating a simple, yet responsive, robust, scalable, and easy to maintain.
+**Fragrancias Front** is a real web application focused on creating a simple, yet responsive, robust, scalable, and easy to maintain system.
 
 ---
 
@@ -11,7 +11,7 @@
 - **Angular Material**
 - **Bootstrap 5**
 - **SweetAlert2**
-  
+- **Swiper**
 ---
 
 ## 🛠️ Como Rodar o Projeto

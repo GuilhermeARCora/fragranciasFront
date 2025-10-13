@@ -5,12 +5,11 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import { BannerComponent } from "../../../shared/components/banner/banner.component";
-import { LayoutComponent } from '../../../shared/components/layout/layout.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
-import { CategoryHeaderComponent } from "./category-header/category-header.component";
 import { Product } from '../../../shared/types/Product';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
+import { LayoutComponent } from '../layout/layout.component';
 
 @Component({
   selector: 'app-category',
@@ -20,8 +19,7 @@ import { ToastService } from '../../../core/services/swal/toast.service';
     MatIconModule,
     ProductCardComponent,
     BannerComponent,
-    LayoutComponent,
-    CategoryHeaderComponent
+    LayoutComponent
 ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.scss'
@@ -33,7 +31,6 @@ export class CategoryComponent implements OnInit{
   toaster = inject(ToastService);
   breakPointService = inject(BreakPointService);
 
-  title = signal<string>('Categoria');
   page = 1;
 
   products = signal<Product[]>([]);
@@ -45,19 +42,6 @@ export class CategoryComponent implements OnInit{
   ngOnInit(): void {
     this.getCategoryFromUrl();
     this.setProducts();
-    this.setTitle();
-  };
-
-  setTitle():void{
-
-    if(this.categoryFromURl === 'aromatizadores'){
-      this.title.set('Aromatizadores')
-    }else if(this.categoryFromURl === 'autoCuidado'){
-      this.title.set('Autocuidado')
-    }else{
-      this.title.set('Casa e Bem estar')
-    };
-
   };
 
   getCategoryFromUrl():void{
@@ -68,13 +52,13 @@ export class CategoryComponent implements OnInit{
 
   setProducts(page = 1):void{
     this.productService.getProductsByCategory(this.categoryFromURl, page).subscribe(v => {
-        const products = v.products;
+        const products = v.data.products;
         if(products.length === 0)return this.toaster.info("Todos os produtos já foram listados");
 
         const currentProducts = this.products();
         this.products.set([...currentProducts,...products]);
 
-        const amount = v.amount;
+        const amount = v.data.amount;
         const currentAmount = this.amount();
         this.amount.set(amount + currentAmount);
       });

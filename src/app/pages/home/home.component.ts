@@ -3,14 +3,14 @@ import { BannerComponent } from "../../shared/components/banner/banner.component
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CategoryCardComponent } from "../../shared/components/category-card/category-card.component";
-import { CategoryBanner } from '../../shared/types/banner';
 import { NovidadesListComponent } from "../../shared/components/novidades-list/novidades-list.component";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SobreNosComponent } from "./sobre-nos/sobre-nos.component";
 import { PoliticasComponent } from "./politicas/politicas.component";
 import { AtendimentoAoClienteComponent } from "./atendimento-ao-cliente/atendimento-ao-cliente.component";
-import { LayoutComponent } from '../../shared/components/layout/layout.component';
 import { AutoScrollOnOpenDirective } from '../../shared/directives/autoScrollOnOpen/auto-scroll-on-open.directive';
+import { CategoryBanner } from '../../shared/types/Banner';
+import { LayoutComponent } from '../client/layout/layout.component';
 @Component({
   selector: 'app-home',
   imports: [

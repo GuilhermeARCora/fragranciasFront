@@ -22,10 +22,19 @@
   white-space: nowrap;
 }
 
+.header-border-bottom{
+  border-bottom: 3px solid var(--green);
+}
+
 /* Animation only for small screens (< 576px) */
 @media (max-width: 576px) {
   .banner-track {
     animation: marquee 12s linear infinite;
+  }
+
+  .imgSmall{
+    max-width: 15rem;
+    height: auto;
   }
 
   @keyframes marquee {
@@ -40,6 +49,7 @@
     animation: none !important;
   }
 }
+
 
 
 

@@ -1,8 +1,6 @@
-<app-category-header [title]="title()"/>
+<app-layout>
 
-<body>
-
-  <app-layout>
+  <section>
 
     <div>
       <app-banner [name]="'home'"></app-banner>
@@ -16,7 +14,7 @@
         </h1>
       </div>
 
-      <div [ngClass]="(breakPointService.isHandset$ | async) ? '' : 'd-flex flex-wrap gap-4 justify-content-center'">
+      <div [ngClass]="!(breakPointService.isHandset$ | async) ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
         @for(produto of products(); track produto._id){
           <app-product-card
             class="d-flex py-2"
@@ -39,6 +37,6 @@
 
     </div>
 
-  </app-layout>
+  </section>
 
-</body>
+</app-layout>

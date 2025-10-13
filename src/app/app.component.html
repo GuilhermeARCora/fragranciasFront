@@ -1,11 +1,22 @@
-<div class="loading-overlay" *ngIf="isLoading$ | async">
+@if(loadingService.isLoading$ | async){
+<div class="loading-overlay">
   <div class="spinner-wrap">
     <div class="css-spinner"></div>
   </div>
 </div>
+}
 
-<app-header *ngIf="!(hideHeader$ | async) && !(isAdmin$ | async)" />
+@if(!(layoutService.hideHeader$ | async) && !(layoutService.isAdmin$ | async)){
+<app-header
+  [isHome$]="layoutService.isHome$"
+  [title]="layoutService.title()"
+/>
+}
+
 <router-outlet/>
-<app-footer *ngIf="!(hideFooter$ | async)" />
+
+@if(!(layoutService.hideFooter$ | async)){
+<app-footer/>
+}
 
 <app-scroll-top-btn></app-scroll-top-btn>

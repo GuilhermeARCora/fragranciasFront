@@ -20,7 +20,7 @@
 
                 <input
                   type="text"
-                  id="email"
+                  id="input-email"
                   formControlName="email"
                   matInput
                   placeholder="Insira seu E-mail"
@@ -29,13 +29,17 @@
                   <mat-label>E-mail</mat-label>
                   <mat-hint>exemplo&#64;exemplo.com</mat-hint>
 
-                  <mat-error *ngIf="hasFormError(loginForm,'email','required')">
+                  @if(hasFormError(loginForm,'email','required')){
+                  <mat-error>
                       E-mail é <strong>obrigatório!</strong>
                   </mat-error>
+                  }
 
-                  <mat-error *ngIf="hasFormError(loginForm,'email','email')">
+                  @if(hasFormError(loginForm,'email','email')){
+                  <mat-error>
                       Insira um E-mail <strong>válido!</strong>
                   </mat-error>
+                  }
 
               </mat-form-field>
             </div>
@@ -45,7 +49,7 @@
 
                 <input
                   [type]="hide() ? 'password' : 'text'"
-                  id="password"
+                  id="input-password"
                   formControlName="password"
                   matInput
                   placeholder="Insira sua Senha"
@@ -53,6 +57,7 @@
                 >
                   <button
                     matSuffix
+                    id="btn-hide"
                     (click)="clickEvent($event)"
                     [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide()"
@@ -64,13 +69,17 @@
 
                   <mat-label>Senha</mat-label>
 
-                  <mat-error *ngIf="hasFormError(loginForm,'password','required')">
+                  @if(hasFormError(loginForm,'password','required')){
+                  <mat-error>
                       Senha é <strong>obrigatório!</strong>
                   </mat-error>
+                  }
 
-                  <mat-error *ngIf="hasFormError(loginForm,'password','minlength')">
+                  @if(hasFormError(loginForm,'password','minlength')){
+                  <mat-error>
                       Senha precisa ter no mínimo <strong>6 caracteres!</strong>
                   </mat-error>
+                  }
 
               </mat-form-field>
             </div>

@@ -3,21 +3,23 @@ import { Routes } from "@angular/router";
 export const ClientRoutes:Routes = [
 
   {
-    path: 'cart',
-    loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent)
-  },
-  //falta checkout
-  {
-    path: 'category/aromatizadores',
-    loadComponent: () => import('../pages/client/category/category.component').then(c => c.CategoryComponent)
+    path: 'carrinho',
+    loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent),
+    data: { title: 'Carrinho' }
   },
   {
-    path: 'category/autoCuidado',
-    loadComponent: () => import('../pages/client/category/category.component').then(c => c.CategoryComponent)
+    path:'checkout',
+    loadComponent: () => import('../pages/client/checkout/checkout.component').then(c => c.CheckoutComponent),
+    data: { title: 'Checkout' }
   },
   {
-    path: 'category/casaEBemEstar',
-    loadComponent: () => import('../pages/client/category/category.component').then(c => c.CategoryComponent)
+    path:'pedido/:id',
+    loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent),
+    data: { title: 'Pedido'}
   },
+  {
+    path: 'categoria/:categoria',
+    loadComponent: () => import('../pages/client/category/category.component').then(c => c.CategoryComponent)
+  }
 
 ];
