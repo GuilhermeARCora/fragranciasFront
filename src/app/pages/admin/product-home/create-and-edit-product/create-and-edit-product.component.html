@@ -126,12 +126,6 @@
             </textarea>
           </mat-form-field>
 
-          @if(hasFormError(productForm,'description','required')){
-          <mat-error>
-            A descrição é <strong>OBRIGATÓRIA</strong>
-          </mat-error>
-          }
-
           @if(hasFormError(productForm,'description','minlength')){
           <mat-error>
             A descrição deve ter pelo menos 10 caracteres
@@ -234,6 +228,10 @@
 
     </form>
 
+  </div>
+
+  <div class="d-flex justify-content-center">
+    <app-product-card [product]="product" class="shadow-sm p-2" [class.mt-4]="isSmall" />
   </div>
 
 </section>

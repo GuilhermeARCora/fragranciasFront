@@ -21,11 +21,6 @@
 .banner-track span {
   white-space: nowrap;
 }
-
-.header-border-bottom{
-  border-bottom: 3px solid var(--green);
-}
-
 /* Animation only for small screens (< 576px) */
 @media (max-width: 576px) {
   .banner-track {

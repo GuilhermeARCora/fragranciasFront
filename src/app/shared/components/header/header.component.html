@@ -1,7 +1,7 @@
 @let isHome = isHome$ | async;
 @let isHandset = breakpointService.isHandset$ | async;
 
-<header class="d-flex justify-content-center flex-column gap-4 shadow-sm sticky-top bg-white" [class.header-border-bottom]="!isHome">
+<header class="d-flex justify-content-center flex-column gap-4 shadow-sm sticky-top bg-white">
 
   @if(isHome){
   <div class="banner" role="region" aria-label="promoções">
