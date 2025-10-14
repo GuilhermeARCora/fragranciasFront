@@ -11,7 +11,7 @@ import { ToastService } from '../../../../core/services/swal/toast.service';
 import { Product, ProductForm } from '../../../../shared/types/Product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyMask } from '../../../../shared/controlValueAcessor/currency/currency-mask.cva';
-import { TextFieldModule } from '@angular/cdk/text-field';
+import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { PercentageSuffix } from '../../../../shared/controlValueAcessor/percentage-sufix/percentage-sufix.cva';
 import { DisplayCategoryPipe } from "../../../../shared/pipes/display-category/display-category.pipe";
 import { numberValidator } from '../../../../shared/validators/isNumber.validator';
@@ -32,7 +32,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     PercentageSuffix,
     TextFieldModule,
     DisplayCategoryPipe,
-    ProductCardComponent
+    ProductCardComponent,
+    CdkTextareaAutosize
 ],
   templateUrl: './create-and-edit-product.component.html',
   styleUrl: './create-and-edit-product.component.scss'
