@@ -1,1 +1,122 @@
-<p>checkout works!</p>
+<app-layout>
+
+  <section class="card-checkout d-flex flex-column gap-3 p-md-5 mt-md-0">
+
+    <h1>Preencha as informações</h1>
+
+    <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Nome completo</mat-label>
+          <input
+            matInput
+            type="text"
+            id="input-fullName"
+            formControlName="fullName"
+            placeholder="Insira seu nome completo"
+          >
+        </mat-form-field>
+
+        @if(hasFormError(checkoutForm, 'fullName', 'required')){
+        <mat-error>
+          Seu nome completo é obrigatório
+        </mat-error>
+        }
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Email</mat-label>
+          <input
+            matInput
+            type="text"
+            id="input-email"
+            formControlName="email"
+            placeholder="Insira seu email"
+          >
+        </mat-form-field>
+
+        @if(hasFormError(checkoutForm, 'email', 'required')){
+        <mat-error>
+          Email é obrigatório
+        </mat-error>
+        }
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>CPF/CNPJ</mat-label>
+          <input
+            matInput
+            type="text"
+            id="input-cpfOrCnpj"
+            formControlName="cpfOrCnpj"
+            placeholder="Insira seu CPF/CNPJ"
+          >
+        </mat-form-field>
+
+        @if(hasFormError(checkoutForm, 'cpfOrCnpj', 'required')){
+        <mat-error>
+          CPF/CNPJ é obrigatório
+        </mat-error>
+        }
+      </div>
+
+      <div>
+        <mat-form-field appearance="outline" class="w-100">
+          <mat-label>Endereço</mat-label>
+          <textarea
+            matInput
+            id="textarea-address"
+            cdkTextareaAutosize
+            #autosize="cdkTextareaAutosize"
+            cdkAutosizeMinRows="3"
+            cdkAutosizeMaxRows="5"
+            formControlName="address"
+            placeholder="Insira seu endereço"
+          ></textarea>
+        </mat-form-field>
+
+        @if(hasFormError(checkoutForm, 'address', 'required')){
+        <mat-error>
+          Endereço é obrigatório
+        </mat-error>
+        }
+
+        @if(hasFormError(checkoutForm,'address','minlength')){
+        <mat-error>
+          O Endereço deve ter pelo menos 5 caracteres
+        </mat-error>
+        }
+
+        @if(hasFormError(checkoutForm,'address','maxlength')){
+        <mat-error>
+          O Endereço pode ter no máximo 150 caracteres
+        </mat-error>
+        }
+
+        @if(hasFormError(checkoutForm,'address','pattern')){
+        <mat-error>
+          Caracteres inválidos foram usados
+        </mat-error>
+        }
+
+      </div>
+
+      <div>
+        <button
+          type="submit"
+          id="btn-end"
+          class="btn btn-success rounded-5 p-2 w-100"
+          [disabled]="checkoutForm.invalid"
+        >
+          FINALIZAR
+        </button>
+      </div>
+
+    </form>
+
+  </section>
+
+</app-layout>
