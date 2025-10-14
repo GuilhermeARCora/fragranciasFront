@@ -4,7 +4,7 @@ export interface Product {
   fullPrice:number;
   currentPrice:number;
   pixPrice:number;
-  image: string;
+  image: string | File;
   promoPercentage:number;
   categories?:string[];
   description?:string;
@@ -27,3 +27,5 @@ export interface ProductsList{
   products: Product[],
   amount: number
 };
+
+export type ProductFilters = Omit<Product, 'image' | '_id' | 'currentPrice' | 'pixPrice' | 'description' | 'createdAt' | 'updatedAt'>;

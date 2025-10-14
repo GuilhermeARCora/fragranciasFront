@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
-import { Product, ProductForm, ProductsList } from '../../../shared/types/Product';
+import { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/Product';
 import { ResponseData } from '../../../shared/types/ResponseData';
 @Injectable({
   providedIn: 'root'
@@ -78,7 +78,7 @@ export class ProductsService {
     )
   };
 
-  getAllProducts(filters: Partial<Product>):Observable<Product[]>{
+  getAllProducts(filters: Partial<ProductFilters>):Observable<Product[]>{
     const params = new HttpParams({fromObject:filters});
 
     return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/`, { params }).pipe(
