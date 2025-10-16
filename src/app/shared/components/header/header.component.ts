@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderCartComponent } from './header-cart/header-cart.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
+import { AuthService } from '../../../core/services/auth/auth.service';
 @Component({
   selector: 'app-header',
   imports: [
@@ -24,6 +25,9 @@ export class HeaderComponent{
 
   location = inject(Location);
   breakpointService = inject(BreakPointService);
+  authService = inject(AuthService);
+
+  isAdmin = this.authService.currentUser?.role;
 
   title = input<string>('');
 

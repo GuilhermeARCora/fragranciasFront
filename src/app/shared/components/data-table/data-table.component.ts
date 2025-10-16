@@ -5,12 +5,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { Observable, Subject, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomPaginatorIntl } from '../../utils/custom-paginator-intl';
 import { CommonModule } from '@angular/common';
 import { PipeRegistryService } from '../../../core/services/pipeRegistry/pipe-registry.service';
 import { FormsModule } from '@angular/forms';
+import { MatTooltip } from '@angular/material/tooltip';
 
 export interface ColumnDef {
   key: string;
@@ -30,7 +31,8 @@ export interface ColumnDef {
     MatSortModule,
     MatPaginatorModule,
     MatIconModule,
-    FormsModule
+    FormsModule,
+    MatTooltip
   ],
   providers: [
     { provide: MatPaginatorIntl, useFactory: CustomPaginatorIntl }
@@ -42,9 +44,16 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
 
   @Input({required:true}) data$!: Observable<T[]>;
   @Input() displayedColumns: ColumnDef[] = [];
+  @Input() useBtnEdit: boolean = true;
+  @Input() useBtnActive: boolean = true;
+  @Input() useBtnStatus: boolean = false;
+  @Input() useBtnLink: boolean = false;
+
 
   @Output() edit = new EventEmitter<any>();
+  @Output() active = new EventEmitter<any>();
   @Output() status = new EventEmitter<any>();
+  @Output() link = new EventEmitter<any>();
 
   dataSource = new MatTableDataSource<T>();
   autoColumns: ColumnDef[] = [];
@@ -118,8 +127,16 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
     this.edit.emit(element);
   };
 
+  onChangeActive(element: object):void {
+    this.active.emit(element);
+  };
+
   onChangeStatus(element: object):void {
     this.status.emit(element);
+  };
+
+  onChangeLink(element: object):void {
+    this.link.emit(element);;
   };
 
 };

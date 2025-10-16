@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { ShoppingCartService } from '../../../../core/services/shoppingCart/shopping-cart.service';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { ToastService } from '../../../../core/services/swal/toast.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-header-cart',
@@ -16,7 +18,8 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatIconModule,
     MatBadgeModule,
     MatButtonModule,
-    RouterModule
+    RouterModule,
+    MatTooltipModule
   ],
   templateUrl: './header-cart.component.html',
   styleUrl: './header-cart.component.scss',
@@ -42,6 +45,7 @@ export class HeaderCartComponent {
   router = inject(Router);
   cartService = inject(ShoppingCartService);
   destroyRef = inject(DestroyRef);
+  toaster = inject(ToastService);
 
   cartCount$: Observable<number> = this.cartService.cartUnits$;
   glow = signal<boolean>(false);
@@ -50,11 +54,16 @@ export class HeaderCartComponent {
     this.activateAnimation();
   };
 
-  redirectCart():void{
+  redirectCart(count: number | null):void {
+    if (!count) {
+      this.toaster.info("Seu carrinho está vazio");
+      return;
+    };
+
     this.router.navigate(['/carrinho']);
   };
 
-  activateAnimation():void{
+  activateAnimation():void {
     this.cartService.cartUnits$.pipe(
       startWith(0),
       pairwise(),

@@ -6,7 +6,9 @@
     matBadgeColor="accent"
     [@badgeBounce]="cartCount"
     [ngClass]="{ 'badge-glow': glow() }"
-    (click)="redirectCart()"
+    (click)="redirectCart(cartCount)"
+    matTooltip="Carrinho de compras"
+    matTooltipPosition="below"
   >
   <mat-icon fontSet="material-symbols-outlined">shopping_bag</mat-icon>
 </button>

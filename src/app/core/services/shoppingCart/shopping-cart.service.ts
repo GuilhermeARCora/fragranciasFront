@@ -3,6 +3,7 @@ import { BehaviorSubject, debounceTime, distinctUntilChanged, map, Observable, t
 import { ToastService } from '../swal/toast.service';
 import { Product } from '../../../shared/types/Product';
 import { Cart, CartItem } from '../../../shared/types/Cart';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,7 @@ export class ShoppingCartService {
   readonly cartPixPriceTotal$:Observable<number> = this.cart$.pipe(map(cart => cart?.totalPixPrice));
 
   toaster = inject(ToastService);
+  router = inject(Router);
 
   constructor() {
     this.cartSubject.pipe(
@@ -36,15 +38,15 @@ export class ShoppingCartService {
     };
   };
 
-  addOrUpdateCart(product: Product, amount = 1): void {
-    const currentCart = this.cartSubject.value;
+  addOrUpdateCart(product: Product, amount:number, sum = false): void {
+    const currentCart = this.cartSubject.getValue();
     const exists = currentCart?.items.some(item => item.product._id === product._id);
 
     let updatedItems: CartItem[];
 
     if (exists) {
       updatedItems = currentCart.items.map(item =>
-        item.product._id === product._id ? { ...item, amount } : item
+        item.product._id === product._id ? { ...item, amount: sum ? item.amount + amount : amount } : item
       );
     } else {
       updatedItems = [...currentCart.items, { product, amount }];
@@ -95,6 +97,9 @@ export class ShoppingCartService {
   clearCart(): void {
     localStorage.setItem('cart', JSON.stringify({ items: [], totalUnits: 0, totalCurrentPrice: 0, totalFullPrice: 0, totalPixPrice: 0 }));
     this.cartSubject.next({items: [], totalUnits: 0, totalCurrentPrice: 0, totalFullPrice: 0, totalPixPrice: 0});
+
+    this.toaster.info("Carrinho vazio");
+    this.router.navigateByUrl('/');
   };
 
 };

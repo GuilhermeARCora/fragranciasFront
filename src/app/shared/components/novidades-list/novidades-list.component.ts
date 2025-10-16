@@ -1,4 +1,4 @@
-import { Observable, of } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit} from '@angular/core';
 import { ProductCardComponent } from "../product-card/product-card.component";
 import { CommonModule } from '@angular/common';

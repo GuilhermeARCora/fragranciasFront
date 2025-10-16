@@ -25,22 +25,31 @@ export const AdminRoutes: Routes = [
           {
             path: 'home',
             loadComponent: () =>
-              import('../pages/admin/admin-home/admin-home.component').then(c => c.AdminHomeComponent)
+              import('../pages/admin/admin-home/admin-home.component').then(c => c.AdminHomeComponent),
+            data: { title: 'Home'}
           },
           {
             path:'homeProduct',
-            loadComponent:() => import('../pages/admin/product-home/product-home.component').then(c => c.ProductHomeComponent)
+            loadComponent:() => import('../pages/admin/product-home/product-home.component').then(c => c.ProductHomeComponent),
+            data: { title: 'Produtos'}
           },
           {
             path: 'createProduct',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
+            data: { title: 'Criar Produto'}
           },
           {
             path: 'editProduct/:id',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
+            data: { title: 'Editar Produto'}
           },
+          {
+            path:'homeOrder',
+            loadComponent:() => import('../pages/admin/order-home/order-home.component').then(c => c.OrderHomeComponent),
+            data: { title: 'Pedidos'}
+          }
         ],
       },
     ],

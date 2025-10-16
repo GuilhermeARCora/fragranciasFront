@@ -11,7 +11,7 @@ export class ProductsService {
 
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
-  path = 'products';
+  path = 'product';
 
   private productsSubject = new BehaviorSubject<Product[]>([]);
   public readonly products$ = this.productsSubject.asObservable();

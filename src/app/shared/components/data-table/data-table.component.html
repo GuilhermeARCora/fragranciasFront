@@ -71,7 +71,10 @@
           [id]="'cell-actions-' + element._id"
           class="cell-col-actions px-2"
         >
+        @if(useBtnEdit){
           <button
+            matTooltip="Editar"
+            matTooltipPosition="below"
             mat-icon-button
             color="primary"
             (click)="onEdit(element)"
@@ -80,11 +83,16 @@
           >
             <mat-icon fontSet="material-symbols-outlined">edit</mat-icon>
           </button>
+        }
+
+        @if(useBtnActive){
           <button
+            [matTooltip]="element.active === true ? 'Desativar': 'Ativar'"
+            matTooltipPosition="below"
             mat-icon-button
             color="warn"
-            (click)="onChangeStatus(element)"
-            [id]="'delete-' + element._id"
+            (click)="onChangeActive(element)"
+            [id]="'active-' + element._id"
             class="btn border-0 bg-transparent p-0"
           >
           @if(element.active === true){
@@ -93,6 +101,36 @@
             <mat-icon fontSet="material-symbols-outlined">cancel</mat-icon>
           }
           </button>
+        }
+
+        @if(useBtnStatus){
+          <button
+            matTooltip="Mudar o status"
+            matTooltipPosition="below"
+            mat-icon-button
+            color="warn"
+            (click)="onChangeStatus(element)"
+            [id]="'status-' + element._id"
+            class="btn border-0 bg-transparent p-0"
+          >
+            <mat-icon fontSet="material-symbols-outlined">autorenew</mat-icon>
+          </button>
+        }
+
+        @if(useBtnLink){
+          <button
+            matTooltip="Ir para outra página"
+            matTooltipPosition="below"
+            mat-icon-button
+            color="warn"
+            (click)="onChangeLink(element)"
+            [id]="'link-' + element._id"
+            class="btn border-0 bg-transparent p-0"
+          >
+            <mat-icon fontSet="material-symbols-outlined">open_in_new</mat-icon>
+          </button>
+        }
+
         </td>
       </ng-container>
 

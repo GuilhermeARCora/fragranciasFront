@@ -30,7 +30,7 @@ export class ProductCardComponent {
   added = signal(false);
 
   addCart(product: Product): void {
-    this.cartService.addOrUpdateCart(product);
+    this.cartService.addOrUpdateCart(product, 1, true);
     this.added.set(true);
 
     timer(1200)

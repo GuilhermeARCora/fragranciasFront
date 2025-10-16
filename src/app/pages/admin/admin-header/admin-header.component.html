@@ -1,11 +1,40 @@
-<nav class="m-3 d-flex flex-column gap-3">
-  <a routerLink="/" class="menu-link" style="font-family: var(--mer);" id="link-client-home">
-    <mat-icon fontSet="material-symbols-outlined">house</mat-icon>
-    Visão do Cliente
+<div class="mt-4 text-center">
+  <a
+      matTooltip="Ir para a página inicial de admin"
+      matTooltipPosition="below"
+      routerLink="/admin/home"
+      style="display:inline-block"
+      id="link-admin-home"
+  >
+    <img
+      src="assets/img/logo-branco.webp"
+      alt="Logo Fragrâncias Decor"
+      style="display:block"
+      class="img-width"
+    />
+  </a>
+</div>
+<nav class="m-3 pt-3 d-flex flex-column gap-3">
+
+  <a routerLink="/admin/home" class="menu-link" style="font-family: var(--mer);" id="link-client-home">
+    <mat-icon fontSet="material-symbols-outlined">bar_chart</mat-icon>
+    Painel Administrativo
   </a>
 
   <a routerLink="/admin/homeProduct" class="menu-link" style="font-family: var(--mer);" id="link-products-home">
     <mat-icon fontSet="material-symbols-outlined">storefront</mat-icon>
     Produtos
   </a>
+
+  <a routerLink="/admin/homeOrder" class="menu-link" style="font-family: var(--mer);" id="link-order-home">
+    <mat-icon fontSet="material-symbols-outlined">order_approve</mat-icon>
+    Pedidos
+  </a>
+
+  <a routerLink="/" class="menu-link" style="font-family: var(--mer);" id="link-client-home">
+    <mat-icon fontSet="material-symbols-outlined">house</mat-icon>
+    Visão do Cliente
+  </a>
+
+
 </nav>
