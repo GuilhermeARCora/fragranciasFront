@@ -1,10 +1,9 @@
 @use './reset.scss' as *;
 
-@use 'swiper/swiper-bundle' as *;
+@use 'swiper/css' as *;          // estilos base
+@use 'swiper/css/pagination' as *; // estilos da paginação
 
 @use '@angular/material' as mat;
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 
@@ -13,7 +12,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Merriweather:ital,opsz,wght@0,18..144,300..900;1,18..144,300..900&display=swap');
 
 :root {
-    --pop: "Poppins", sans-serif;
     --mer: "Merriweather", sans-serif;
     --rob: "Roboto", sans-serif;
     --lat: "Lato", sans-serif;
@@ -80,13 +78,6 @@ a {
   transform: translate(-50%, -50%);
 }
 
-
-
-
-
-
-
-
-
-
-
+.cdk-overlay-container {
+  z-index: 2000 !important;
+}

@@ -1,70 +1,79 @@
 <footer style="background-color: var(--white); font-family: var(--mer);" class="shadow-lg py-5 mt-5">
   <div class="container">
+
     <div class="row g-3 text-center">
 
       <!-- Empresa -->
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-6">
+
         <h5 class="fw-bolder">Fragrâncias Decor</h5>
         <p class="small mb-1">Águas Claras - DF</p>
+
+        <div class="d-flex justify-content-center align-items-center">
+
+          <p class="small">
+            <a
+              href="https://wa.me/5561996263326?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20saber%20mais%20sobre%20os%20produtos%20da%20loja%20Fragr%C3%A2ncias%20Decor."
+              target="_blank"
+              rel="noopener"
+              aria-label="Falar no WhatsApp"
+              class="text-decoration-none"
+              id="link-whats-app"
+              >
+              <img
+                src="/assets/icon/whatsApp.webp"
+                alt="Icon WhastApp"
+                class="w-auto object-fit-contain"
+                style="height: 3.5rem;"
+              >
+            </a>
+        </p>
+
         <p class="small">
-          <img
-            src="/assets/icon/whatsApp.webp"
-            alt="Icon Instagram"
-            class="w-auto object-fit-contain"
-            style="height: 2.5rem;"
-          >
           <a
-            href="https://wa.me/5561999999999"
+            href="https://www.instagram.com/fragrancias_e_decor/"
+            target="_blank"
             class="text-decoration-none"
-            id="link-whats-app"
+            id="link-instagram"
+          >
+            <img
+              src="/assets/icon/instagram.webp"
+              alt="Icon Instagram"
+              class="w-auto object-fit-contain"
+              style="height: 2.5rem;"
             >
-             WhatsApp
           </a>
         </p>
-        <p class="small mb-3 d-md-block d-flex justify-content-center align-items-center gap-2">
-          <img
-            src="/assets/icon/gmail.webp"
-            alt="Icon gmail"
-            class="w-auto object-fit-contain me-2"
-            style="height: 1.2rem;"
-          >
+
+        <p class="small ms-2 ps-1">
           <a
             href="mailto:fragranciasdecor@gmail.com"
             class="text-decoration-none"
             id="link-gmail"
+            target="_blank"
           >
-            fragranciasdecor&#64;gmail.com
+            <img
+              src="/assets/icon/gmail.webp"
+              alt="Icon gmail"
+              class="w-auto object-fit-contain"
+              style="height: 2rem;"
+            >
           </a>
         </p>
-      </div>
 
-      <!-- Redes sociais -->
-      <div class="col-12 col-md-4 mb-3">
-        <h5 class="fw-bolder">Redes sociais</h5>
-        <a
-          href="https://www.instagram.com/fragrancias_e_decor/"
-          target="_blank"
-          class="fs-3"
-          id="link-instagram"
-        >
-        <img
-          src="/assets/icon/instagram.webp"
-          alt="Icon Instagram"
-          class="w-auto object-fit-contain"
-          style="height: 2.5rem;"
-        >
-      </a>
+        </div>
+
       </div>
 
       <!-- Pagamentos -->
-      <div class="col-12 col-md-4">
+      <div class="col-12 col-md-6">
         <h5 class="fw-bolder">Formas de pagamento</h5>
-        <div class="d-flex flex-column mt-2 ">
+        <div class="d-flex flex-column flex-md-row align-items-center gap-md-3 mt-2 mt-md-0" [class.justify-content-center]="!(breakpointService.isHandset$ | async)">
           <!-- Pix -->
           <img src="/assets/icon/pix.webp" alt="Pix" class="w-auto object-fit-contain" style="height: 2.5rem;" />
 
           <!-- Visa + Mastercard -->
-          <div class="d-flex gap-2 mt-4 align-items-center justify-content-center">
+          <div class="d-flex gap-2 mt-4 mt-md-0 align-items-center justify-content-center">
             <img src="/assets/icon/visa.webp" alt="Visa" class="w-auto object-fit-contain" style="height: 1.5rem;"/>
             <img src="/assets/icon/masterCard.webp" alt="Mastercard" class="w-auto object-fit-contain" style="height: 2rem;" />
           </div>

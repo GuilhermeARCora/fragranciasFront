@@ -1,5 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { OrderService } from '../order/order.service';
+import { CheckoutMsg } from '../../../shared/types/Checkout';
+import { Cart } from '../../../shared/types/Cart';
+import { OrderCreateItem } from '../../../shared/types/Order';
+import { map, take } from 'rxjs';
+import { ToastService } from '../swal/toast.service';
 
 @Injectable({
   providedIn: 'root'
@@ -8,22 +13,50 @@ export class CheckoutService {
 
   orderService = inject(OrderService);
   whatsappNumber =  61996263326;
+  toaster = inject(ToastService);
+
+  mapCartToOrderItems(cart: Cart): OrderCreateItem[] {
+    return cart.items.map(item => ({
+      _id: item.product._id,
+      name: item.product.name,
+      fullPrice: item.product.fullPrice,
+      promoPercentage: item.product.promoPercentage,
+      amount: item.amount,
+      image: item.product.image
+    }));
+  };
 
   alreadyAClient():void{
-    //cria order
-    const orderId = this.orderService.createOrder();
-    //envia para o zap
-    // this.whatsAppMessage(true, orderId);
+    const cart:Cart = JSON.parse(localStorage.getItem('cart') || 'null');
+    if (!cart || !cart.items?.length) {
+      this.toaster.info('Seu carrinho está vazio');
+      return;
+    };
+
+    const orderItems = this.mapCartToOrderItems(cart);
+
+    this.orderService.createOrder(orderItems).pipe(take(1)).subscribe(id => {
+       this.whatsAppMessage(true, id);
+    });
   };
 
-  newClient(form?: any):void{
-    //cria order
-    const orderId = this.orderService.createOrder();
-    //envia para o zap
-    // this.whatsAppMessage(false, orderId, form);
+  newClient(form: CheckoutMsg):void{
+    const cart:Cart = JSON.parse(localStorage.getItem('cart') || 'null');
+    if (!cart || !cart.items?.length) {
+      this.toaster.info('Seu carrinho está vazio');
+      return;
+    };
+
+    const orderItems = this.mapCartToOrderItems(cart);
+    const { fullName, cpfOrCnpj, email, address } = form;
+    const checkoutMessage = `Nome: ${fullName}\nCPF/CNPJ: ${cpfOrCnpj}\nEmail: ${email}\nEndereço: ${address}`;
+
+    this.orderService.createOrder(orderItems).pipe(take(1)).subscribe(id => {
+       this.whatsAppMessage(false, id, checkoutMessage);
+    });
   };
 
-  private whatsAppMessage(isClient:boolean, orderId: string, checkoutForm?:any){
+  private whatsAppMessage(isClient:boolean, orderId: string, checkoutMsg?:string){
     const link = `http://localhost:4200/pedido/${orderId}`;
 
     let message = '';
@@ -34,7 +67,7 @@ export class CheckoutService {
 
       message = `${salutations}\n\n${orderMessage}`;
     }else{
-      const checkout = checkoutForm; // retorna objeto ou texto com dados do novo cliente
+      const checkout = checkoutMsg; // retorna objeto ou texto com dados do novo cliente
 
       const salutations = 'Olá, sou um novo cliente e gostaria de prosseguir com minha compra!';
       const checkoutInfo = `Aqui vão as minhas informações preenchidas no checkout:\n${checkout}`;

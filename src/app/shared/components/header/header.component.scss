@@ -21,11 +21,6 @@
 .banner-track span {
   white-space: nowrap;
 }
-
-.header-border-bottom{
-  border-bottom: 3px solid var(--green);
-}
-
 /* Animation only for small screens (< 576px) */
 @media (max-width: 576px) {
   .banner-track {
@@ -35,6 +30,20 @@
   .imgSmall{
     max-width: 15rem;
     height: auto;
+  }
+
+  .title{
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp:2;
+    -webkit-box-orient: vertical;
+
+    max-width: 12rem;
+    line-height: 1.5em;
+    max-height: 3.5em;
   }
 
   @keyframes marquee {
@@ -49,6 +58,7 @@
     animation: none !important;
   }
 }
+
 
 
 

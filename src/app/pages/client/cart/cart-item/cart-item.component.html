@@ -7,7 +7,7 @@
     <img [src]="product.image" alt="Produto"/>
   </div>
 
-  <div class="d-flex flex-column gap-4">
+  <div class="d-flex flex-column gap-3">
 
     <div>
 
@@ -17,29 +17,52 @@
 
       <div class="d-flex flex-column">
 
+        @if(!isModoView){
         <div class="main-price">
           {{itemCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
+        }@else {
+          <div class="main-price">
+          {{product.currentPrice| currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        </div>
+        }
 
-        @if(inPromo()){
-        <div class="old-price">
+        @if(!isModoView){
+        <div
+          class="old-price"
+          [style.visibility]="itemCurrentPrice === itemFullPrice ? 'hidden' : 'visible'"
+        >
             {{itemFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
+        }@else {
+          <div
+            class="old-price"
+            [style.visibility]="product.currentPrice === product.fullPrice ? 'hidden' : 'visible'"
+          >
+            {{product.fullPrice| currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+          </div>
         }
 
       </div>
 
     </div>
 
-    @if(!isModoView){
     <div class="d-flex gap-3">
 
       <div class="quantity-selector">
+        @if(!isModoView){
         <button type="button" (click)="decrease()">-</button>
+        }
+        @if(isModoView){
+        <p>Qtd</p>
+        }
         <span>{{ amount }}</span>
+        @if(!isModoView){
         <button type="button" (click)="increase()">+</button>
+        }
       </div>
 
+      @if(!isModoView){
       <div>
         <button
           type="button"
@@ -50,9 +73,9 @@
           <mat-icon fontSet="material-symbols-outlined">delete</mat-icon>
         </button>
       </div>
+      }
 
     </div>
-    }
 
   </div>
 

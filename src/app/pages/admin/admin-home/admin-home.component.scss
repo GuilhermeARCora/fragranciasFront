@@ -1,7 +1,112 @@
-.btn {
-  transition: transform 0.3s ease;
+:host {
+  display: block;
 }
 
-.btn:hover {
-  transform: translateY(-4px);
+/* --- Cards principais --- */
+.dashboard-card {
+  background: #ffffff;
+  border-left: 4px solid var(--green);
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  h3 {
+    font-size: 1.6rem;
+  }
+}
+
+/* --- Gráficos --- */
+.chart-container-doughnut {
+  max-width: 320px;
+  height: 320px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chart-container-line {
+  height: 25rem;
+  width: 55rem;
+  position: relative;
+  z-index: 1;
+}
+
+canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+section + section {
+  margin-top: 2rem;
+}
+
+.chart-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* --- Estatísticas --- */
+.stats-card {
+  position: relative;
+  z-index: 2; // garante que as estatísticas fiquem acima
+  background: #fff;
+  border-left: 4px solid var(--green);
+  transition: transform 0.2s ease-in-out;
+  will-change: transform;
+
+  &:hover {
+    transform: translateY(-3px);
+  }
+
+  h6 {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  h4 {
+    font-size: 1.3rem;
+  }
+}
+
+/* --- Espaçamento geral --- */
+section {
+  margin-bottom: 1.5rem;
+}
+
+h2, h5 {
+  color: #212529;
+}
+
+.stats-card mat-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-size: 2rem !important;
+  line-height: 1 !important;
+  vertical-align: middle;
+  margin-bottom: 0.25rem;
+}
+
+/* --- Responsividade --- */
+@media (max-width: 768px) {
+  .chart-container-doughnut {
+    max-width: 250px;
+    height: 250px;
+  }
+
+  .chart-container-line {
+    height: 320px;
+    width: auto;
+  }
+
+  .dashboard-card h3 {
+    font-size: 1.4rem;
+  }
 }

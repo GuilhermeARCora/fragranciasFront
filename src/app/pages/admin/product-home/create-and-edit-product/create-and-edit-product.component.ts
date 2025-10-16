@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit, signal } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -11,11 +11,13 @@ import { ToastService } from '../../../../core/services/swal/toast.service';
 import { Product, ProductForm } from '../../../../shared/types/Product';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CurrencyMask } from '../../../../shared/controlValueAcessor/currency/currency-mask.cva';
-import { TextFieldModule } from '@angular/cdk/text-field';
+import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
 import { PercentageSuffix } from '../../../../shared/controlValueAcessor/percentage-sufix/percentage-sufix.cva';
 import { DisplayCategoryPipe } from "../../../../shared/pipes/display-category/display-category.pipe";
 import { numberValidator } from '../../../../shared/validators/isNumber.validator';
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
+import { ProductCardComponent } from "../../../../shared/components/product-card/product-card.component";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-create-and-edit-product',
@@ -29,12 +31,14 @@ import { BreakPointService } from '../../../../core/services/breakPoint/break-po
     CurrencyMask,
     PercentageSuffix,
     TextFieldModule,
-    DisplayCategoryPipe
+    DisplayCategoryPipe,
+    ProductCardComponent,
+    CdkTextareaAutosize
 ],
   templateUrl: './create-and-edit-product.component.html',
   styleUrl: './create-and-edit-product.component.scss'
 })
-export class CreateAndEditProductComponent implements OnInit{
+export class CreateAndEditProductComponent implements OnInit, OnDestroy{
 
   hasFormError = hasFormError;
   productService = inject(ProductsService);
@@ -44,6 +48,7 @@ export class CreateAndEditProductComponent implements OnInit{
   location = inject(Location);
   router = inject(Router);
   route = inject(ActivatedRoute);
+  destroyRef = inject(DestroyRef);
 
   productForm!: FormGroup;
   allCategories = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
@@ -52,9 +57,26 @@ export class CreateAndEditProductComponent implements OnInit{
   id = signal<string | null>('');
   title = signal<string>('Cadastre um Produto!');
 
+  productPlaceholder: Product = {
+    _id: 'preenchido',
+    name: 'Exemplo',
+    fullPrice: 100,
+    currentPrice: 90,
+    pixPrice: 85.5,
+    image: '/assets/img/difusorTomada.webp',
+    promoPercentage: 10
+  };
+
+  product: Product= this.productPlaceholder;
+
   ngOnInit(): void {
     this.createForm();
     this.isEditCheck();
+
+    // Escuta mudanças no form e atualiza preview em tempo real
+    this.productForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.createTheProductForDisplay();
+    });
   };
 
   isEditCheck():void{
@@ -75,6 +97,7 @@ export class CreateAndEditProductComponent implements OnInit{
         });
       };
 
+      this.createTheProductForDisplay();
     };
 
   };
@@ -87,7 +110,6 @@ export class CreateAndEditProductComponent implements OnInit{
       description: new FormControl('', {
         nonNullable: true,
         validators: [
-          Validators.required,
           Validators.minLength(10),
           Validators.maxLength(500),
           Validators.pattern(/^[\w\sÀ-ÿ.,!?"'()-]*$/)
@@ -116,11 +138,10 @@ export class CreateAndEditProductComponent implements OnInit{
   };
 
   onFileSelected(file: File | null) {
-    if (file) {
-      this.productForm.patchValue({ image: file });
-    } else {
-      this.productForm.patchValue({ image: null });
-    }
+    if (file) this.productForm.patchValue({ image: file });
+
+    else this.productForm.patchValue({ image: null });
+
     this.productForm.updateValueAndValidity();
   };
 
@@ -136,13 +157,12 @@ export class CreateAndEditProductComponent implements OnInit{
 
     if(!this.isEdit()) this.saveProduct(formValue);
     else this.editProduct(formValue);
-
   };
 
   preventNegative(event: KeyboardEvent) {
     if (event.key === '-' || event.key === 'Subtract') {
       event.preventDefault();
-    }
+    };
   };
 
   imageValidation(image: File | string | null): boolean{
@@ -203,17 +223,55 @@ export class CreateAndEditProductComponent implements OnInit{
       categories.updateValueAndValidity();
     };
 
-    if(this.productForm.touched){
-      this.productForm.reset();
-      this.productForm.markAsPristine();
-      this.productForm.markAsUntouched();
-      this.productForm.updateValueAndValidity();
+    this.productForm.patchValue({
+      name: '',
+      fullPrice: null,
+      promoPercentage: 0,
+      cod: null,
+      description: '',
+      image: null
+    });
+    this.productForm.updateValueAndValidity();
+
+    this.product = this.productPlaceholder;
+  };
+
+  createTheProductForDisplay():void{
+    const formValue = this.productForm.value as ProductForm;
+    const { name, image, fullPrice, promoPercentage } = formValue;
+
+    let currentPrice = fullPrice;
+    if (promoPercentage && promoPercentage > 0) currentPrice = fullPrice * (1 - promoPercentage / 100);
+
+    const pixPrice = currentPrice * (1 - 5 / 100);
+
+    let finalImage: string | File = '';
+    if (image instanceof File) {
+      // cria uma URL temporária para preview
+      finalImage = URL.createObjectURL(image);
+    } else {
+      finalImage = image;
     };
 
+    this.product = {
+      _id: 'preenchido',
+      name: name,
+      fullPrice: fullPrice,
+      currentPrice: currentPrice,
+      pixPrice: pixPrice,
+      image: finalImage,
+      promoPercentage: promoPercentage ?? 0
+    };
   };
 
   goBack():void{
     this.location.back();
+  };
+
+  ngOnDestroy(): void {
+    if (this.product?.image && typeof this.product.image === 'string' && this.product.image.startsWith('blob:')) {
+      URL.revokeObjectURL(this.product.image);
+    };
   };
 
 };
