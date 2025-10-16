@@ -1,7 +1,7 @@
 import { OrderService } from './../../../core/services/order/order.service';
 import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
 import { ShoppingCartService } from '../../../core/services/shoppingCart/shopping-cart.service';
-import { combineLatest, map, Observable } from 'rxjs';
+import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 import { CheckoutService } from '../../../core/services/checkout/checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { Order } from '../../../shared/types/Order';
 
 @Component({
   selector: 'app-cart',
@@ -42,9 +43,16 @@ export class CartComponent implements OnInit{
   cartItems$!: Observable<CartItem[]>;
   cartDiscountTotal$!: Observable<number>;
 
-  orderItems$!: Observable<CartItem[]>;
+  orderId!:string | null;
+  private orderSubject = new BehaviorSubject<Order | null>(null);
+  readonly order$ = this.orderSubject.asObservable();
+  readonly orderItems$ = this.order$.pipe(map(order => order?.items));
+  readonly orderStatus$ = this.order$.pipe(map(order => order?.status));
+  readonly orderTotalFullPrice$ = this.order$.pipe(map(order => order?.totalFullPrice));
+  readonly orderTotalCurrentPrice$ = this.order$.pipe(map(order => order?.totalCurrentPrice));
+  readonly orderTotalDiscount$ = this.order$.pipe(map(order => order?.totalDiscount));
+  readonly orderTotalPixPrice$ = this.order$.pipe(map(order => order?.totalPixPrice));
 
-  orderId = this.route.snapshot.paramMap.get('id');
   viewMode = signal<boolean>(false);
 
   ngOnInit(): void {
@@ -72,10 +80,20 @@ export class CartComponent implements OnInit{
   };
 
   isOrder():void{
+    this.orderId = this.route.snapshot.paramMap.get('id');
 
     if(!this.orderId) return;
 
     this.viewMode.set(true);
+    this.getOrder(this.orderId);
+  };
+
+  getOrder(orderId: string):void{
+    this.OrderService.findOneOrder(orderId).pipe(
+      takeUntilDestroyed(this.destroyRef)
+    ).subscribe(order => {
+      this.orderSubject.next(order);
+    });
   };
 
   isClient(): void {
@@ -87,12 +105,12 @@ export class CartComponent implements OnInit{
       confirmButtonText: "Sim, já sou!",
       cancelButtonText: "Não, preciso fazer o checkout",
       confirmButtonColor: "#1b7d0c",
-      cancelButtonColor: "#d33",
-      reverseButtons: true
+      cancelButtonColor: "#d33"
     }).then(result => {
       if (result.isConfirmed) {
 
         this.checkoutService.alreadyAClient();
+        this.toaster.setTimerEnabled(false);
         this.toaster.success("Carrinho enviado para o WhatsApp com sucesso!");
       } else if (result.dismiss === Swal.DismissReason.cancel) {
 
@@ -101,8 +119,16 @@ export class CartComponent implements OnInit{
     });
   };
 
-  endOrder():void{
-    this.OrderService.completeOrder(this.orderId!);
+  endOrder(): void {
+    if (!this.orderId) return;
+
+    this.OrderService.completeOrder(this.orderId!).pipe(
+      takeUntilDestroyed(this.destroyRef),
+      switchMap(() => this.OrderService.findOneOrder(this.orderId!))
+    ).subscribe(order => {
+      this.toaster.success("Pedido finalizado com sucesso");
+      this.orderSubject.next(order);
+    });
   };
 
   redirectBack():void{

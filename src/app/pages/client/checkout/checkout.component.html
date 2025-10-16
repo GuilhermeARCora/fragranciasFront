@@ -2,7 +2,7 @@
 
   <section class="card-checkout d-flex flex-column gap-3 p-md-5 mt-md-0">
 
-    <h1>Preencha as informações</h1>
+    <h1 style="font-family: var(--mer);">Preencha as informações</h1>
 
     <form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
 
@@ -40,6 +40,12 @@
         @if(hasFormError(checkoutForm, 'email', 'required')){
         <mat-error>
           Email é obrigatório
+        </mat-error>
+        }
+
+        @if(hasFormError(checkoutForm, 'email', 'email')){
+        <mat-error>
+          Insira um email válido
         </mat-error>
         }
       </div>
@@ -108,7 +114,7 @@
         <button
           type="submit"
           id="btn-end"
-          class="btn btn-success rounded-5 p-2 w-100"
+          class="btn btn-success w-100 fw-bold rounded-2"
           [disabled]="checkoutForm.invalid"
         >
           FINALIZAR

@@ -23,20 +23,18 @@ export class CartItemComponent implements OnInit{
   cartService = inject(ShoppingCartService);
   breakPointService = inject(BreakPointService);
 
-  inPromo = signal<boolean>(false);
   itemCurrentPrice$!: Observable<number>;
   itemFullPrice$!: Observable<number>;
 
   ngOnInit(): void {
     this.calcCurrentTotalAmount();
     this.calcFullTotalAmount();
-    this.isInPromo();
   };
 
   increase(): void {
     this.amount++;
     this.cartService.addOrUpdateCart(this.product, this.amount);
-  }
+  };
 
   decrease(): void {
     if (this.amount > 1) {
@@ -71,10 +69,6 @@ export class CartItemComponent implements OnInit{
       })
     );
 
-  };
-
-  isInPromo():void{
-    this.inPromo.set(!!this.product.promoPercentage);
   };
 
 };

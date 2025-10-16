@@ -6,7 +6,7 @@ import { BreakPointService } from '../../../core/services/breakPoint/break-point
 import { DataTableComponent } from "../../../shared/components/data-table/data-table.component";
 import { ProductsService } from '../../../core/services/products/products.service';
 import { Product } from '../../../shared/types/Product';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import Swal from 'sweetalert2';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -22,12 +22,10 @@ import { CurrencyMask } from '../../../shared/controlValueAcessor/currency/curre
     CommonModule,
     ReactiveFormsModule,
     MatIconModule,
-    CommonModule,
     DataTableComponent,
     RouterModule,
     MatFormFieldModule,
     MatInput,
-    FormsModule,
     MatSelectModule,
     DisplayCategoryPipe,
     MatCheckboxModule,
@@ -85,7 +83,7 @@ export class ProductHomeComponent implements OnInit{
     });
   };
 
-  changeStatus(product: Product): void{
+  changeActive(product: Product): void{
     const newStatus = !product.active;
 
      Swal.fire({
@@ -127,9 +125,7 @@ export class ProductHomeComponent implements OnInit{
     const filters = this.productForm.value;
 
     this.productService.getAllProducts(filters).subscribe({
-      next: () => {
-        this.toaster.success("Produtos listados!");
-      },
+      next: () => {},
       error: (err) => {
         this.toaster.error(err.error.message);
       }

@@ -43,14 +43,29 @@
       </a>
     </div>
     }@else{
-      <div class="position-absolute start-50 translate-middle-x">
-        <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
+      <div class="position-absolute start-50 translate-middle-x text-center">
+        <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;" class="title">
           {{ title() }}
         </h1>
       </div>
     }
 
-    <div class="d-flex ms-auto me-3 pe-md-5 me-md-5" [class.me-4]="!isHome">
+    <div class="d-flex ms-auto me-3 pe-md-5 me-md-5 align-items-center" [class.me-4]="!isHome">
+      @if(isAdmin){
+      <div>
+        <button
+          matTooltip="Painel do Admin"
+          matTooltipPosition="below"
+          mat-icon-button
+          color="primary"
+          routerLink="/admin"
+          id="link-redirect-admin"
+          class="btn border-0 bg-transparent p-0"
+        >
+          <mat-icon fontSet="material-symbols-outlined">admin_panel_settings</mat-icon>
+        </button>
+      </div>
+      }
       <app-header-cart/>
     </div>
 

@@ -18,8 +18,14 @@
         {{product.name}}
       </p>
 
-      <div class="d-flex flex-column gap-1">
-        <h4 class="old-price">{{product.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</h4>
+      <div class="d-flex flex-column gap-1 ">
+
+        <h4
+          class="old-price"
+          [style.visibility]="product.currentPrice === product.fullPrice ? 'hidden' : 'visible'"
+        >
+          {{ product.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}
+        </h4>
 
         <div class="d-flex flex-row gap-1" >
           <h1 class="main-price">{{product.currentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</h1>

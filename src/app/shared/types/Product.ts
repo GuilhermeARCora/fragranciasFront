@@ -10,8 +10,6 @@ export interface Product {
   description?:string;
   active?:boolean;
   cod?:string;
-  createdAt?:string;
-  updatedAt?:string;
 };
 export interface ProductForm {
   name:string;

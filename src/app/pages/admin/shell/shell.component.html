@@ -1,6 +1,11 @@
 <mat-drawer-container class="sidenav-container" autosize>
 
-      <mat-drawer #drawer [mode]="(breakpoint.isHandset$ | async) ? 'over' : 'side'" style="background: var(--green);">
+      <mat-drawer
+        #drawer
+        [mode]="(breakpoint.isHandset$ | async) ? 'over' : 'side'"
+        style="background: var(--green);"
+        [opened]="!(breakpoint.isHandset$ | async)"
+      >
         <app-admin-header/>
       </mat-drawer>
 
@@ -14,25 +19,17 @@
             </button>
 
             <div class="position-absolute top-50 start-50 translate-middle">
-              <a
-                 matTooltip="Ir para a página inicial de admin"
-                 matTooltipPosition="below"
-                 routerLink="/admin/home"
-                 style="display:inline-block"
-                 id="link-admin-home"
-              >
-                <img
-                  src="assets/img/logo.webp"
-                  alt="Logo Fragrâncias Decor"
-                  style="display:block"
-                />
-              </a>
+
+              <p class="fs-1" style="font-family: var(--mer);">
+                {{title()}}
+              </p>
+
             </div>
 
           </div>
         </header>
 
-        <main class="container-fluid py-3">
+        <main class="container-fluid py-3" (click)="drawer.opened ? drawer.close() : null">
           <app-layout></app-layout>
         </main>
 

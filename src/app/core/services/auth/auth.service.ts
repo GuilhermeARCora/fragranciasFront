@@ -14,7 +14,7 @@ import { ResponseData } from '../../../shared/types/ResponseData';
 export class AuthService {
 
   url = environment.apiUrl;
-  route = 'users'
+  route = 'user'
   http = inject(HttpClient);
   router = inject(Router);
   toast = inject(ToastService);

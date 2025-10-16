@@ -9,6 +9,7 @@ import { CheckoutService } from '../../../core/services/checkout/checkout.servic
 import { MatInputModule } from '@angular/material/input';
 import { hasFormError } from '../../../shared/utils/helpers';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-checkout',
@@ -28,6 +29,7 @@ export class CheckoutComponent implements OnInit {
 
   fb = inject(FormBuilder);
   hasFormError = hasFormError;
+  router = inject(Router);
 
   checkoutService = inject(CheckoutService);
   toaster = inject(ToastService);
@@ -41,7 +43,7 @@ export class CheckoutComponent implements OnInit {
   createForm():void{
     this.checkoutForm = this.fb.group({
       fullName: ['', [Validators.required]],
-      email: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
       address: ['', [
           Validators.required,
           Validators.minLength(5),
@@ -55,7 +57,9 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit():void{
     this.checkoutService.newClient(this.checkoutForm.value);
+    this.toaster.setTimerEnabled(false);
     this.toaster.success("Informações enviadas para o WhatsApp com sucesso!");
+    this.router.navigateByUrl("/");
   };
 
 };
