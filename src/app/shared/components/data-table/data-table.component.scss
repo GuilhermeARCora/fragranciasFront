@@ -105,3 +105,31 @@
 .btn:hover {
   transform: translateY(-4px);
 }
+
+.row-concluido {
+  background-color: #189058 !important;
+  color: white;
+}
+
+.row-concluido mat-icon {
+  color: white; // Ícones dentro da linha verde
+}
+
+.row-pendente {
+  background-color: #fdce43 !important;
+  color: #1b1b1b;
+}
+
+.row-pendente mat-icon {
+  color: #1b1b1b; // Ícones dentro da linha amarela
+}
+
+.row-cancelado {
+  background-color: #d50314 !important;
+  color: white;
+}
+
+.row-cancelado mat-icon {
+  color: white; // Ícones dentro da linha vermelha
+}
+

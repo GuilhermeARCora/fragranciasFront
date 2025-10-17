@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit{
   router = inject(Router);
   authService = inject(AuthService);
 
-  hide = signal(true);
+  hide:boolean = true;
 
   ngOnInit(): void {
     this.buildForm();
@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit{
   buildForm(): void{
        this.loginForm = new FormGroup({
             email: new FormControl('',[Validators.required, Validators.email]),
-            password: new FormControl('',[Validators.required, Validators.minLength(6)]),
+            password: new FormControl('',[Validators.required]),
         }
       );
   };
@@ -66,7 +66,7 @@ export class LoginComponent implements OnInit{
   };
 
   clickEvent(event: MouseEvent): void {
-      this.hide.update(value => !value);
+      this.hide = !this.hide;
       event.preventDefault();
       event.stopPropagation();
   };

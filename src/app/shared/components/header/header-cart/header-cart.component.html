@@ -1,12 +1,11 @@
-@let cartCount = (cartCount$ | async);
 <button
     class="btn"
     aria-label="Open cart"
-    [matBadge]="cartCount || 0"
+    [matBadge]="cartCount() || 0"
     matBadgeColor="accent"
-    [@badgeBounce]="cartCount"
+    [@badgeBounce]="cartCount()"
     [ngClass]="{ 'badge-glow': glow() }"
-    (click)="redirectCart(cartCount)"
+    (click)="redirectCart(cartCount())"
     matTooltip="Carrinho de compras"
     matTooltipPosition="below"
   >

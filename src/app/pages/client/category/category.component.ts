@@ -31,10 +31,10 @@ export class CategoryComponent implements OnInit{
   toaster = inject(ToastService);
   breakPointService = inject(BreakPointService);
 
-  page = 1;
+  page:number = 1;
+  amount:number = 0;
 
   products = signal<Product[]>([]);
-  amount = signal<number>(0);
 
   categories:string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
   categoryFromURl!:string;
@@ -53,14 +53,14 @@ export class CategoryComponent implements OnInit{
   setProducts(page = 1):void{
     this.productService.getProductsByCategory(this.categoryFromURl, page).subscribe(v => {
         const products = v.data.products;
-        if(products.length === 0)return this.toaster.info("Todos os produtos já foram listados");
+        if(products.length === 0) return this.toaster.info("Todos os produtos já foram listados");
 
         const currentProducts = this.products();
         this.products.set([...currentProducts,...products]);
 
         const amount = v.data.amount;
-        const currentAmount = this.amount();
-        this.amount.set(amount + currentAmount);
+        const currentAmount = this.amount;
+        this.amount = amount + currentAmount;
       });
   };
 

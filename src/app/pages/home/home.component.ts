@@ -1,4 +1,4 @@
-import { Component, OnInit, signal, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { BannerComponent } from "../../shared/components/banner/banner.component";
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -33,8 +33,6 @@ import { LayoutComponent } from '../client/layout/layout.component';
 export class HomeComponent implements OnInit {
 
   categories: CategoryBanner[] = [];
-
-  readonly panelOpenState = signal(false);
 
   ngOnInit(): void {
     this.categoriesList();

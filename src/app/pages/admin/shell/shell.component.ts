@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -26,7 +26,7 @@ export class ShellComponent {
 
   breakpoint = inject(BreakPointService);
   router = inject(Router);
-  title = signal<string>('Titulo');
+  title:string = 'Titulo';
 
   constructor(){
     // escuta mudanças de rota
@@ -48,7 +48,7 @@ export class ShellComponent {
 
     const rawTitle:string = currentRoute.snapshot.data['title'];
 
-    this.title.set(rawTitle);
+    this.title = rawTitle;
   };
 
 };

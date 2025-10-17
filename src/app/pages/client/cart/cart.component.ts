@@ -1,19 +1,18 @@
 import { OrderService } from './../../../core/services/order/order.service';
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { ShoppingCartService } from '../../../core/services/shoppingCart/shopping-cart.service';
-import { BehaviorSubject, combineLatest, map, Observable, switchMap } from 'rxjs';
+import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
 import { CartItemComponent } from "./cart-item/cart-item.component";
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import { LayoutComponent } from '../layout/layout.component';
-import { CartItem } from '../../../shared/types/Cart';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import Swal from 'sweetalert2';
 import { CheckoutService } from '../../../core/services/checkout/checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { Order } from '../../../shared/types/Order';
+import { CartService } from '../../../core/services/cart/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -33,15 +32,18 @@ export class CartComponent implements OnInit{
   authService = inject(AuthService);
   checkoutService = inject(CheckoutService);
   OrderService = inject(OrderService);
-  cartService = inject(ShoppingCartService);
+  cartService = inject(CartService);
 
   destroyRef = inject(DestroyRef);
   router = inject(Router);
   route = inject(ActivatedRoute);
   location = inject(Location);
 
-  cartItems$!: Observable<CartItem[]>;
-  cartDiscountTotal$!: Observable<number>;
+  cartTotalDiscount = computed(() => {
+    const cart = this.cartService.cartSignal();
+
+    return (cart.totalFullPrice ?? 0) - (cart.totalCurrentPrice ?? 0);
+  });
 
   orderId!:string | null;
   private orderSubject = new BehaviorSubject<Order | null>(null);
@@ -53,30 +55,10 @@ export class CartComponent implements OnInit{
   readonly orderTotalDiscount$ = this.order$.pipe(map(order => order?.totalDiscount));
   readonly orderTotalPixPrice$ = this.order$.pipe(map(order => order?.totalPixPrice));
 
-  viewMode = signal<boolean>(false);
+  viewMode:boolean = (false);
 
   ngOnInit(): void {
-    this.cartItems$ = this.getItemsFromCart();
-    this.calcCartDiscount();
     this.isOrder();
-  };
-
-  getItemsFromCart(): Observable<CartItem[]>{
-    return this.cartService.cart$.pipe(
-      map(cart => cart.items)
-    );
-  };
-
-  calcCartDiscount():void{
-
-    this.cartDiscountTotal$ = combineLatest([
-      this.cartService.cartFullPriceTotal$,
-      this.cartService.cartCurrentPriceTotal$
-    ]).pipe(
-      map(([full, current]) => (full ?? 0) - (current ?? 0)),
-      takeUntilDestroyed(this.destroyRef)
-    );
-
   };
 
   isOrder():void{
@@ -84,7 +66,7 @@ export class CartComponent implements OnInit{
 
     if(!this.orderId) return;
 
-    this.viewMode.set(true);
+    this.viewMode = true;
     this.getOrder(this.orderId);
   };
 

@@ -1,15 +1,15 @@
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, Injector, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { filter, Observable, pairwise, startWith, switchMap, timer } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
-import { ShoppingCartService } from '../../../../core/services/shoppingCart/shopping-cart.service';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { CartService } from '../../../../core/services/cart/cart.service';
 
 @Component({
   selector: 'app-header-cart',
@@ -43,11 +43,12 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 export class HeaderCartComponent {
 
   router = inject(Router);
-  cartService = inject(ShoppingCartService);
+  cartService = inject(CartService);
   destroyRef = inject(DestroyRef);
+  injector = inject(Injector);
   toaster = inject(ToastService);
 
-  cartCount$: Observable<number> = this.cartService.cartUnits$;
+  cartCount = this.cartService.cartUnits;
   glow = signal<boolean>(false);
 
   ngOnInit(): void {
@@ -64,16 +65,22 @@ export class HeaderCartComponent {
   };
 
   activateAnimation():void {
-    this.cartService.cartUnits$.pipe(
-      startWith(0),
-      pairwise(),
-      filter(([prev, curr]) => curr > prev), // só reage se o número aumentar
-      switchMap(() => {
+    let prevUnits = this.cartCount();
+    let saveTimeout: any;
+
+    effect(() => {
+      const currUnits = this.cartCount();
+
+      if (currUnits > prevUnits) {
         this.glow.set(true);
-        return timer(450);
-      }),
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(() => this.glow.set(false));
+
+        clearTimeout(saveTimeout);
+
+        saveTimeout = setTimeout(() => this.glow.set(false), 450);
+      };
+
+      prevUnits = currUnits;
+    }, {injector: this.injector});
   };
 
 };
