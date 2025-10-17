@@ -1,6 +1,3 @@
-@let itemCurrentPrice = itemCurrentPrice$ | async;
-@let itemFullPrice = itemFullPrice$ | async;
-
 <div class="product-card">
 
   <div class="product-image mb-2">
@@ -19,7 +16,7 @@
 
         @if(!isModoView){
         <div class="main-price">
-          {{itemCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+          {{itemCurrentPrice() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
         }@else {
           <div class="main-price">
@@ -32,7 +29,7 @@
           class="old-price"
           [style.visibility]="itemCurrentPrice === itemFullPrice ? 'hidden' : 'visible'"
         >
-            {{itemFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+            {{itemFullPrice() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
         }@else {
           <div

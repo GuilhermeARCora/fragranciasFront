@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit, signal } from '@angular/core';
+import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -51,11 +51,10 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   destroyRef = inject(DestroyRef);
 
   productForm!: FormGroup;
-  allCategories = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
+  allCategories: string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
 
-  isEdit = signal<boolean>(false);
-  id = signal<string | null>('');
-  title = signal<string>('Cadastre um Produto!');
+  isEdit:boolean = false;
+  id:string | null = null;
 
   productPlaceholder: Product = {
     _id: 'preenchido',
@@ -80,18 +79,17 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   };
 
   isEditCheck():void{
-    this.id.set(this.route.snapshot.paramMap.get('id'));
+    this.id = this.route.snapshot.paramMap.get('id');
 
-    if(this.id()){
-      this.isEdit.set(true);
-      this.title.set("Edite um Produto!");
+    if(this.id){
+      this.isEdit = true;
       const productState = history.state['product'] as Product | undefined;
 
       if(productState){
         this.productForm.patchValue(productState);
         this.productForm.updateValueAndValidity();
       }else{
-        this.productService.getOneProduct(this.id()).subscribe((res) => {
+        this.productService.getOneProduct(this.id).subscribe((res) => {
           this.productForm.patchValue(res);
           this.productForm.updateValueAndValidity();
         });
@@ -155,7 +153,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
     if (!this.imageValidation(image)) return;
 
 
-    if(!this.isEdit()) this.saveProduct(formValue);
+    if(!this.isEdit) this.saveProduct(formValue);
     else this.editProduct(formValue);
   };
 
@@ -167,7 +165,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
 
   imageValidation(image: File | string | null): boolean{
 
-    if (!this.isEdit()) {
+    if (!this.isEdit) {
       // criação → precisa ser File
       if (!(image instanceof File)) {
         this.toaster.error('A imagem é obrigatória');
@@ -199,7 +197,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   };
 
   editProduct(formValue: ProductForm):void{
-    this.productService.editProduct(formValue, this.id()).subscribe({
+    this.productService.editProduct(formValue, this.id).subscribe({
         next: () => {
           this.toaster.setTimerEnabled(true);
           this.toaster.success("Produto editado com sucesso!")

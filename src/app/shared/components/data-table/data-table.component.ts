@@ -49,7 +49,6 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
   @Input() useBtnStatus: boolean = false;
   @Input() useBtnLink: boolean = false;
 
-
   @Output() edit = new EventEmitter<any>();
   @Output() active = new EventEmitter<any>();
   @Output() status = new EventEmitter<any>();

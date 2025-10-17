@@ -146,6 +146,11 @@
         *matRowDef="let row; columns: columnKeys.concat(['actions'])"
         [id]="'row-' + row._id"
         [class]="'data-row-' + row._id"
+        [ngClass]="{
+          'row-concluido': row.status === 'CONCLUIDO',
+          'row-pendente': row.status === 'PENDENTE',
+          'row-cancelado': row.status === 'CANCELADO'
+        }"
       ></tr>
 
     </table>

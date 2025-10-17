@@ -44,7 +44,7 @@ export class ProductHomeComponent implements OnInit{
   toaster = inject(ToastService);
   productForm!: FormGroup;
 
-  allCategories = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
+  allCategories: string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
 
   columns = [
     { key: '_id', label: '_id', visible: false },

@@ -39,7 +39,7 @@ export class OrderHomeComponent implements OnInit{
   toaster = inject(ToastService);
   orderForm!: FormGroup;
 
-  statusList = ['PENDENTE', 'CONCLUIDO', 'CANCELADO'];
+  statusList: string[] = ['PENDENTE', 'CONCLUIDO', 'CANCELADO'];
 
   columns = [
     { key: '_id', label: '_id', visible: true },

@@ -1,12 +1,5 @@
 @let isHandset = (breakPointService.isHandset$ | async);
-@let isViewMode = viewMode();
 @let isAdmin = this.authService.currentUser?.role;
-
-@let cartItems = (cartItems$ | async);
-@let cartFullPrice = (cartService.cartFullPriceTotal$ | async) ?? 0;
-@let cartCurrentPrice = (cartService.cartCurrentPriceTotal$ | async) ?? 0;
-@let cartPixPrice = (cartService.cartPixPriceTotal$ | async) ?? 0;
-@let cartTotalDiscount = (cartDiscountTotal$ | async) ?? 0;
 
 @let orderItems = (orderItems$ | async);
 @let orderStatus = (orderStatus$ | async);
@@ -22,12 +15,12 @@
     <div class="d-flex justify-content-center mt-5 card-items">
 
       <div [ngClass]=" isHandset ? 'd-flex flex-column gap-5' : 'd-flex flex-wrap gap-3 justify-content-evenly'">
-        @if(!isViewMode){
-          @for(item of cartItems ; track item.product._id){
+        @if(!viewMode){
+          @for(item of cartService.cartItems() ; track item.product._id){
           <app-cart-item
             [product]="item.product"
             [amount]="item.amount"
-            [isModoView]="isViewMode"
+            [isModoView]="viewMode"
           />
           }
         }@else{
@@ -35,7 +28,7 @@
           <app-cart-item
             [product]="item"
             [amount]="item.amount"
-            [isModoView]="isViewMode"
+            [isModoView]="viewMode"
           />
           }
         }
@@ -49,8 +42,8 @@
 
         <div class="d-flex justify-content-between align-items-center">
          <h2>Subtotal</h2>
-         @if(!isViewMode){
-          <p>{{ cartFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+         @if(!viewMode){
+          <p>{{ cartService.cartFullPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
          }@else {
           <p>{{ orderTotalFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
          }
@@ -58,8 +51,8 @@
 
         <div class="d-flex justify-content-between align-items-center">
           <h5>Desconto total</h5>
-          @if(!isViewMode){
-            <p>{{cartTotalDiscount | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+          @if(!viewMode){
+            <p>{{cartTotalDiscount() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
           }@else {
             <p>{{orderTotalDiscount | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
           }
@@ -75,8 +68,8 @@
 
           <div class="d-flex justify-content-between align-items-center">
             <h2>Total</h2>
-            @if(!isViewMode){
-              <p>{{cartCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+            @if(!viewMode){
+              <p>{{cartService.cartCurrentPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
             }@else {
               <p>{{orderTotalCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
             }
@@ -84,8 +77,8 @@
 
           <div class="d-flex justify-content-between align-items-center">
             <h5>Via Pix</h5>
-            @if(!isViewMode){
-              <p class="pix-price">{{cartPixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+            @if(!viewMode){
+              <p class="pix-price">{{cartService.cartPixPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
             }@else {
               <p class="pix-price">{{orderTotalPixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
             }
@@ -93,7 +86,7 @@
 
         </div>
 
-        @if(!isViewMode){
+        @if(!viewMode){
         <div class="d-flex flex-column">
 
           <div>
@@ -132,7 +125,7 @@
         </div>
         }
 
-        @if(isAdmin && isViewMode && orderStatus === 'PENDENTE'){
+        @if(isAdmin && viewMode && orderStatus === 'PENDENTE'){
         <div>
           <button
             (click)="endOrder()"

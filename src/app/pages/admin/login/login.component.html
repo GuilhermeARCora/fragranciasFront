@@ -48,7 +48,7 @@
               <mat-form-field floatLabel="always" appearance="outline" class="w-100">
 
                 <input
-                  [type]="hide() ? 'password' : 'text'"
+                  [type]="hide ? 'password' : 'text'"
                   id="input-password"
                   formControlName="password"
                   matInput
@@ -60,11 +60,11 @@
                     id="btn-hide"
                     (click)="clickEvent($event)"
                     [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide()"
+                    [attr.aria-pressed]="hide"
                     style="margin-right: 0.4em;"
                     class="bg-transparent border-0 pe-2"
                   >
-                    <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                   </button>
 
                   <mat-label>Senha</mat-label>
@@ -72,12 +72,6 @@
                   @if(hasFormError(loginForm,'password','required')){
                   <mat-error>
                       Senha é <strong>obrigatório!</strong>
-                  </mat-error>
-                  }
-
-                  @if(hasFormError(loginForm,'password','minlength')){
-                  <mat-error>
-                      Senha precisa ter no mínimo <strong>6 caracteres!</strong>
                   </mat-error>
                   }
 
