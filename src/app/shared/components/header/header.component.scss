@@ -21,6 +21,12 @@
 .banner-track span {
   white-space: nowrap;
 }
+
+.green-border{
+  border-bottom: 3px solid var(--green);
+  border-radius: 16px;
+}
+
 /* Animation only for small screens (< 576px) */
 @media (max-width: 576px) {
   .banner-track {
@@ -42,7 +48,7 @@
     -webkit-box-orient: vertical;
 
     max-width: 12rem;
-    line-height: 1.5em;
+    line-height: 1em;
     max-height: 3.5em;
   }
 

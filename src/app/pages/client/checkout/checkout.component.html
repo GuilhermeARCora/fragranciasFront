@@ -16,13 +16,13 @@
             formControlName="fullName"
             placeholder="Insira seu nome completo"
           >
+          @if(hasFormError(checkoutForm, 'fullName', 'required')){
+          <mat-error>
+            Seu nome completo é obrigatório
+          </mat-error>
+          }
         </mat-form-field>
 
-        @if(hasFormError(checkoutForm, 'fullName', 'required')){
-        <mat-error>
-          Seu nome completo é obrigatório
-        </mat-error>
-        }
       </div>
 
       <div>
@@ -35,23 +35,25 @@
             formControlName="email"
             placeholder="Insira seu email"
           >
+
+          @if(hasFormError(checkoutForm, 'email', 'required')){
+          <mat-error>
+            Email é obrigatório
+          </mat-error>
+          }
+
+          @if(hasFormError(checkoutForm, 'email', 'email')){
+          <mat-error>
+            Insira um email válido
+          </mat-error>
+          }
+
         </mat-form-field>
 
-        @if(hasFormError(checkoutForm, 'email', 'required')){
-        <mat-error>
-          Email é obrigatório
-        </mat-error>
-        }
-
-        @if(hasFormError(checkoutForm, 'email', 'email')){
-        <mat-error>
-          Insira um email válido
-        </mat-error>
-        }
       </div>
 
       <div>
-        <mat-form-field appearance="outline" class="w-100">
+        <mat-form-field appearance="outline" class="w-100 mb-2">
           <mat-label>CPF/CNPJ</mat-label>
           <input
             matInput
@@ -59,14 +61,22 @@
             id="input-cpfOrCnpj"
             formControlName="cpfOrCnpj"
             placeholder="Insira seu CPF/CNPJ"
+            appOnlyNumber
           >
-        </mat-form-field>
+          <mat-hint>Somente números</mat-hint>
 
-        @if(hasFormError(checkoutForm, 'cpfOrCnpj', 'required')){
-        <mat-error>
-          CPF/CNPJ é obrigatório
-        </mat-error>
-        }
+          @if(hasFormError(checkoutForm, 'cpfOrCnpj', 'required')){
+          <mat-error>
+            CPF/CNPJ é obrigatório
+          </mat-error>
+          }
+
+          @if(hasFormError(checkoutForm, 'cpfOrCnpj', 'notCPForCNPJ')){
+          <mat-error>
+            Insira um CPF ou CNPJ válido!
+          </mat-error>
+          }
+        </mat-form-field>
       </div>
 
       <div>
@@ -82,31 +92,33 @@
             formControlName="address"
             placeholder="Insira seu endereço"
           ></textarea>
+          <mat-hint>Endereço para entrega</mat-hint>
+
+          @if(hasFormError(checkoutForm, 'address', 'required')){
+          <mat-error>
+            Endereço é obrigatório
+          </mat-error>
+          }
+
+          @if(hasFormError(checkoutForm,'address','minlength')){
+          <mat-error>
+            O Endereço deve ter pelo menos 5 caracteres
+          </mat-error>
+          }
+
+          @if(hasFormError(checkoutForm,'address','maxlength')){
+          <mat-error>
+            O Endereço pode ter no máximo 150 caracteres
+          </mat-error>
+          }
+
+          @if(hasFormError(checkoutForm,'address','pattern')){
+          <mat-error>
+            Caracteres inválidos foram usados
+          </mat-error>
+          }
+
         </mat-form-field>
-
-        @if(hasFormError(checkoutForm, 'address', 'required')){
-        <mat-error>
-          Endereço é obrigatório
-        </mat-error>
-        }
-
-        @if(hasFormError(checkoutForm,'address','minlength')){
-        <mat-error>
-          O Endereço deve ter pelo menos 5 caracteres
-        </mat-error>
-        }
-
-        @if(hasFormError(checkoutForm,'address','maxlength')){
-        <mat-error>
-          O Endereço pode ter no máximo 150 caracteres
-        </mat-error>
-        }
-
-        @if(hasFormError(checkoutForm,'address','pattern')){
-        <mat-error>
-          Caracteres inválidos foram usados
-        </mat-error>
-        }
 
       </div>
 
@@ -114,7 +126,7 @@
         <button
           type="submit"
           id="btn-end"
-          class="btn btn-success w-100 fw-bold rounded-2"
+          class="btn btn-success w-100 fw-bold rounded-2 mt-4"
           [disabled]="checkoutForm.invalid"
         >
           FINALIZAR

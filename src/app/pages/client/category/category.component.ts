@@ -4,7 +4,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
-import { BannerComponent } from "../../../shared/components/banner/banner.component";
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { Product } from '../../../shared/types/Product';
 import { ProductsService } from '../../../core/services/products/products.service';
@@ -18,7 +17,6 @@ import { LayoutComponent } from '../layout/layout.component';
     MatTooltipModule,
     MatIconModule,
     ProductCardComponent,
-    BannerComponent,
     LayoutComponent
 ],
   templateUrl: './category.component.html',

@@ -18,13 +18,14 @@
               formControlName="name"
               placeholder="Digite o nome do produto"
             >
-          </mat-form-field>
 
-          @if(hasFormError(productForm,'name','required')){
-          <mat-error>
-            O nome é <strong>OBRIGATÓRIO</strong>
-          </mat-error>
-          }
+            @if(hasFormError(productForm,'name','required')){
+            <mat-error>
+              O nome é <strong>OBRIGATÓRIO</strong>
+            </mat-error>
+            }
+
+          </mat-form-field>
 
         </div>
 
@@ -94,13 +95,14 @@
               step="1"
               placeholder="Digite o código do produto"
             >
-          </mat-form-field>
 
-          @if(hasFormError(productForm,'cod','min')){
-          <mat-error>
-            O código deve ser maior ou igual a 1
-          </mat-error>
-          }
+            @if(hasFormError(productForm,'cod','min')){
+            <mat-error>
+              O código deve ser maior ou igual a 1
+            </mat-error>
+            }
+
+          </mat-form-field>
 
         </div>
       </div>
@@ -122,25 +124,32 @@
               placeholder="Digite a descrição do produto"
             >
             </textarea>
+
+            @if(hasFormError(productForm,'description','required')){
+            <mat-error>
+              A descrição é obrigatória.
+            </mat-error>
+            }
+
+            @if(hasFormError(productForm,'description','minlength') && !hasFormError(productForm,'description','required')){
+            <mat-error>
+              A descrição deve ter pelo menos 10 caracteres.
+            </mat-error>
+            }
+
+            @if(hasFormError(productForm,'description','maxlength')){
+            <mat-error>
+              A descrição pode ter no máximo 500 caracteres.
+            </mat-error>
+            }
+
+            @if(hasFormError(productForm,'description','pattern')){
+            <mat-error>
+              Caracteres inválidos foram usados.
+            </mat-error>
+            }
+
           </mat-form-field>
-
-          @if(hasFormError(productForm,'description','minlength')){
-          <mat-error>
-            A descrição deve ter pelo menos 10 caracteres
-          </mat-error>
-          }
-
-          @if(hasFormError(productForm,'description','maxlength')){
-          <mat-error>
-            A descrição pode ter no máximo 500 caracteres
-          </mat-error>
-          }
-
-          @if(hasFormError(productForm,'description','pattern')){
-          <mat-error>
-            Caracteres inválidos foram usados
-          </mat-error>
-          }
 
         </div>
       </div>

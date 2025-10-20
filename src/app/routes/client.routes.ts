@@ -13,6 +13,11 @@ export const ClientRoutes:Routes = [
     data: { title: 'Checkout' }
   },
   {
+    path:'produto/:id',
+    loadComponent: () => import('../pages/client/individual-product/individual-product.component').then(c => c.IndividualProductComponent),
+    data: { title: 'Produto'}
+  },
+  {
     path:'pedido/:id',
     loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent),
     data: { title: 'Pedido'}

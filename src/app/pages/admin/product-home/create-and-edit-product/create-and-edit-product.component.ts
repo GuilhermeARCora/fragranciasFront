@@ -108,6 +108,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
       description: new FormControl('', {
         nonNullable: true,
         validators: [
+          Validators.required,
           Validators.minLength(10),
           Validators.maxLength(500),
           Validators.pattern(/^[\w\sÀ-ÿ.,!?"'()-]*$/)

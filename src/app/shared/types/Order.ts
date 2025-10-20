@@ -3,7 +3,7 @@ export interface OrderItem {
   name: string;
   fullPrice: number;
   currentPrice: number;
-  pixPrice:number;
+  pixPrice: number;
   promoPercentage: number;
   amount: number;
   image: string | File;
@@ -12,23 +12,29 @@ export interface OrderItem {
 export type OrderCreateItem = Omit<OrderItem, 'currentPrice' | 'pixPrice'>;
 
 export interface Order {
-  _id:string,
-  items:OrderItem[],
-  status:string,
-  totalUnits:number,
-  totalFullPrice:number,
-  totalDiscount:number,
-  totalCurrentPrice:number,
-  totalPixPrice:number
+  _id: string;
+  items: OrderItem[];
+  status: string;
+  totalUnits: number;
+  totalFullPrice: number;
+  totalDiscount: number;
+  totalCurrentPrice: number;
+  totalPixPrice: number;
+  dayItWasIssued: string;
 };
 
-export interface OrderList{
-  orders: Order[],
-  amount: number
+export interface OrderList {
+  orders: Order[];
+  amount: number;
 };
 
-
-export type OrderCreate = Omit<
-Order, '_id' | 'totalUnits' | 'totalFullPrice' | 'totalDiscount' | 'totalCurrentPrice' | 'totalPixPrice'> & { items: OrderCreateItem[] };
-
-export type OrderFilter = Omit<Order, 'items'>;
+export interface OrderFilter {
+  _id?: string;
+  status?: string;
+  totalUnits?: number;
+  totalFullPrice?: number;
+  totalDiscount?: number;
+  totalCurrentPrice?: number;
+  totalPixPrice?: number;
+  daysAgo?: number;
+};
