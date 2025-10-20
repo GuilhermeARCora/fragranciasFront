@@ -39,11 +39,12 @@ export class OrderHomeComponent implements OnInit{
   toaster = inject(ToastService);
   orderForm!: FormGroup;
 
-  statusList = ['PENDENTE', 'CONCLUIDO', 'CANCELADO'];
+  statusList: string[] = ['PENDENTE', 'CONCLUIDO', 'CANCELADO'];
 
   columns = [
     { key: '_id', label: '_id', visible: true },
     { key: 'status', label: 'Status', visible: true },
+    { key: 'dayItWasIssued', label:'Data de Criacão', visible: true},
     { key: 'totalFullPrice', label: 'Valor cheio', visible: true, pipe: 'currency', pipeArgs: ['BRL', 'symbol', '1.2-2'] },
     { key: 'totalDiscount', label:'Desconto', visible: true, pipe: 'currency', pipeArgs: ['BRL', 'symbol', '1.2-2'] },
     { key: 'totalCurrentPrice', label: 'Valor final', visible: true, pipe: 'currency', pipeArgs: ['BRL', 'symbol', '1.2-2']  },
@@ -53,7 +54,7 @@ export class OrderHomeComponent implements OnInit{
 
   ngOnInit(): void{
     this.createForm();
-    this.sendFilter();
+    this.firstFilter();
   };
 
   createForm(): void{
@@ -64,7 +65,8 @@ export class OrderHomeComponent implements OnInit{
       totalDiscount:[''],
       totalCurrentPrice: [''],
       totalPixPrice:[''],
-      totalUnits:['']
+      totalUnits:[''],
+      daysAgo:['']
     });
   };
 
@@ -76,7 +78,7 @@ export class OrderHomeComponent implements OnInit{
         showCancelButton: true,
         cancelButtonText:"CANCELAR",
         confirmButtonText: "CONCLUIDO",
-        confirmButtonColor: "#3085d6",
+        confirmButtonColor: "#0ecc3eff",
         cancelButtonColor: "#d33"
       }).then((result) => {
         if (result.isConfirmed) {
@@ -133,6 +135,24 @@ export class OrderHomeComponent implements OnInit{
     });
   };
 
+  firstFilter(): void {
+    const state = history.state?.filter;
+
+    if (state) {
+      this.orderForm.patchValue(state);
+      this.orderForm.updateValueAndValidity();
+      this.orderService.findAllOrders(state).subscribe({
+        next: () => {},
+        error: (err) => this.toaster.error(err.error.message),
+      });
+
+      history.replaceState({}, '');
+    } else {
+      this.sendFilter();
+    };
+
+  };
+
   resetForm():void {
     this.orderForm.reset({
       _id:'',
@@ -142,6 +162,7 @@ export class OrderHomeComponent implements OnInit{
       totalCurrentPrice: '',
       totalPixPrice: '',
       totalUnits: '',
+      daysAgo: ''
     });
     this.sendFilter();
     this.orderForm.updateValueAndValidity();

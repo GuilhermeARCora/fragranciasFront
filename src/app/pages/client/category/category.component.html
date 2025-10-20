@@ -2,15 +2,11 @@
 
   <section>
 
-    <div>
-      <app-banner [name]="'home'"></app-banner>
-    </div>
-
     <div class="d-flex flex-column p-4">
 
       <div [class.text-center]="(breakPointService.isTablet$ | async) ">
         <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
-          {{amount()}} produtos
+          {{amount}} produtos
         </h1>
       </div>
 

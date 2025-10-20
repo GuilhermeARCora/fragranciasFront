@@ -48,12 +48,13 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
   @Input() useBtnActive: boolean = true;
   @Input() useBtnStatus: boolean = false;
   @Input() useBtnLink: boolean = false;
-
+  @Input() useBtnRemove: boolean = false;
 
   @Output() edit = new EventEmitter<any>();
   @Output() active = new EventEmitter<any>();
   @Output() status = new EventEmitter<any>();
   @Output() link = new EventEmitter<any>();
+  @Output() remove = new EventEmitter<any>();
 
   dataSource = new MatTableDataSource<T>();
   autoColumns: ColumnDef[] = [];
@@ -137,6 +138,10 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
 
   onChangeLink(element: object):void {
     this.link.emit(element);;
+  };
+
+  onChangeRemove(element: object):void {
+    this.remove.emit(element);;
   };
 
 };

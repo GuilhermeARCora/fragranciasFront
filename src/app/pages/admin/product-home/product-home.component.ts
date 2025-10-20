@@ -44,7 +44,7 @@ export class ProductHomeComponent implements OnInit{
   toaster = inject(ToastService);
   productForm!: FormGroup;
 
-  allCategories = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
+  allCategories: string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
 
   columns = [
     { key: '_id', label: '_id', visible: false },
@@ -59,7 +59,7 @@ export class ProductHomeComponent implements OnInit{
 
   ngOnInit(): void{
     this.createForm();
-    this.sendFilter();
+    this.firstFilter();
   };
 
   createForm(): void{
@@ -69,16 +69,17 @@ export class ProductHomeComponent implements OnInit{
       fullPrice:[''],
       promoPercentage:[''],
       categories: [''],
-      active:[true]
+      active:[true],
+      isInPromo:[false]
     });
   };
 
   redirectCreateProduct():void{
-    this.router.navigateByUrl('/admin/createProduct');
+    this.router.navigateByUrl('/admin/criar-produto');
   };
 
   redirectEditProduct(product: Product):void{
-    this.router.navigate([`/admin/editProduct/${product._id}`], {
+    this.router.navigate([`/admin/editar-produto/${product._id}`], {
       state: { product }
     });
   };
@@ -111,6 +112,34 @@ export class ProductHomeComponent implements OnInit{
 
   };
 
+  removeProduct(product: Product):void{
+
+    Swal.fire({
+        title: "Deseja excluir este produto?",
+        text:'Essa acão não será reversivel!',
+        icon: "warning",
+        showCancelButton: true,
+        cancelButtonText:"NÃO",
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "SIM"
+      }).then((result) => {
+        if (result.isConfirmed) {
+        this.productService.deleteProduct(product._id).subscribe({
+          next: () => {
+            this.sendFilter();
+            this.toaster.success("Produto deletado!");
+          },
+          error: (err) => {
+            this.toaster.setTimerEnabled(false);
+            this.toaster.error(err.error.message);
+          }
+        });
+      };
+    });
+
+  };
+
   onSubmit():void {
 
     if(this.productForm.untouched || this.productForm.pristine){
@@ -132,14 +161,36 @@ export class ProductHomeComponent implements OnInit{
     });
   };
 
+  firstFilter(): void {
+    const state = history.state?.filter;
+
+    if (state) {
+      const { active } = state;
+      if(active !== false ) state.active = true;
+
+      this.productForm.patchValue(state);
+      this.productForm.updateValueAndValidity();
+      this.productService.getAllProducts(state).subscribe({
+        next: () => {},
+        error: (err) => this.toaster.error(err.error.message),
+      });
+
+      history.replaceState({}, '');
+    } else {
+      this.sendFilter();
+    };
+
+  };
+
   resetForm():void {
     this.productForm.reset({
-      active:true,
+      active: true,
       name:'',
       cod:'',
       fullPrice:'',
       promoPercentage:'',
       categories: '',
+      isInPromo: false
     });
     this.sendFilter();
     this.productForm.updateValueAndValidity();
@@ -148,7 +199,7 @@ export class ProductHomeComponent implements OnInit{
   preventNegative(event: KeyboardEvent):void {
     if (event.key === '-' || event.key === 'Subtract') {
       event.preventDefault();
-    }
+    };
   };
 
 };

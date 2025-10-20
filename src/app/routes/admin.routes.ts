@@ -23,30 +23,30 @@ export const AdminRoutes: Routes = [
         data:{ roles: ['admin'] },
         children: [
           {
-            path: 'home',
+            path: 'painel-admin',
             loadComponent: () =>
               import('../pages/admin/admin-home/admin-home.component').then(c => c.AdminHomeComponent),
-            data: { title: 'Home'}
+            data: { title: 'Painel Administrativo'}
           },
           {
-            path:'homeProduct',
+            path:'produtos',
             loadComponent:() => import('../pages/admin/product-home/product-home.component').then(c => c.ProductHomeComponent),
             data: { title: 'Produtos'}
           },
           {
-            path: 'createProduct',
+            path: 'criar-produto',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
             data: { title: 'Criar Produto'}
           },
           {
-            path: 'editProduct/:id',
+            path: 'editar-produto/:id',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
             data: { title: 'Editar Produto'}
           },
           {
-            path:'homeOrder',
+            path:'pedidos',
             loadComponent:() => import('../pages/admin/order-home/order-home.component').then(c => c.OrderHomeComponent),
             data: { title: 'Pedidos'}
           }

@@ -1,18 +1,12 @@
 <section class="search-container">
 
-  <div class="search-header">
-    <h1>
-      Busque um produto
-    </h1>
-  </div>
-
   <form>
     <mat-form-field class="search-field" appearance="outline">
       <input
         #input
         id="input-autocomplete"
         matInput
-        placeholder="Busque..."
+        placeholder="Encontre um produto"
         aria-label="Produtos"
         [matAutocomplete]="auto"
         [formControl]="prodCtrl"
@@ -31,16 +25,12 @@
       </button>
       }
 
-      @if(!prodCtrl.value){
-      <mat-icon
-        matSuffix
-        class="icon-search"
-        style="cursor: pointer;"
+      <mat-autocomplete
+        #auto="matAutocomplete"
+        class="d-flex flex-column gap-2 custom-autocomplete"
+        (optionSelected)="onProductSelected($event.option.value)"
+        [displayWith]="displayFn"
       >
-       search
-      </mat-icon>
-      }
-      <mat-autocomplete #auto="matAutocomplete" class="custom-autocomplete" class="d-flex flex-column gap-2 ">
         @for (data of  (filtered$ | async); track data._id) {
           <mat-option [value]="data.name" [id]="'option-' + data._id">
             <img alt="Product image" class="option-img" [src]="data.image" height="65">
@@ -50,6 +40,7 @@
       </mat-autocomplete>
 
     </mat-form-field>
+
   </form>
 
 </section>

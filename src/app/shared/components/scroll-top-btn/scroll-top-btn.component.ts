@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ScrollTopBtnComponent {
 
-  isVisible = false;
+  isVisible:boolean = false;
 
   @HostListener('window:scroll')
   onScroll(): void {

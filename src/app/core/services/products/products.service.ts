@@ -4,6 +4,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
 import { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/Product';
 import { ResponseData } from '../../../shared/types/ResponseData';
+import { AdminPanelService } from '../adminPanel/admin-panel.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +13,7 @@ export class ProductsService {
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
   path = 'product';
+  adminPanelService = inject(AdminPanelService);
 
   private productsSubject = new BehaviorSubject<Product[]>([]);
   public readonly products$ = this.productsSubject.asObservable();
@@ -36,7 +38,11 @@ export class ProductsService {
       formData.append('image', product.image);
     };
 
-    return this.http.post<ResponseData<Product>>(`${this.apiUrl}${this.path}/`, formData)
+    return this.http.post<ResponseData<Product>>(`${this.apiUrl}${this.path}/`, formData).pipe(
+      tap(() => {
+        this.adminPanelService.refreshProductsStatistics();
+      })
+    );
   };
 
   editProduct(product:ProductForm, id: string | null):Observable<ResponseData<Product>>{
@@ -59,17 +65,29 @@ export class ProductsService {
       formData.append('image', product.image);
     };
 
-    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}`, formData)
+    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}`, formData).pipe(
+      tap(() => {
+        this.adminPanelService.refreshProductsStatistics();
+      })
+    );
   };
 
   deleteProduct(id:string):Observable<ResponseData<{}>>{
-    return this.http.delete<ResponseData<{}>>(`${this.apiUrl}${this.path}/${id}`)
+    return this.http.delete<ResponseData<{}>>(`${this.apiUrl}${this.path}/${id}`).pipe(
+      tap(() => {
+        this.adminPanelService.refreshProductsStatistics();
+      })
+    );
   };
 
   changeStatusProduct(status:boolean, id:string):Observable<Product>{
     return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}/status`, {active : status}).pipe(
       map(v => v.data)
-    )
+    ).pipe(
+      tap(() => {
+        this.adminPanelService.refreshProductsStatistics();
+      })
+    );
   };
 
   getOneProduct(id: string | null):Observable<Product>{

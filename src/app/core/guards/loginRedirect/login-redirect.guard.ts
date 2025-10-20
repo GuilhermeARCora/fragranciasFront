@@ -10,7 +10,7 @@ export const loginRedirectGuard: CanMatchFn = (): UrlTree | boolean => {
   const user = authService.currentUser;
 
   if(user?.role === 'admin'){
-    return router.createUrlTree(['/admin/home']);
+    return router.createUrlTree(['/admin/painel-admin']);
   };
 
   return true;

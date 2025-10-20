@@ -105,3 +105,20 @@
 .btn:hover {
   transform: translateY(-4px);
 }
+
+.row-concluido {
+  background-color: #189058 !important;
+  color: white;
+}
+
+.row-pendente {
+  background-color: #fdce43 !important;
+  color: black;
+}
+
+.row-cancelado {
+  background-color: #d50314 !important;
+  color: white;
+}
+
+

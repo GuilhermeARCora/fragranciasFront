@@ -1,7 +1,16 @@
 @let isHome = isHome$ | async;
+@let isCategoria = isCategoria$ | async;
 @let isHandset = breakpointService.isHandset$ | async;
 
-<header class="d-flex justify-content-center flex-column gap-4 shadow-sm sticky-top bg-white">
+<header
+  #headerRoot
+  class="d-flex justify-content-center flex-column gap-4 sticky-top bg-white"
+  [ngClass]="{
+    'gap-1': openSearchInput() && !isHandset,
+    'green-border': isCategoria,
+    'shadow-sm' : !isCategoria
+  }"
+>
 
   @if(isHome){
   <div class="banner" role="region" aria-label="promoções">
@@ -12,7 +21,13 @@
   </div>
   }
 
-  <div class="d-flex justify-content-between align-items-center position-relative" [ngClass]="{'pb-4':isHome, 'my-3': !isHome}">
+  <div class="d-flex justify-content-between align-items-center position-relative pb-2"
+    [ngClass]="{
+      'pb-4': isHome,
+      'mb-1': !isHome && openSearchInput(),
+      'my-3': !isHome && !openSearchInput(),
+    }"
+  >
 
     @if(!isHome){
     <div class="ms-4 ps-md-5 ms-md-5">
@@ -22,6 +37,22 @@
      >
         <mat-icon>arrow_back</mat-icon>
      </a>
+    </div>
+    }
+
+    @if(isAdmin){
+    <div class="ms-4 ps-md-5 ms-md-5 my-md-3">
+      <button
+        matTooltip="Painel do Admin"
+        matTooltipPosition="below"
+        mat-icon-button
+        color="primary"
+        routerLink="/admin"
+        id="link-redirect-admin"
+        class="btn border-0 bg-transparent p-0"
+      >
+        <mat-icon fontSet="material-symbols-outlined">admin_panel_settings</mat-icon>
+      </button>
     </div>
     }
 
@@ -50,25 +81,28 @@
       </div>
     }
 
-    <div class="d-flex ms-auto me-3 pe-md-5 me-md-5 align-items-center" [class.me-4]="!isHome">
-      @if(isAdmin){
+    <div class="d-flex ms-auto me-2 pe-md-5 me-md-5 align-items-center" [class.me-4]="!isHome">
+
+      @if(openSearchInput() && !isHandset){
       <div>
-        <button
-          matTooltip="Painel do Admin"
-          matTooltipPosition="below"
-          mat-icon-button
-          color="primary"
-          routerLink="/admin"
-          id="link-redirect-admin"
-          class="btn border-0 bg-transparent p-0"
-        >
-          <mat-icon fontSet="material-symbols-outlined">admin_panel_settings</mat-icon>
-        </button>
+        <app-input-autocomplete/>
       </div>
       }
-      <app-header-cart/>
+
+      <div>
+        <app-header-input-auto-complete id="toggle-search-btn" (event)="searchInputState()"/>
+      </div>
+
+      <div>
+        <app-header-cart/>
+      </div>
+
     </div>
 
   </div>
+
+  @if(openSearchInput() && isHandset){
+    <app-input-autocomplete/>
+  }
 
 </header>
