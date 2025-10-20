@@ -1,9 +1,9 @@
 import { Observable } from 'rxjs';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit} from '@angular/core';
-import { ProductCardComponent } from "../product-card/product-card.component";
 import { CommonModule } from '@angular/common';
-import { Product } from '../../types/Product';
 import { ProductsService } from '../../../core/services/products/products.service';
+import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
+import { Product } from '../../../shared/types/Product';
 
 @Component({
   selector: 'app-novidades-list',

@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { hasFormError } from '../../../shared/utils/helpers';
 import { CdkTextareaAutosize } from '@angular/cdk/text-field';
 import { Router } from '@angular/router';
+import { OnlyNumberDirective } from '../../../shared/directives/onlyNumber/only-number.directive';
+import { cpfCnpjValidator } from '../../../shared/validators/isCPForCNPJ.validator';
 
 @Component({
   selector: 'app-checkout',
@@ -20,7 +22,8 @@ import { Router } from '@angular/router';
     MatInputModule,
     MatIconModule,
     ReactiveFormsModule,
-    CdkTextareaAutosize
+    CdkTextareaAutosize,
+    OnlyNumberDirective
 ],
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.scss'
@@ -51,7 +54,7 @@ export class CheckoutComponent implements OnInit {
           Validators.pattern(/^[\w\sÀ-ÿ.,!?"'()-]*$/)
         ]
       ],
-      cpfOrCnpj: ['', [Validators.required]],
+      cpfOrCnpj: ['', [Validators.required, cpfCnpjValidator]],
     });
   };
 

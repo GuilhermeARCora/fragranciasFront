@@ -9,7 +9,12 @@
   <div [ngClass]="(isCategory() && (breakPointService.isHandset$ | async)) ? 'product-card-category' : ''">
 
     <div class="product-image mb-2">
-      <img [src]="product.image" alt="Produto"/>
+      <img
+        [src]="product.image"
+        alt="Produto"
+        (click)="redirectToProduct(product)"
+        style="cursor: pointer;"
+      />
     </div>
 
     <div class="product-info">

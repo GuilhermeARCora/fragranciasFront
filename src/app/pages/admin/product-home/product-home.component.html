@@ -10,10 +10,10 @@
         id="btn-admin-home"
         class="btn d-flex align-items-center gap-2 px-4 py-3 shadow-sm rounded-pill"
         style="background: var(--green); color: white;"
-        routerLink="/admin/home"
+        routerLink="/admin/painel-admin"
       >
-        <mat-icon fontSet="material-symbols-outlined">home</mat-icon>
-        <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="isHandset">Voltar para Home</span>
+        <mat-icon fontSet="material-symbols-outlined">bar_chart</mat-icon>
+        <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="isHandset">Painel Administrativo</span>
       </button>
     </div>
 
@@ -138,6 +138,13 @@
           >
             Ativo
           </mat-checkbox>
+
+          <mat-checkbox
+            formControlName="isInPromo"
+            id="checkbox-active"
+          >
+            Somente os em promo
+          </mat-checkbox>
         </div>
 
         <div class="d-flex flex-row gap-3">
@@ -180,6 +187,8 @@
         [displayedColumns]="columns"
         (edit)="redirectEditProduct($event)"
         (active)="changeActive($event)"
+        [useBtnRemove]="true"
+        (remove)="removeProduct($event)"
       >
     </app-data-table>
   </div>

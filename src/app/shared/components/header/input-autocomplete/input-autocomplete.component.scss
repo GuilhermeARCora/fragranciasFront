@@ -1,0 +1,132 @@
+:host {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.search-container {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.search-field {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+
+  .mat-mdc-text-field-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .mat-mdc-form-field-infix {
+    padding: 0 !important;
+  }
+
+  .mat-mdc-form-field-flex {
+    align-items: center;
+    margin: 0 !important;
+  }
+
+  input.mat-mdc-input-element {
+    margin: 0 !important;
+    padding: 0 !important;
+    height: auto;
+  }
+}
+
+.search-container {
+  width: 100%;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 1rem;
+  padding-top: .7rem;
+
+  .search-field {
+    width: 100%;
+    min-width: 18rem;
+    max-width: 22rem;
+    background-color: #fff;
+    border-radius: 0.6rem;
+  }
+
+  #button-clear {
+    color: #999;
+    transition: color 0.2s ease;
+    &:hover {
+      color: var(--green);
+    }
+  }
+}
+
+.mat-mdc-option {
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px;
+  height: 70px;
+  padding: 8px 12px;
+}
+
+/* Imagem fixada ao centro */
+.option-img {
+  vertical-align: middle;
+  margin-right: 8px;
+  padding: 3px;
+}
+
+/* Texto truncado corretamente */
+.option-name {
+  flex: 1; /* ocupa o resto do espaço */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 0.95rem;
+  color: #333;
+  display: block;
+  line-height: 1.2;
+}
+
+::ng-deep .mat-mdc-option {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 70px;
+  padding: 8px 12px;
+
+  .mdc-list-item__primary-text {
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+}
+
+::ng-deep .mat-mdc-option:hover,
+.mat-mdc-option.mdc-list-item--selected {
+  background-color: white !important;
+  color: #000;
+}
+
+::ng-deep .mat-mdc-autocomplete-panel {
+  background-color: white !important;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15) !important;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .search-container {
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 0px rgba(0, 0, 0, 0.15);
+    padding-top: 0;
+
+    .search-header h1 {
+      font-size: 1.5rem;
+    }
+
+    .search-field {
+      min-width: 17rem;
+    }
+  }
+}

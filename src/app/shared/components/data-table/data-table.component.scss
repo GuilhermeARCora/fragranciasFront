@@ -111,17 +111,9 @@
   color: white;
 }
 
-.row-concluido mat-icon {
-  color: white; // Ícones dentro da linha verde
-}
-
 .row-pendente {
   background-color: #fdce43 !important;
-  color: #1b1b1b;
-}
-
-.row-pendente mat-icon {
-  color: #1b1b1b; // Ícones dentro da linha amarela
+  color: black;
 }
 
 .row-cancelado {
@@ -129,7 +121,4 @@
   color: white;
 }
 
-.row-cancelado mat-icon {
-  color: white; // Ícones dentro da linha vermelha
-}
 

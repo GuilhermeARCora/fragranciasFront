@@ -43,18 +43,35 @@
 
         <div class="row w-100">
 
-        <mat-form-field appearance="outline">
-          <mat-label>Total de unidades</mat-label>
-          <input
-            matInput
-            type="number"
-            id="field-totalUnits"
-            formControlName="totalUnits"
-            placeholder="Digite o total de unidades"
-            min="1"
-            step="1"
-          >
-        </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Mínimo de unidades</mat-label>
+            <input
+              matInput
+              type="number"
+              id="field-totalUnits"
+              formControlName="totalUnits"
+              placeholder="Digite o mínimo total de unidades"
+              min="1"
+              step="1"
+            >
+          </mat-form-field>
+
+        </div>
+
+        <div class="row w-100">
+
+          <mat-form-field appearance="outline">
+            <mat-label>Pedidos no últimos X dias</mat-label>
+            <input
+              matInput
+              type="number"
+              id="field-daysAgo"
+              formControlName="daysAgo"
+              placeholder="Quero saber os pedidos emitidos nos ultimos X dias"
+              min="1"
+              step="1"
+            >
+          </mat-form-field>
 
         </div>
 
@@ -65,14 +82,14 @@
         <div class="row w-100">
 
           <mat-form-field appearance="outline">
-              <mat-label>Total Preço Cheio</mat-label>
+              <mat-label>Mínimo de Preço Cheio</mat-label>
               <input
                 matInput
                 type="text"
                 id="input-totalFullPrice"
                 formControlName="totalFullPrice"
                 appCurrencyMask
-                placeholder="Digite o preço cheio do pedido"
+                placeholder="Digite o mínimo de preço cheio do pedido"
               >
             </mat-form-field>
 
@@ -81,14 +98,14 @@
         <div class="row w-100">
 
           <mat-form-field appearance="outline">
-            <mat-label>Total de Promoção</mat-label>
+            <mat-label>Mínimo de Promoção</mat-label>
             <input
               matInput
               type="text"
               id="input-totalDiscount"
               formControlName="totalDiscount"
               appCurrencyMask
-              placeholder="Digite o total de promoção do pedido"
+              placeholder="Digite o mínimo total de promoção do pedido"
             >
           </mat-form-field>
 
@@ -97,14 +114,14 @@
         <div class="row w-100">
 
           <mat-form-field appearance="outline">
-            <mat-label>Total Preço Final</mat-label>
+            <mat-label>Mínimo de Preço Final</mat-label>
             <input
               matInput
               type="text"
               id="input-totalCurrentPrice"
               formControlName="totalCurrentPrice"
               appCurrencyMask
-              placeholder="Digite o preço final do pedido"
+              placeholder="Digite o mínimo de preço final do pedido"
             >
           </mat-form-field>
 
@@ -113,14 +130,14 @@
         <div class="row w-100">
 
           <mat-form-field appearance="outline">
-            <mat-label>Total Preço Pix</mat-label>
+            <mat-label>Mínimo de Preço Pix</mat-label>
             <input
               matInput
               type="text"
               id="input-totalPixPrice"
               formControlName="totalPixPrice"
               appCurrencyMask
-              placeholder="Digite o preço pix do pedido"
+              placeholder="Digite o mínimo de preço pix do pedido"
             >
           </mat-form-field>
 
@@ -136,10 +153,10 @@
               id="btn-admin-home"
               class="btn d-flex align-items-center gap-2 px-4 py-3 shadow-sm rounded-pill"
               style="background: var(--green); color: white;"
-              routerLink="/admin/home"
+              routerLink="/admin/painel-admin"
             >
-              <mat-icon fontSet="material-symbols-outlined">home</mat-icon>
-              <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="isHandset">Voltar para Home</span>
+              <mat-icon fontSet="material-symbols-outlined">bar_chart</mat-icon>
+              <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="isHandset">Painel Administrativo</span>
             </button>
           </div>
 

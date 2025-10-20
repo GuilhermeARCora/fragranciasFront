@@ -1,0 +1,86 @@
+import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { combineLatest, debounceTime, distinctUntilChanged, map, Observable, startWith, take } from 'rxjs';
+import { CommonModule } from '@angular/common';
+
+import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
+import { ProductsService } from '../../../../core/services/products/products.service';
+import { Product } from '../../../types/Product';
+
+@Component({
+  selector: 'app-input-autocomplete',
+  imports: [
+    CommonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatAutocompleteModule,
+    ReactiveFormsModule,
+    MatIconModule,
+  ],
+  templateUrl: './input-autocomplete.component.html',
+  styleUrl: './input-autocomplete.component.scss'
+})
+export class InputAutocompleteComponent implements OnInit{
+
+  productService = inject(ProductsService);
+  router = inject(Router);
+
+  filtered$!: Observable<Product[]>;
+  prodCtrl = new FormControl('');
+
+  ngOnInit(): void {
+    this.filteringTheInput();
+  };
+
+  filteringTheInput(): void{
+    const input$ = this.prodCtrl.valueChanges.pipe(
+      startWith(''),
+      debounceTime(150),
+      distinctUntilChanged(),
+      map(value => value?.toLowerCase() ?? '')
+    );
+
+    this.filtered$ = combineLatest([
+      this.productService.products$,
+      input$
+    ]).pipe(
+      map(([products, search]) => {
+        if (!search) return products;
+        return products.filter(p => p.name.toLowerCase().includes(search));
+      })
+    );
+  };
+
+  @ViewChild('input') input!: ElementRef<HTMLInputElement>;
+  clearFilter(event: MouseEvent):void {
+    this.prodCtrl.patchValue('');
+    this.prodCtrl.updateValueAndValidity();
+    event.preventDefault();
+    event.stopPropagation();
+    this.input.nativeElement.focus();
+  };
+
+  onProductSelected(productName: string): void {
+    this.filtered$.pipe(take(1)).subscribe(products => {
+      const product = products.find(p => p.name === productName);
+      if (product) {
+        this.redirectToProduct(product);
+      }
+    });
+  };
+
+  redirectToProduct(product : Product){
+    this.router.navigate([`/produto/${product._id}`], {
+      state: product
+    });
+  };
+
+  displayFn(value: any): string {
+    return typeof value === 'object' ? value.name : value;
+  };
+
+};

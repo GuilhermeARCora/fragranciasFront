@@ -3,6 +3,9 @@
   font-weight: 700;
   font-style: bold;
   font-size: 1rem;
+  @media (min-width: 1000px) {
+    font-size: 1.2rem;
+  }
 }
 
 ::ng-deep mat-expansion-panel {
@@ -24,6 +27,16 @@
 ::ng-deep mat-expansion-panel-header .mat-expansion-indicator svg {
   width: 2.4rem;
   height: 2.4rem;
+}
+
+.title{
+  font-family: var(--mer);
+  font-size: 1.2rem;
+  font-weight: 700;
+
+  @media (min-width: 1000px) {
+    font-size: 1.7rem;
+  }
 }
 
 

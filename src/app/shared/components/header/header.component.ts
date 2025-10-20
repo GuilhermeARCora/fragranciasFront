@@ -1,5 +1,5 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, inject, input, Input } from '@angular/core';
+import { Component, ElementRef, HostListener, inject, input, Input, OnInit, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Observable } from 'rxjs';
@@ -7,6 +7,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { HeaderCartComponent } from './header-cart/header-cart.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { HeaderInputAutoCompleteComponent } from "./header-input-auto-complete/header-input-auto-complete.component";
+import { ProductsService } from '../../../core/services/products/products.service';
+import { ToastService } from '../../../core/services/swal/toast.service';
+import { InputAutocompleteComponent } from './input-autocomplete/input-autocomplete.component';
 @Component({
   selector: 'app-header',
   imports: [
@@ -14,25 +18,60 @@ import { AuthService } from '../../../core/services/auth/auth.service';
     RouterModule,
     MatTooltipModule,
     HeaderCartComponent,
-    MatIconModule
+    MatIconModule,
+    HeaderInputAutoCompleteComponent,
+    InputAutocompleteComponent
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
-export class HeaderComponent{
+export class HeaderComponent implements OnInit{
 
   @Input({required:true}) isHome$!: Observable<boolean>;
+  @Input() isCategoria$!:Observable<boolean>;
 
   location = inject(Location);
   breakpointService = inject(BreakPointService);
   authService = inject(AuthService);
+  productsService = inject(ProductsService);
+  toaster = inject(ToastService);
 
   isAdmin = this.authService.currentUser?.role;
 
   title = input<string>('');
+  openSearchInput = signal<boolean>(false);
+
+  ngOnInit(){
+    this.productsService.getAllProducts({active:true}).subscribe({
+      next: () => {},
+      error: (err) => {
+        this.toaster.error(err.error.message);
+      }
+    });;
+  };
 
   back():void {
     this.location.back();
+  };
+
+  searchInputState():void{
+    this.openSearchInput.update(v => !v);
+  };
+
+  @ViewChild('headerRoot', { static: true })
+  headerEl!: ElementRef<HTMLElement>;
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent): void {
+    if (!this.openSearchInput()) return;
+
+    const target = event.target as HTMLElement;
+
+    const insideSearch = !!target.closest('app-input-autocomplete,[data-search-root]');
+    if (insideSearch) return;
+    if (target.closest('#toggle-search-btn')) return;
+
+    const insideHeader = this.headerEl.nativeElement.contains(target);
+    if (insideHeader) this.openSearchInput.set(false);
   };
 
 };

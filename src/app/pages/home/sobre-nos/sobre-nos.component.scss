@@ -1,37 +1,25 @@
-.about h2 {
-  font-weight: 600;
-}
+.about {
 
-.about p.lead {
-  color: #555;
-}
+  h2, h3 {
+    color: var(--green);
+    font-weight: 600;
+  }
 
-.card{
-  transition: transform 0.3s ease;
-}
+  .card {
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
 
-.card:hover {
-  transform: translateY(-4px);
-}
+    &:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.1);
+    }
 
-.card-body {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-}
+    img {
+      filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+    }
+  }
 
-.card-body img {
-  height: 100px;
-  object-fit: contain;
-}
-
-.card-title {
-  font-weight: 700;
-  margin-bottom: 0.5rem;
-}
-
-.card-text {
-  font-size: 0.9rem;
-  color: #333;
+  p.lead {
+    color: #555;
+    line-height: 1.8;
+  }
 }

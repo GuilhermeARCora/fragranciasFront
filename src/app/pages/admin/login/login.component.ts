@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit{
 
     this.authService.login(formValue).subscribe({
       next:() => {
-        this.router.navigateByUrl('/admin/home');
+        this.router.navigateByUrl('/admin/admin-panel');
         this.toast.success('Login bem sucedido!');
 
       },
