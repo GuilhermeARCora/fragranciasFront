@@ -1,6 +1,6 @@
 <div class="container-fluid h-100 d-flex justify-content-center align-items-center" style=" background: var(--light-green); font-family: var(--lat);">
 
-  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" autocomplete="on">
 
     <mat-card class="d-flex align-items-center p-5 shadow-lg" style="max-width: 600px; width: 100%;">
 
@@ -19,6 +19,7 @@
               <mat-form-field floatLabel="always" appearance="outline" class="w-100">
 
                 <input
+                  autocomplete="username"
                   type="text"
                   id="input-email"
                   formControlName="email"
@@ -48,6 +49,7 @@
               <mat-form-field floatLabel="always" appearance="outline" class="w-100">
 
                 <input
+                  autocomplete="current-password"
                   [type]="hide ? 'password' : 'text'"
                   id="input-password"
                   formControlName="password"

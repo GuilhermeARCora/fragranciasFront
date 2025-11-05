@@ -1,4 +1,4 @@
-import { Routes } from "@angular/router";
+import type { Routes } from '@angular/router';
 
 export const ClientRoutes:Routes = [
 
@@ -14,13 +14,12 @@ export const ClientRoutes:Routes = [
   },
   {
     path:'produto/:id',
-    loadComponent: () => import('../pages/client/individual-product/individual-product.component').then(c => c.IndividualProductComponent),
-    data: { title: 'Produto'}
+    loadComponent: () => import('../pages/client/individual-product/individual-product.component').then(c => c.IndividualProductComponent)
   },
   {
     path:'pedido/:id',
     loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent),
-    data: { title: 'Pedido'}
+    data: { title: 'Pedido' }
   },
   {
     path: 'categoria/:categoria',

@@ -1,4 +1,5 @@
 @let isHome = isHome$ | async;
+@let isProduto = isProduto$ | async;
 @let isCategoria = isCategoria$ | async;
 @let isHandset = breakpointService.isHandset$ | async;
 
@@ -23,7 +24,8 @@
 
   <div class="d-flex justify-content-between align-items-center position-relative pb-2"
     [ngClass]="{
-      'pb-4': isHome,
+      'pb-4': isHome || isProduto,
+      'pt-4': isProduto,
       'mb-1': !isHome && openSearchInput(),
       'my-3': !isHome && !openSearchInput(),
     }"
@@ -34,6 +36,8 @@
      <a
       id="link-back"
       (click)="back()"
+      (keypress)="back()"
+      tabindex="0"
      >
         <mat-icon>arrow_back</mat-icon>
      </a>
@@ -56,7 +60,7 @@
     </div>
     }
 
-    @if(isHome){
+    @if(isHome || isProduto){
     <div class="position-absolute start-50 translate-middle-x">
       <a
         [matTooltip]="(breakpointService.isHandset$ | async) ? null : 'Ir para a página inicial'"

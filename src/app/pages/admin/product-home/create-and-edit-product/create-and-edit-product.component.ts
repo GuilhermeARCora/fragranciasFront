@@ -1,23 +1,24 @@
-import { Component, DestroyRef, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { hasFormError } from '../../../../shared/utils/helpers';
 import { CommonModule, Location } from '@angular/common';
 import { ProductsService } from '../../../../core/services/products/products.service';
-import { InputFileComponent } from "../../../../shared/components/input-file/input-file.component";
+import { InputFileComponent } from '../../../../shared/components/input-file/input-file.component';
 import { ToastService } from '../../../../core/services/swal/toast.service';
-import { Product, ProductForm } from '../../../../shared/types/Product';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CurrencyMask } from '../../../../shared/controlValueAcessor/currency/currency-mask.cva';
-import { CdkTextareaAutosize, TextFieldModule } from '@angular/cdk/text-field';
-import { PercentageSuffix } from '../../../../shared/controlValueAcessor/percentage-sufix/percentage-sufix.cva';
-import { DisplayCategoryPipe } from "../../../../shared/pipes/display-category/display-category.pipe";
+import { TextFieldModule } from '@angular/cdk/text-field';
+import { DisplayCategoryPipe } from '../../../../shared/pipes/display-category/display-category.pipe';
 import { numberValidator } from '../../../../shared/validators/isNumber.validator';
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
-import { ProductCardComponent } from "../../../../shared/components/product-card/product-card.component";
+import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import EasyMDE from 'easymde';
+import type { MatCheckboxChange } from '@angular/material/checkbox';
+import type { Product, ProductForm } from '../../../../shared/types/Product';
+import type { AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-create-and-edit-product',
@@ -28,17 +29,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     MatFormFieldModule,
     MatCheckboxModule,
     InputFileComponent,
-    CurrencyMask,
-    PercentageSuffix,
     TextFieldModule,
     DisplayCategoryPipe,
-    ProductCardComponent,
-    CdkTextareaAutosize
-],
+    ProductCardComponent
+  ],
   templateUrl: './create-and-edit-product.component.html',
   styleUrl: './create-and-edit-product.component.scss'
 })
-export class CreateAndEditProductComponent implements OnInit, OnDestroy{
+export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnDestroy{
 
   hasFormError = hasFormError;
   productService = inject(ProductsService);
@@ -51,7 +49,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   destroyRef = inject(DestroyRef);
 
   productForm!: FormGroup;
-  allCategories: string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar'];
+  allCategories: string[] = ['aromatizadores', 'autoCuidado', 'casaEBemEstar', 'destaque'];
 
   isEdit:boolean = false;
   id:string | null = null;
@@ -67,15 +65,19 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   };
 
   product: Product= this.productPlaceholder;
+  easyMDE!: EasyMDE;
 
   ngOnInit(): void {
     this.createForm();
     this.isEditCheck();
 
-    // Escuta mudanças no form e atualiza preview em tempo real
     this.productForm.valueChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.createTheProductForDisplay();
     });
+  };
+
+  ngAfterViewInit(): void {
+    this.setupDescription();
   };
 
   isEditCheck():void{
@@ -110,14 +112,14 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
         validators: [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(500),
-          Validators.pattern(/^[\w\sÀ-ÿ.,!?"'()-]*$/)
+          Validators.maxLength(3000),
+          Validators.pattern(/^(?!.*<[^>]+>)(?!.*\$\w+)[\s\S]*$/)
         ]
       }),
       image: new FormControl<File | null>(null),
       categories: new FormControl<string[]>([], { nonNullable: true, validators: [Validators.required] }),
       promoPercentage: new FormControl<number | null>(0),
-      cod: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(1)] }),
+      cod: new FormControl<number | null>(null, { validators: [Validators.required, Validators.min(1)] })
     });
 
   };
@@ -147,7 +149,7 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
   onSubmit():void{
 
     const formValue = this.productForm.value as ProductForm;
-    const {categories, image} = formValue;
+    const { categories, image } = formValue;
 
     if(categories.length === 0 ) this.productForm.get('categories')?.markAsTouched();
 
@@ -185,29 +187,29 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
 
   saveProduct(formValue: ProductForm):void{
     this.productService.createProduct(formValue).subscribe({
-        next: () => {
-          this.toaster.setTimerEnabled(true);
-          this.toaster.success("Produto criado com sucesso!")
-          this.router.navigateByUrl("/admin/homeProduct");
-        },
-        error: (err) => {
-          this.toaster.setTimerEnabled(false);
-          this.toaster.error(err.error.message);
-        }
+      next: () => {
+        this.toaster.setTimerEnabled(true);
+        this.toaster.success('Produto criado com sucesso!');
+        this.router.navigateByUrl('/admin/produtos');
+      },
+      error: (err) => {
+        this.toaster.setTimerEnabled(false);
+        this.toaster.error(err.error.message);
+      }
     });
   };
 
   editProduct(formValue: ProductForm):void{
     this.productService.editProduct(formValue, this.id).subscribe({
-        next: () => {
-          this.toaster.setTimerEnabled(true);
-          this.toaster.success("Produto editado com sucesso!")
-          this.router.navigateByUrl("/admin/homeProduct");
-        },
-        error: (err) => {
-          this.toaster.setTimerEnabled(false);
-          this.toaster.error(err.error.message);
-        }
+      next: () => {
+        this.toaster.setTimerEnabled(true);
+        this.toaster.success('Produto editado com sucesso!');
+        this.router.navigateByUrl('/admin/produtos');
+      },
+      error: (err) => {
+        this.toaster.setTimerEnabled(false);
+        this.toaster.error(err.error.message);
+      }
     });
   };
 
@@ -263,6 +265,92 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
     };
   };
 
+  setupDescription(): void {
+    const textarea = document.getElementById('input-description') as HTMLTextAreaElement;
+    if (!textarea) return;
+
+    // Initialize EasyMDE
+    this.easyMDE = new EasyMDE({
+      element: textarea,
+      spellChecker: false,
+      placeholder: 'Use markdown para fazer a descrição...',
+      toolbar: [
+        {
+          name: 'bold',
+          action: EasyMDE.toggleBold,
+          className: 'fa fa-bold',
+          title: 'Negrito (Ctrl+B)'
+        },
+        {
+          name: 'italic',
+          action: EasyMDE.toggleItalic,
+          className: 'fa fa-italic',
+          title: 'Itálico (Ctrl+I)'
+        },
+        {
+          name: 'heading',
+          action: EasyMDE.toggleHeadingSmaller,
+          className: 'fa fa-header',
+          title: 'Título (Ctrl+H)'
+        },
+        '|',
+        {
+          name: 'quote',
+          action: EasyMDE.toggleBlockquote,
+          className: 'fa fa-quote-left',
+          title: 'Citação (Ctrl+\')'
+        },
+        {
+          name: 'unordered-list',
+          action: EasyMDE.toggleUnorderedList,
+          className: 'fa fa-list-ul',
+          title: 'Lista não ordenada (Ctrl+L)'
+        },
+        {
+          name: 'ordered-list',
+          action: EasyMDE.toggleOrderedList,
+          className: 'fa fa-list-ol',
+          title: 'Lista ordenada (Ctrl+Alt+L)'
+        },
+        '|',
+        {
+          name: 'link',
+          action: EasyMDE.drawLink,
+          className: 'fa fa-link',
+          title: 'Inserir link (Ctrl+K)'
+        },
+        {
+          name: 'line-break',
+          action: editor => {
+            const cm = editor.codemirror;
+            const pos = cm.getCursor();
+            cm.replaceRange('<br>\n', pos);
+            cm.focus();
+          },
+          className: 'fa fa-level-down',
+          title: 'Quebra de linha (<br>)'
+        },
+        '|',
+        {
+          name: 'preview',
+          action: EasyMDE.togglePreview,
+          className: 'fa fa-eye no-disable',
+          title: 'Pré-visualizar (Ctrl+P)'
+        }
+      ]
+    });
+
+    // Keep form and EasyMDE in sync
+    this.easyMDE.codemirror.on('change', () => {
+      const value = this.easyMDE.value();
+      this.productForm.get('description')?.setValue(value);
+    });
+
+    // If editing an existing product, set content
+    const current = this.productForm.get('description')?.value;
+    if (current) this.easyMDE.value(current);
+  };
+
   goBack():void{
     this.location.back();
   };
@@ -271,6 +359,12 @@ export class CreateAndEditProductComponent implements OnInit, OnDestroy{
     if (this.product?.image && typeof this.product.image === 'string' && this.product.image.startsWith('blob:')) {
       URL.revokeObjectURL(this.product.image);
     };
+
+    if (this.easyMDE) {
+      this.easyMDE.toTextArea();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.easyMDE = undefined as any;
+    }
   };
 
 };

@@ -1,15 +1,19 @@
-import { Directive, ElementRef } from '@angular/core';
+import { Directive, inject } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { MatExpansionPanel } from '@angular/material/expansion';
 import { debounceTime } from 'rxjs';
+import { MatExpansionPanel } from '@angular/material/expansion';
+import { ElementRef } from '@angular/core';
 
 @Directive({
-  selector: '[autoScrollOnOpen]',
+  selector: '[appAutoScrollOnOpen]',
   standalone: true
 })
 export class AutoScrollOnOpenDirective{
 
-  constructor(private panel: MatExpansionPanel, private host: ElementRef<HTMLElement>) {
+  panel = inject(MatExpansionPanel);
+  host = inject(ElementRef<HTMLElement>);
+
+  constructor() {
     // Escuta quando o painel abre
     this.panel.opened.pipe(
       debounceTime(150),

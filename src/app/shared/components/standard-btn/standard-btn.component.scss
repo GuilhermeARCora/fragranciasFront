@@ -1,50 +1,68 @@
 .btn-padrao {
-  background-color: var(--green);
+  background: var(--green);
   color: var(--white);
   font-weight: 500;
-  border-radius: 24px;
-  padding: 8px 0;
-  transition: background-color 0.3s ease, opacity 0.3s ease;
-  will-change: background-color, opacity;
+  border-radius: 12px;
+  padding: 10px 0;
+  transition: background 0.3s ease, opacity 0.3s ease, transform 0.3s ease;
   width: 200px;
   text-align: center;
-
-  &:hover {
-    background-color: #006a59;
-  }
-
-  &:disabled,
-  &[disabled] {
-    background-color: #3e887b;
-    color: #ded3d3;
-    cursor: not-allowed !important;
-    opacity: 0.7;
-    pointer-events: none;
-  }
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
 }
 
-.btn {
-  transition: transform 0.3s ease;
-  will-change: transform;
-}
-
-.btn:hover {
+.btn-padrao:hover {
+  background: linear-gradient(135deg, #00d4a0, #006a59);
   transform: translateY(-4px);
+}
+
+.btn-padrao:disabled,
+.btn-padrao[disabled] {
+  background: #3e887b;
+  color: #ded3d3;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+.btn-padrao.clicked::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    rgba(255, 255, 255, 0.2) 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    rgba(255, 255, 255, 0.2) 100%
+  );
+  animation: shineMove 3s ease-in-out forwards;
+}
+
+@keyframes shineMove {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 @media (max-width: 600px) {
   .btn-padrao {
     max-width: 75%;
     font-size: 0.9rem;
-    padding: 10px 0px;
-    border-radius: 12px;
+    padding: 10px 0;
   }
 }
 
 @media (hover: none) and (pointer: coarse) {
   .btn-padrao,
-  .btn,
-  .btn:hover,
   .btn-padrao:hover {
     transition: none !important;
     transform: none !important;

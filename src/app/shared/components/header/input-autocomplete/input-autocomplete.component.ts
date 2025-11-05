@@ -1,15 +1,17 @@
-import { Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { combineLatest, debounceTime, distinctUntilChanged, map, Observable, startWith, take } from 'rxjs';
+import { combineLatest, debounceTime, distinctUntilChanged, map, startWith, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
-
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ProductsService } from '../../../../core/services/products/products.service';
-import { Product } from '../../../types/Product';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import type { ElementRef, OnInit } from '@angular/core';
+import type { Product } from '../../../types/Product';
+import type { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-input-autocomplete',
@@ -20,6 +22,7 @@ import { Product } from '../../../types/Product';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatIconModule,
+    MatTooltipModule
   ],
   templateUrl: './input-autocomplete.component.html',
   styleUrl: './input-autocomplete.component.scss'
@@ -79,7 +82,7 @@ export class InputAutocompleteComponent implements OnInit{
     });
   };
 
-  displayFn(value: any): string {
+  displayFn(value: Product | string): string {
     return typeof value === 'object' ? value.name : value;
   };
 

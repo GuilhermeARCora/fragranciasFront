@@ -11,50 +11,50 @@
   flex-direction: row;
   align-items: flex-start;
   gap: 0.5rem;
-}
 
-.product-card-category .product-image {
-  flex-shrink: 0;
-  width: 140px;
-  height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+  .product-image {
+    flex-shrink: 0;
+    width: 140px;
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-.product-card-category .product-image img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-}
+  .product-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
 
-.product-card-category .product-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-}
+  .product-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
 
-.product-card-category .product-title {
-  font-size: 1rem;
-  font-weight: 500;
-  color: var(--black);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  flex: 1;
-  min-width: 10.4rem;
-  margin-bottom: 8px;
-}
+  .product-title {
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--black);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex: 1;
+    min-width: 10.4rem;
+    margin-bottom: 8px;
+  }
 
-.product-card-category .btn-padrao {
-  min-width: 12rem;
+  .btn-padrao {
+    min-width: 12rem;
+  }
 }
 
 .promo{
   position: absolute;
   top: 0px;
   left: 0px;
-  padding: 6px 16px 6px 14px;
+  padding: 6px 16px 6px 12px;
   background: var(--strong-pink);
   color: var(--white);
   font: 700 0.8rem/1 var(--lat);
@@ -68,19 +68,19 @@
   padding: 6px;
   border-radius: 8px;
   white-space: nowrap;
-  max-width: 70px;
+  max-width: 75px;
   text-align: center;
 }
 
 .product-image {
-  display: flex;
-  justify-content: flex-start;
-}
+  height: 200px;
 
-.product-image img {
-  min-width: fit-content;
-  max-height: 180px;
-  object-fit: contain;
+  img {
+    min-width: fit-content;
+    max-height: 200px;
+    object-fit: contain;
+    object-position: center bottom;
+  }
 }
 
 .product-title {

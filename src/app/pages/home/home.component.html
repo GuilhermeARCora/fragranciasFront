@@ -26,32 +26,42 @@
 
     <section>
       <div class="text-start">
+        <h1 class="title">Destaques</h1>
+      </div>
+
+      <div class="pt-4">
+        <app-list-of-products [products$]="productsDestaque$" />
+      </div>
+    </section>
+
+    <section>
+      <div class="text-start">
         <h1 class="title">Novidades</h1>
       </div>
 
       <div class="pt-4">
-        <app-novidades-list/>
+        <app-list-of-products [products$]="productsLatest$" />
       </div>
     </section>
 
       <hr class="mx-3">
 
       <mat-accordion class="mb-3">
-        <mat-expansion-panel autoScrollOnOpen >
+        <mat-expansion-panel appAutoScrollOnOpen >
           <mat-expansion-panel-header>
             <mat-panel-title class="panel-title">SOBRE NÓS</mat-panel-title>
           </mat-expansion-panel-header>
           <app-sobre-nos></app-sobre-nos>
         </mat-expansion-panel>
 
-        <mat-expansion-panel autoScrollOnOpen >
+        <mat-expansion-panel appAutoScrollOnOpen >
           <mat-expansion-panel-header>
             <mat-panel-title class="panel-title">POLÍTICAS</mat-panel-title>
           </mat-expansion-panel-header>
           <app-politicas></app-politicas>
         </mat-expansion-panel>
 
-        <mat-expansion-panel autoScrollOnOpen >
+        <mat-expansion-panel appAutoScrollOnOpen >
           <mat-expansion-panel-header>
             <mat-panel-title class="panel-title">ATENDIMENTO AO CLIENTE</mat-panel-title>
           </mat-expansion-panel-header>
