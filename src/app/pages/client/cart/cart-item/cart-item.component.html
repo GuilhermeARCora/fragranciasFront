@@ -1,7 +1,14 @@
 <div class="product-card">
 
   <div class="product-image mb-2">
-    <img [src]="product.image" alt="Produto"/>
+    <img
+      [src]="product.image"
+      alt="Produto"
+      (click)="redirectToProduct(product)"
+      style="cursor: pointer;"
+      (keypress)="redirectToProduct(product)"
+      tabindex="0"
+    />
   </div>
 
   <div class="d-flex flex-column gap-3">
@@ -19,8 +26,8 @@
           {{itemCurrentPrice() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
         }@else {
-          <div class="main-price">
-          {{product.currentPrice| currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        <div class="main-price">
+          {{product.currentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
         </div>
         }
 
@@ -36,7 +43,7 @@
             class="old-price"
             [style.visibility]="product.currentPrice === product.fullPrice ? 'hidden' : 'visible'"
           >
-            {{product.fullPrice| currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+            {{product.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
           </div>
         }
 

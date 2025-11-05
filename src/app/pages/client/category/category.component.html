@@ -1,16 +1,18 @@
+@let isHandset = breakPointService.isHandset$ | async;
+
 <app-layout>
 
   <section>
 
     <div class="d-flex flex-column p-4">
 
-      <div [class.text-center]="(breakPointService.isTablet$ | async) ">
+      <div>
         <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
           {{amount}} produtos
         </h1>
       </div>
 
-      <div [ngClass]="!(breakPointService.isHandset$ | async) ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
+      <div [ngClass]="!isHandset ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
         @for(produto of products(); track produto._id){
           <app-product-card
             class="d-flex py-2"

@@ -14,7 +14,7 @@ import { ScrollTopBtnComponent } from './shared/components/scroll-top-btn/scroll
     RouterOutlet,
     CommonModule,
     ScrollTopBtnComponent
-],
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

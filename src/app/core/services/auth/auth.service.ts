@@ -3,10 +3,11 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ToastService } from '../swal/toast.service';
-import { BehaviorSubject, map, Observable, switchMap, tap } from 'rxjs';
-import { User } from '../../../shared/types/User';
-import { LoginPayload } from '../../../shared/types/Authentication';
-import { ResponseData } from '../../../shared/types/ResponseData';
+import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
+import type { Observable } from 'rxjs';
+import type { User } from '../../../shared/types/User';
+import type { LoginPayload } from '../../../shared/types/Authentication';
+import type { ResponseData } from '../../../shared/types/ResponseData';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { ResponseData } from '../../../shared/types/ResponseData';
 export class AuthService {
 
   url = environment.apiUrl;
-  route = 'user'
+  route = 'auth';
   http = inject(HttpClient);
   router = inject(Router);
   toast = inject(ToastService);
@@ -37,13 +38,13 @@ export class AuthService {
     );
   };
 
-  logout():Observable<ResponseData<{}>> {
-    return this.http.post<ResponseData<{}>>(`${this.url}${this.route}/logout`, null).pipe(
+  logout():Observable<ResponseData<void>> {
+    return this.http.delete<ResponseData<void>>(`${this.url}${this.route}/logout`).pipe(
       tap(() => {
         this.userSubject.next(null);
         this.router.navigateByUrl('/login');
       })
-    )
+    );
   };
 
   get currentUser(): User | null {

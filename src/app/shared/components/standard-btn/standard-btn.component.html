@@ -1,8 +1,14 @@
+@let isHandset = breakPointService.isHandset$ | async;
+
 <button
   class="btn btn-padrao mt-2 w-100"
+  [class.clicked]="added()"
   style="font-family: var(--rob);"
   (click)="action($event)"
   id="btn-standard"
 >
-  {{title}}
+  @if(!isHandset){
+  {{ added() ? '' : 'ADICIONAR'}}
+  }
+  <mat-icon>add_shopping_cart</mat-icon>
 </button>

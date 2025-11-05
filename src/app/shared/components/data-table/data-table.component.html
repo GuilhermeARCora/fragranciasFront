@@ -69,7 +69,6 @@
           mat-cell
           *matCellDef="let element"
           [id]="'cell-actions-' + element._id"
-          class="pe-2"
         >
         @if(useBtnEdit){
           <button
@@ -79,7 +78,7 @@
             color="primary"
             (click)="onEdit(element)"
             [id]="'edit-' + element._id"
-            class="btn border-0 bg-primary rounded-5 text-white p-1 me-2"
+            class="btn border-0 bg-primary rounded-5 text-white p-1 me-1"
           >
             <mat-icon class="d-flex">edit</mat-icon>
           </button>
@@ -93,7 +92,7 @@
             color="warn"
             (click)="onChangeActive(element)"
             [id]="'active-' + element._id"
-            class="btn border-0 rounded-5 text-white p-1 me-2"
+            class="btn border-0 rounded-5 text-white p-1 me-1"
             [ngClass]="{
               'bg-success': element.active === true,
               'bg-danger': element.active === false
@@ -115,7 +114,7 @@
             color="warn"
             (click)="onChangeRemove(element)"
             [id]="'remove-' + element._id"
-            class="btn border-0 bg-danger text-white rounded-5 p-1 me-2"
+            class="btn border-0 bg-danger text-white rounded-5 p-1"
           >
             <mat-icon class="d-flex">delete</mat-icon>
           </button>
@@ -129,7 +128,7 @@
             color="warn"
             (click)="onChangeStatus(element)"
             [id]="'status-' + element._id"
-            class="btn border-0 bg-white text-dark rounded-5 p-1 me-2"
+            class="btn border-0 bg-white text-dark rounded-5 p-1 me-1"
           >
             <mat-icon class="d-flex">autorenew</mat-icon>
           </button>

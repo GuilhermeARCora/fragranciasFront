@@ -48,10 +48,10 @@
           "configurations": {
             "production": {
               "fileReplacements": [
-                  {
-                    "replace": "src/environments/environment.ts",
-                    "with": "src/environments/environment.prod.ts"
-                  }
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
               ],
               "budgets": [
                 {
@@ -115,11 +115,23 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ]
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/**/*.ts",
+              "src/**/*.html"
+            ]
+          }
         }
       }
     }
   },
   "cli": {
-    "analytics": "dc000890-0633-4bc8-8521-9f7fb94466d1"
+    "analytics": "dc000890-0633-4bc8-8521-9f7fb94466d1",
+    "schematicCollections": [
+      "angular-eslint"
+    ]
   }
 }

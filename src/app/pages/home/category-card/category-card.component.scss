@@ -12,6 +12,16 @@
   overflow: hidden;
   position: relative;
 
+  @media (min-width: 600px) {
+    width: clamp(9rem, 21vw, 12rem);
+    aspect-ratio: 110 / 172;
+  }
+
+  @media (min-width: 800px) {
+    width: clamp(12rem, 28vw, 19rem);
+    aspect-ratio: 2 / 1;
+  }
+
   @media (min-width: 1000px) {
     width: clamp(24rem, 36vw, 26rem);
     aspect-ratio: 2 / 1;
@@ -31,6 +41,11 @@
   transition: transform 0.3s ease, top 0.3s ease;
   will-change: transform;
 
+  @media (min-width: 600px) {
+    top: 12%;
+    width: 180%;
+  }
+
   @media (min-width: 1000px) {
     top: -9%;
     width: 80%;
@@ -45,6 +60,11 @@
   top: 22%;
   width: 140%;
   height: auto;
+
+  @media (min-width: 600px) {
+    top: 26%;
+    width: 135%;
+  }
 
   @media (min-width: 1000px) {
     top: 8%;

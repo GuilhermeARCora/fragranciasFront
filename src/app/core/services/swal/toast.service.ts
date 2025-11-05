@@ -6,7 +6,7 @@ import Swal, { SweetAlertIcon } from 'sweetalert2';
 })
 export class ToastService {
 
-   private useTimer = true; // padrão = com timer
+  private useTimer = true; // padrão = com timer
 
   /** Ativa ou desativa o timer dinamicamente */
   setTimerEnabled(enabled: boolean):void {

@@ -9,6 +9,7 @@
 @if(!(layoutService.hideHeader$ | async) && !(layoutService.isAdmin$ | async)){
 <app-header
   [isHome$]="layoutService.isHome$"
+  [isProduto$]="layoutService.isProduto$"
   [isCategoria$]="layoutService.isCategoria$"
   [title]="layoutService.title()"
 />

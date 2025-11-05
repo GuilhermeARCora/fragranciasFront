@@ -1,0 +1,14 @@
+<swiper-container
+  #swiperEl
+  class="center-carousel"
+  navigation="false"
+  pagination='{"clickable": false}'
+>
+  @for (p of productsSig(); track p._id) {
+    <swiper-slide class="ccard">
+       <app-product-card
+          [product]="p"
+       ></app-product-card>
+    </swiper-slide>
+  }
+</swiper-container>

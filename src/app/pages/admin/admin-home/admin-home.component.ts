@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, inject, OnInit } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { MatCardModule } from '@angular/material/card';
 import { BaseChartDirective } from 'ng2-charts';
-import { ChartConfiguration } from 'chart.js';
 import {
   Chart,
   // controladores
@@ -20,12 +19,14 @@ import {
   // utilitários
   Tooltip,
   Legend,
-  Filler,
+  Filler
 } from 'chart.js';
 import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { MatTooltip } from '@angular/material/tooltip';
 import { AdminPanelService } from '../../../core/services/adminPanel/admin-panel.service';
+import type { ChartConfiguration } from 'chart.js';
+import type { OnInit } from '@angular/core';
 
 Chart.register(
   // controladores
@@ -67,9 +68,9 @@ export class AdminHomeComponent implements OnInit{
     this.adminPanelService.getProductsStatistics();
   };
 
-  redirectWithFilter(filter: any, route: string){
+  redirectWithFilter(filter: object, route: string){
     const destination = `/admin/${route}`;
-    return this.router.navigate([destination], { state: {filter}, replaceUrl: true });
+    return this.router.navigate([destination], { state: { filter }, replaceUrl: true });
   };
 
   readonly summaryCards = computed<SummaryCards[]>(() => [
@@ -120,7 +121,7 @@ export class AdminHomeComponent implements OnInit{
       value: `${this.adminPanelService.productsStatistics()?.greatestDiscount ?? 0}%`,
       filter: { promoPercentage: this.adminPanelService.productsStatistics()?.greatestDiscount ?? 0 },
       route: 'produtos'
-    },
+    }
   ]);
 
   readonly ordersChartLabels = ['Pendentes', 'Concluídos', 'Cancelados'];
@@ -137,14 +138,15 @@ export class AdminHomeComponent implements OnInit{
   }));
 
   // 🟣 Gráfico de produtos por categoria
-  productsChartLabels = ['Aromatizadores', 'AutoCuidado', 'Casa e Bem Estar'];
+  productsChartLabels = ['Aromatizadores', 'AutoCuidado', 'Casa e Bem Estar', 'Destaque'];
   productsChartData =  computed<ChartConfiguration<'bar'>['data']>(() => ({
     labels: this.productsChartLabels,
     datasets: [{
       data: [
         this.adminPanelService.productsStatistics()?.countProdsAroma ?? 0,
         this.adminPanelService.productsStatistics()?.countProdsAuto ?? 0,
-        this.adminPanelService.productsStatistics()?.countProdsCasa ?? 0
+        this.adminPanelService.productsStatistics()?.countProdsCasa ?? 0,
+        this.adminPanelService.productsStatistics()?.countProdsDest ?? 0
       ],
       label: 'Produtos',
       backgroundColor: '#0f877b'

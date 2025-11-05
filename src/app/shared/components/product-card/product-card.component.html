@@ -14,6 +14,8 @@
         alt="Produto"
         (click)="redirectToProduct(product)"
         style="cursor: pointer;"
+        (keypress)="redirectToProduct(product)"
+        tabindex="0"
       />
     </div>
 
@@ -49,7 +51,6 @@
 
       <app-standard-btn
         class="btn-padrao"
-        [title]="added() ? '🛒 Adicionado!' : 'ADICIONAR'"
         (event)="addCart(product)"
       />
 

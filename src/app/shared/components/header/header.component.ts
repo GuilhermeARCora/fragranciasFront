@@ -1,16 +1,17 @@
 import { CommonModule, Location } from '@angular/common';
-import { Component, ElementRef, HostListener, inject, input, Input, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, HostListener, inject, input, Input, signal, ViewChild } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { HeaderCartComponent } from './header-cart/header-cart.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { HeaderInputAutoCompleteComponent } from "./header-input-auto-complete/header-input-auto-complete.component";
+import { HeaderInputAutoCompleteComponent } from './header-input-auto-complete/header-input-auto-complete.component';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import { InputAutocompleteComponent } from './input-autocomplete/input-autocomplete.component';
+import type { Observable } from 'rxjs';
+import type { ElementRef, OnInit } from '@angular/core';
 @Component({
   selector: 'app-header',
   imports: [
@@ -23,11 +24,12 @@ import { InputAutocompleteComponent } from './input-autocomplete/input-autocompl
     InputAutocompleteComponent
   ],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss',
+  styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit{
 
-  @Input({required:true}) isHome$!: Observable<boolean>;
+  @Input({ required:true }) isHome$!: Observable<boolean>;
+  @Input({ required:true }) isProduto$!: Observable<boolean>;
   @Input() isCategoria$!:Observable<boolean>;
 
   location = inject(Location);
@@ -42,8 +44,7 @@ export class HeaderComponent implements OnInit{
   openSearchInput = signal<boolean>(false);
 
   ngOnInit(){
-    this.productsService.getAllProducts({active:true}).subscribe({
-      next: () => {},
+    this.productsService.getAllProducts({ active:true }).subscribe({
       error: (err) => {
         this.toaster.error(err.error.message);
       }
@@ -59,7 +60,7 @@ export class HeaderComponent implements OnInit{
   };
 
   @ViewChild('headerRoot', { static: true })
-  headerEl!: ElementRef<HTMLElement>;
+    headerEl!: ElementRef<HTMLElement>;
   @HostListener('document:click', ['$event'])
   onDocumentClick(event: MouseEvent): void {
     if (!this.openSearchInput()) return;
