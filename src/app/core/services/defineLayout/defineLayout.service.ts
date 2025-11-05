@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
-import { filter, map, startWith, distinctUntilChanged, shareReplay, tap } from 'rxjs';
-import { Product } from '../../../shared/types/Product';
+import { filter, map, startWith, distinctUntilChanged, shareReplay } from 'rxjs';
+import type { Product } from '../../../shared/types/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ export class DefineLayoutService {
   private router = inject(Router);
 
   private headerExcludedRoutes = ['/login', '/not-found'];
-  private footerExcludedRoutes = ['/login', '/not-found', '/categoria', '/admin', '/carrinho', '/checkout', '/pedido'];
+  private footerExcludedRoutes = ['/login', '/not-found', '/categoria', '/admin', '/carrinho', '/checkout', '/pedido', '/produto'];
   readonly title = signal<string>('');
 
   constructor(){
@@ -22,7 +22,7 @@ export class DefineLayoutService {
     map(e => e.urlAfterRedirects),
     startWith(this.router.url),
     distinctUntilChanged(),
-    shareReplay({ bufferSize: 1, refCount: true })
+    shareReplay(1)
   );
 
   private matches(url: string, route: string) {
@@ -45,8 +45,12 @@ export class DefineLayoutService {
     map(url => url === '/home')
   );
 
+  readonly isProduto$ = this.url$.pipe(
+    map(url => url.startsWith('/produto'))
+  );
+
   readonly isCategoria$ = this.url$.pipe(
-    map(url => url.startsWith('/categoria')),
+    map(url => url.startsWith('/categoria'))
   );
 
   private getRouteTitle(): string | null {
@@ -71,16 +75,7 @@ export class DefineLayoutService {
 
       title = `Pedido #${idDoPedido}`;
 
-    }else if(currentRoute.snapshot.data['title'] === 'Produto'){
-      const product = history.state['product'] as Product | undefined;
-
-      const currentNav = this.router.getCurrentNavigation();
-      const productFromNav = currentNav?.extras?.state as Product | undefined;
-
-      const finalProduct = productFromNav ?? product;
-      title = finalProduct?.name ?? 'Produto';
-    }
-    else if (currentRoute.snapshot.data['title']) title = currentRoute.snapshot.data['title'];
+    }else if (currentRoute.snapshot.data['title']) title = currentRoute.snapshot.data['title'];
 
     return title;
   };

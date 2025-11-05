@@ -14,7 +14,9 @@
             <mat-label>Id</mat-label>
             <input
               matInput
-              type="text"
+              type="number"
+              step="1"
+              min="1"
               id="field-id"
               formControlName="_id"
               placeholder="Digite o Id"
@@ -77,7 +79,7 @@
 
       </div>
 
-      <div class="col d-flex flex-column flex-md-row gap-md-3">
+      <div class="col d-flex flex-column flex-md-row gap-md-3 pb-md-2">
 
         <div class="row w-100">
 
@@ -85,12 +87,16 @@
               <mat-label>Mínimo de Preço Cheio</mat-label>
               <input
                 matInput
-                type="text"
+                type="number"
+                step="1"
+                min="1"
                 id="input-totalFullPrice"
                 formControlName="totalFullPrice"
-                appCurrencyMask
                 placeholder="Digite o mínimo de preço cheio do pedido"
               >
+              <mat-hint>
+                129.00, use ponto para decimais.
+              </mat-hint>
             </mat-form-field>
 
         </div>
@@ -101,12 +107,16 @@
             <mat-label>Mínimo de Promoção</mat-label>
             <input
               matInput
-              type="text"
+              type="number"
+              step="1"
+              min="1"
               id="input-totalDiscount"
               formControlName="totalDiscount"
-              appCurrencyMask
               placeholder="Digite o mínimo total de promoção do pedido"
             >
+            <mat-hint>
+              129.00, use ponto para decimais.
+            </mat-hint>
           </mat-form-field>
 
         </div>
@@ -117,12 +127,16 @@
             <mat-label>Mínimo de Preço Final</mat-label>
             <input
               matInput
-              type="text"
+              type="number"
+              step="1"
+              min="1"
               id="input-totalCurrentPrice"
               formControlName="totalCurrentPrice"
-              appCurrencyMask
               placeholder="Digite o mínimo de preço final do pedido"
             >
+            <mat-hint>
+              129.00, use ponto para decimais.
+            </mat-hint>
           </mat-form-field>
 
         </div>
@@ -133,12 +147,17 @@
             <mat-label>Mínimo de Preço Pix</mat-label>
             <input
               matInput
-              type="text"
+              type="number"
+              step="1"
+              min="1"
               id="input-totalPixPrice"
               formControlName="totalPixPrice"
               appCurrencyMask
               placeholder="Digite o mínimo de preço pix do pedido"
             >
+            <mat-hint>
+              129.00, use ponto para decimais.
+            </mat-hint>
           </mat-form-field>
 
         </div>
@@ -148,8 +167,7 @@
       <div class="col d-flex flex-column flex-md-row gap-md-3 align-items-center justify-content-between">
 
           <div class="d-flex">
-            <button
-              type="button"
+            <a
               id="btn-admin-home"
               class="btn d-flex align-items-center gap-2 px-4 py-3 shadow-sm rounded-pill"
               style="background: var(--green); color: white;"
@@ -157,7 +175,7 @@
             >
               <mat-icon fontSet="material-symbols-outlined">bar_chart</mat-icon>
               <span class="fw-bold" style="font-family: var(--lat);" [class.visually-hidden]="isHandset">Painel Administrativo</span>
-            </button>
+            </a>
           </div>
 
           <div class="d-flex gap-4">

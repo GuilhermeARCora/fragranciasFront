@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import { hasFormError } from '../../../shared/utils/helpers';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
-import { LoginPayload } from '../../../shared/types/Authentication';
-import Swal from 'sweetalert2';
+import type { OnInit } from '@angular/core';
+import type { LoginPayload } from '../../../shared/types/Authentication';
 
 @Component({
   selector: 'app-login',
@@ -39,11 +39,11 @@ export class LoginComponent implements OnInit{
   };
 
   buildForm(): void{
-       this.loginForm = new FormGroup({
-            email: new FormControl('',[Validators.required, Validators.email]),
-            password: new FormControl('',[Validators.required]),
-        }
-      );
+    this.loginForm = new FormGroup({
+      email: new FormControl('',[Validators.required, Validators.email]),
+      password: new FormControl('',[Validators.required])
+    }
+    );
   };
 
   onSubmit(): void{
@@ -54,21 +54,17 @@ export class LoginComponent implements OnInit{
 
     this.authService.login(formValue).subscribe({
       next:() => {
-        this.router.navigateByUrl('/admin/admin-panel');
+        this.router.navigateByUrl('/admin/painel-admin');
         this.toast.success('Login bem sucedido!');
-
-      },
-      error:() => {
-        Swal.fire({icon: "error",title: "Erro de Login",text: "Tente novamente!"});
       }
     });
 
   };
 
   clickEvent(event: MouseEvent): void {
-      this.hide = !this.hide;
-      event.preventDefault();
-      event.stopPropagation();
+    this.hide = !this.hide;
+    event.preventDefault();
+    event.stopPropagation();
   };
 
 };

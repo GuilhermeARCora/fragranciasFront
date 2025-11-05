@@ -1,33 +1,9 @@
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { finalize, map } from 'rxjs';
-import { ResponseData } from '../../../shared/types/ResponseData';
-
-interface OrdersStatistics {
-  amountStatusPendente: number,
-  amountStatusConcluido: number,
-  amountStatusCancelado: number,
-  amountInTheLastTwoDays: number,
-  amountWithFinalPriceOverFiveHundred: number,
-};
-
-interface OrdersEvolution {
-  month : string,
-  PENDENTE: number,
-  CONCLUIDO: number,
-  CANCELADO: number
-};
-
-interface ProductsStatistics {
-  countActiveProds:number,
-  countInactiveProds:number,
-  countInPromo:number,
-  greatestDiscount:number,
-  countProdsAroma:number,
-  countProdsAuto:number,
-  countProdsCasa:number
-};
+import type { ResponseData } from '../../../shared/types/ResponseData';
+import type { OrdersStatistics, OrdersEvolution, ProductsStatistics } from '../../../shared/types/AdminPanel';
 
 @Injectable({
   providedIn: 'root'
@@ -36,8 +12,8 @@ export class AdminPanelService {
 
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
-  pathOrder = 'order';
-  pathProduct = 'product';
+  pathOrder = 'orders';
+  pathProduct = 'products';
 
   readonly ordersStatistics = signal<OrdersStatistics | null>(null);
 

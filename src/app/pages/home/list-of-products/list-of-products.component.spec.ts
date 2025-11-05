@@ -1,18 +1,18 @@
 // import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-// import { PoliticasComponent } from './politicas.component';
+// import { NovidadesListComponent } from './list-of-products.component';
 
-// describe('PoliticasComponent', () => {
-//   let component: PoliticasComponent;
-//   let fixture: ComponentFixture<PoliticasComponent>;
+// describe('NovidadesListComponent', () => {
+//   let component: NovidadesListComponent;
+//   let fixture: ComponentFixture<NovidadesListComponent>;
 
 //   beforeEach(async () => {
 //     await TestBed.configureTestingModule({
-//       imports: [PoliticasComponent]
+//       imports: [NovidadesListComponent]
 //     })
 //     .compileComponents();
 
-//     fixture = TestBed.createComponent(PoliticasComponent);
+//     fixture = TestBed.createComponent(NovidadesListComponent);
 //     component = fixture.componentInstance;
 //     fixture.detectChanges();
 //   });

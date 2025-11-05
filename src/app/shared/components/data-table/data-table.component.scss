@@ -121,4 +121,8 @@
   color: white;
 }
 
+:host ::ng-deep th.mat-mdc-header-cell .mat-sort-header-arrow {
+  color: white !important;  
+}
+
 

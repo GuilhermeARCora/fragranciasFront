@@ -1,10 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, map, Observable, shareReplay, tap } from 'rxjs';
-import { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/Product';
-import { ResponseData } from '../../../shared/types/ResponseData';
+import { BehaviorSubject, map, shareReplay, tap } from 'rxjs';
 import { AdminPanelService } from '../adminPanel/admin-panel.service';
+import type { Observable } from 'rxjs';
+import type { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/Product';
+import type { ResponseData } from '../../../shared/types/ResponseData';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,7 @@ export class ProductsService {
 
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
-  path = 'product';
+  path = 'products';
   adminPanelService = inject(AdminPanelService);
 
   private productsSubject = new BehaviorSubject<Product[]>([]);
@@ -72,8 +73,8 @@ export class ProductsService {
     );
   };
 
-  deleteProduct(id:string):Observable<ResponseData<{}>>{
-    return this.http.delete<ResponseData<{}>>(`${this.apiUrl}${this.path}/${id}`).pipe(
+  deleteProduct(id:string):Observable<ResponseData<void>>{
+    return this.http.delete<ResponseData<void>>(`${this.apiUrl}${this.path}/${id}`).pipe(
       tap(() => {
         this.adminPanelService.refreshProductsStatistics();
       })
@@ -81,7 +82,7 @@ export class ProductsService {
   };
 
   changeStatusProduct(status:boolean, id:string):Observable<Product>{
-    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}/status`, {active : status}).pipe(
+    return this.http.patch<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}/status`, { active : status }).pipe(
       map(v => v.data)
     ).pipe(
       tap(() => {
@@ -93,11 +94,11 @@ export class ProductsService {
   getOneProduct(id: string | null):Observable<Product>{
     return this.http.get<ResponseData<Product>>(`${this.apiUrl}${this.path}/${id}`).pipe(
       map((v) => v.data)
-    )
+    );
   };
 
   getAllProducts(filters: Partial<ProductFilters>):Observable<Product[]>{
-    const params = new HttpParams({fromObject:filters});
+    const params = new HttpParams( { fromObject:filters } );
 
     return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/`, { params }).pipe(
       map((res) => res.data.products),
@@ -106,7 +107,7 @@ export class ProductsService {
   };
 
   getLastAddedProducts():Observable<Product[]>{
-    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/novidades`).pipe(
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/latest`).pipe(
       map( res => res.data.products),
       shareReplay(1)
     );

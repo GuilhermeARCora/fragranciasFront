@@ -1,12 +1,10 @@
-import { Component, DestroyRef, effect, inject, Injector, signal } from '@angular/core';
+import { Component, effect, inject, Injector, signal } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { filter, Observable, pairwise, startWith, switchMap, timer } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { trigger, transition, animate, keyframes, style } from '@angular/animations';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CartService } from '../../../../core/services/cart/cart.service';
@@ -44,7 +42,6 @@ export class HeaderCartComponent {
 
   router = inject(Router);
   cartService = inject(CartService);
-  destroyRef = inject(DestroyRef);
   injector = inject(Injector);
   toaster = inject(ToastService);
 

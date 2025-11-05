@@ -1,9 +1,10 @@
 import { Component, computed, inject, Input } from '@angular/core';
-import { Product } from '../../../../shared/types/Product';
 import { CommonModule } from '@angular/common';
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
 import { MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../../../core/services/cart/cart.service';
+import type { Product } from '../../../../shared/types/Product';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cart-item',
@@ -16,11 +17,13 @@ import { CartService } from '../../../../core/services/cart/cart.service';
 })
 export class CartItemComponent{
 
-  @Input({required:true}) product!: Product;
-  @Input({required:true}) amount!:number;
-  @Input({required:true}) isModoView!:boolean;
+  @Input({ required:true }) product!: Product;
+  @Input({ required:true }) amount!:number;
+  @Input({ required:true }) isModoView!:boolean;
+
   cartService = inject(CartService);
   breakPointService = inject(BreakPointService);
+  router = inject(Router);
 
   itemCurrentPrice = computed(() => {
     const cart = this.cartService.cartSignal();
@@ -48,6 +51,12 @@ export class CartItemComponent{
 
   removeItem(product:Product):void{
     this.cartService.removeProductFromCart(product._id);
+  };
+
+  redirectToProduct(product : Product){
+    this.router.navigate([`/produto/${product._id}`], {
+      state: { product }
+    });
   };
 
 };

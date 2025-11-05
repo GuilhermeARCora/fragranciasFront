@@ -14,7 +14,7 @@ export class OrderService {
 
   apiUrl = environment.apiUrl;
   http = inject(HttpClient);
-  path = 'order';
+  path = 'orders';
 
   router = inject(Router);
   adminPanelService = inject(AdminPanelService);

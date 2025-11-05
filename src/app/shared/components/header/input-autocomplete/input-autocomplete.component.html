@@ -33,8 +33,14 @@
       >
         @for (data of  (filtered$ | async); track data._id) {
           <mat-option [value]="data.name" [id]="'option-' + data._id">
-            <img alt="Product image" class="option-img" [src]="data.image" height="65">
-            <span class="option-name" >{{data.name}}</span>
+            <img alt="Product image" class="option-img" [src]="data.image" height="55">
+            <span
+              class="option-name"
+              matTooltip="{{ data.name }}"
+              matTooltipShowDelay="300"
+            >
+              {{ data.name }}
+            </span>
           </mat-option>
         }
       </mat-autocomplete>
