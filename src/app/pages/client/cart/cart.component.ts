@@ -1,26 +1,25 @@
 import { OrderService } from './../../../core/services/order/order.service';
-import { Component, computed, DestroyRef, inject, OnInit, signal } from '@angular/core';
-import { BehaviorSubject, map, Observable, switchMap } from 'rxjs';
+import { Component, computed, DestroyRef, inject } from '@angular/core';
+import { BehaviorSubject, map, switchMap } from 'rxjs';
 import { CommonModule, Location } from '@angular/common';
-import { CartItemComponent } from "./cart-item/cart-item.component";
+import { CartItemComponent } from './cart-item/cart-item.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
-import { LayoutComponent } from '../layout/layout.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import Swal from 'sweetalert2';
 import { CheckoutService } from '../../../core/services/checkout/checkout.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { Order } from '../../../shared/types/Order';
 import { CartService } from '../../../core/services/cart/cart.service';
+import Swal from 'sweetalert2';
+import type { Order } from '../../../shared/types/Order';
+import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-cart',
   imports: [
     CommonModule,
-    CartItemComponent,
-    LayoutComponent
-],
+    CartItemComponent
+  ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
@@ -80,20 +79,20 @@ export class CartComponent implements OnInit{
 
   isClient(): void {
     Swal.fire({
-      title: "Já é cliente?",
-      text: "Se sim, enviaremos seu carrinho direto para o WhatsApp.",
-      icon: "question",
+      title: 'Já é cliente?',
+      text: 'Se sim, enviaremos seu carrinho direto para o WhatsApp.',
+      icon: 'question',
       showCancelButton: true,
-      confirmButtonText: "Sim, já sou!",
-      cancelButtonText: "Não, preciso fazer o checkout",
-      confirmButtonColor: "#1b7d0c",
-      cancelButtonColor: "#d33"
+      confirmButtonText: 'Sim, já sou!',
+      cancelButtonText: 'Não, preciso fazer o checkout',
+      confirmButtonColor: '#1b7d0c',
+      cancelButtonColor: '#d33'
     }).then(result => {
       if (result.isConfirmed) {
 
         this.checkoutService.alreadyAClient();
         this.toaster.setTimerEnabled(false);
-        this.toaster.success("Carrinho enviado para o WhatsApp com sucesso!");
+        this.toaster.success('Carrinho enviado para o WhatsApp com sucesso!');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
 
         this.router.navigateByUrl('/checkout');
@@ -108,7 +107,7 @@ export class CartComponent implements OnInit{
       takeUntilDestroyed(this.destroyRef),
       switchMap(() => this.OrderService.findOneOrder(this.orderId!))
     ).subscribe(order => {
-      this.toaster.success("Pedido finalizado com sucesso");
+      this.toaster.success('Pedido finalizado com sucesso');
       this.orderSubject.next(order);
     });
   };

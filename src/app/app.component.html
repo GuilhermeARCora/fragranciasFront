@@ -15,7 +15,9 @@
 />
 }
 
-<router-outlet/>
+<app-layout>
+  <router-outlet/>
+</app-layout>
 
 @if(!(layoutService.hideFooter$ | async)){
 <app-footer/>

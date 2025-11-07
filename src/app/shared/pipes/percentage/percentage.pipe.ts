@@ -1,4 +1,5 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
+import type { PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'percentage',

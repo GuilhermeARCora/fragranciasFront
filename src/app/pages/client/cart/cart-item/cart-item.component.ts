@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
 import { MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../../../core/services/cart/cart.service';
-import type { Product } from '../../../../shared/types/Product';
 import { Router } from '@angular/router';
+import type { Product } from '../../../../shared/types/Product';
 
 @Component({
   selector: 'app-cart-item',

@@ -1,4 +1,5 @@
-import { Injectable, Pipe, PipeTransform } from '@angular/core';
+import { Injectable, Pipe } from '@angular/core';
+import type { PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'displayCategory',
@@ -7,7 +8,7 @@ import { Injectable, Pipe, PipeTransform } from '@angular/core';
 @Injectable({ providedIn: 'root' })
 export class DisplayCategoryPipe implements PipeTransform {
 
-  transform(value: any): string {
+  transform(value: string): string {
     if (!value) return '';
 
     const format = (str: string) =>

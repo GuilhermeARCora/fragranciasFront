@@ -1,40 +1,36 @@
 @let isHandset = breakPointService.isHandset$ | async;
 
-<app-layout>
+<section>
 
-  <section>
+  <div class="d-flex flex-column p-4">
 
-    <div class="d-flex flex-column p-4">
-
-      <div>
-        <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
-          {{amount}} produtos
-        </h1>
-      </div>
-
-      <div [ngClass]="!isHandset ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
-        @for(produto of products(); track produto._id){
-          <app-product-card
-            class="d-flex py-2"
-            [product]="produto"
-            [isCategory]="true">
-          </app-product-card>
-        }
-      </div>
-
-      <div class="d-flex align-items-center justify-content-center py-3">
-        <button
-          class="btn btn-outline-info"
-          (click)="showMoreProducts()"
-          type="button"
-          id="button-show-more-products"
-        >
-        MOSTRAR MAIS PRODUTOS
-      </button>
-      </div>
-
+    <div>
+      <h1 style="font-family: var(--mer); font-size: 1.2rem; font-weight: 700;">
+        {{amount}} produtos
+      </h1>
     </div>
 
-  </section>
+    <div [ngClass]="!isHandset ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
+      @for(produto of products(); track produto._id){
+        <app-product-card
+          class="d-flex py-2"
+          [product]="produto"
+          [isCategory]="true">
+        </app-product-card>
+      }
+    </div>
 
-</app-layout>
+    <div class="d-flex align-items-center justify-content-center py-3">
+      <button
+        class="btn btn-outline-info"
+        (click)="showMoreProducts()"
+        type="button"
+        id="button-show-more-products"
+      >
+      MOSTRAR MAIS PRODUTOS
+    </button>
+    </div>
+
+  </div>
+
+</section>

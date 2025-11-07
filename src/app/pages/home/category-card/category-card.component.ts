@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-category-card',
@@ -11,7 +12,7 @@ import { Router, RouterModule } from '@angular/router';
 export class CategoryCardComponent implements OnInit {
 
   @Input() imgUrl: string = ('');
-  @Input() titleCategory: string = ('Teste')
+  @Input() titleCategory: string = ('Teste');
   @Input() thick:boolean = false;
   @Input() tall:boolean = false;
 
@@ -25,10 +26,10 @@ export class CategoryCardComponent implements OnInit {
 
   defineRoute(): void{
 
-    let lastSlash = this.imgUrl.lastIndexOf('/');
-    let dot = this.imgUrl.indexOf('.');
+    const lastSlash = this.imgUrl.lastIndexOf('/');
+    const dot = this.imgUrl.indexOf('.');
 
-    let categoria = this.imgUrl.slice(lastSlash+1, dot);
+    const categoria = this.imgUrl.slice(lastSlash+1, dot);
 
     this.route = `/categoria/${categoria}`;
   };

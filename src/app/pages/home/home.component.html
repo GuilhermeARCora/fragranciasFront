@@ -1,4 +1,4 @@
-<app-layout>
+@let produtos = productsDestaque$ | async;
 
   <app-banner [name]="'home'"/>
 
@@ -24,15 +24,21 @@
 
     </section>
 
+    @if(listComponent){
+
+    @if(produtos && produtos.length > 0){
     <section>
       <div class="text-start">
         <h1 class="title">Destaques</h1>
       </div>
 
       <div class="pt-4">
-        <app-list-of-products [products$]="productsDestaque$" />
+        <ng-container
+          *ngComponentOutlet="listComponent; inputs: { products$: productsDestaque$ }">
+        </ng-container>
       </div>
     </section>
+    }
 
     <section>
       <div class="text-start">
@@ -40,9 +46,16 @@
       </div>
 
       <div class="pt-4">
-        <app-list-of-products [products$]="productsLatest$" />
+        <ng-container
+          *ngComponentOutlet="listComponent; inputs: { products$: productsLatest$ }">
+        </ng-container>
       </div>
     </section>
+    }
+
+    @if (!listComponent && isBrowser) {
+      <div class="skeleton-loader">Carregando produtos...</div>
+    }
 
       <hr class="mx-3">
 
@@ -71,4 +84,3 @@
 
   </div>
 
-</app-layout>

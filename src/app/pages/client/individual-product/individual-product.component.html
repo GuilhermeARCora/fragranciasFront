@@ -1,69 +1,67 @@
 @let product = product$ | async;
 
-<app-layout>
-  <section class="card-product d-flex flex-column gap-3 p-md-5 mt-md-5">
+<section class="card-product d-flex flex-column gap-3 p-md-5 mt-md-5">
 
-    <div class="d-flex justify-content-evenly">
+  <div class="d-flex justify-content-evenly">
 
-      <div class="product-image mb-2">
-        <img
-          #image
-          tabindex="0"
-          [src]="product?.image"
-          alt="Produto"
-        />
+    <div class="product-image mb-2">
+      <img
+        #image
+        tabindex="0"
+        [src]="product?.image"
+        alt="Produto"
+      />
+    </div>
+
+    <div class="d-flex flex-column mt-5 mx-2 rounded-3 product-info-container" >
+
+      <div class="product-info">
+
+        <h1 class="product-title">{{ product?.name }}</h1>
+
+        <div
+          class="old-price"
+          [style.visibility]="product?.currentPrice === product?.fullPrice ? 'hidden' : 'visible'"
+        >
+          {{product?.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        </div>
+
+        <div class="main-price">
+              {{product?.currentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
+        </div>
+
+        <div class="pix-price-container">
+          <span class="pix-price">{{product?.pixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
+          <span class="via-pix"> Via Pix</span>
+        </div>
+
       </div>
 
-      <div class="d-flex flex-column mt-5 mx-2 rounded-3 product-info-container" >
+      <div class="d-flex gap-3 flex-row">
 
-        <div class="product-info">
+        <div class="quantity-selector">
 
-          <h1 class="product-title">{{ product?.name }}</h1>
+          <button type="button" (click)="decrease()">-</button>
 
-          <div
-            class="old-price"
-            [style.visibility]="product?.currentPrice === product?.fullPrice ? 'hidden' : 'visible'"
-          >
-            {{product?.fullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
-          </div>
+          <span>{{ amount }}</span>
 
-          <div class="main-price">
-                {{product?.currentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}
-          </div>
-
-          <div class="pix-price-container">
-            <span class="pix-price">{{product?.pixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</span>
-            <span class="via-pix"> Via Pix</span>
-          </div>
+          <button type="button" (click)="increase()">+</button>
 
         </div>
 
-        <div class="d-flex gap-3 flex-row">
-
-          <div class="quantity-selector">
-
-            <button type="button" (click)="decrease()">-</button>
-
-            <span>{{ amount }}</span>
-
-            <button type="button" (click)="increase()">+</button>
-
-          </div>
-
-          <app-standard-btn
-              class="btn-padrao"
-              (event)="addCart(product!)"
-            />
-
-        </div>
+        <app-standard-btn
+            class="btn-padrao"
+            (event)="addCart(product!)"
+          />
 
       </div>
 
     </div>
 
-    <div>
-      <div class="markdown-preview" [innerHTML]="product?.description! | markdown"></div>
-    </div>
+  </div>
 
-  </section>
-</app-layout>
+  <div>
+    <div class="markdown-preview" [innerHTML]="product?.description! | markdown"></div>
+  </div>
+
+</section>

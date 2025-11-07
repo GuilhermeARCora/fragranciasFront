@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import { OrderService } from '../order/order.service';
-import { CheckoutMsg } from '../../../shared/types/Checkout';
-import { Cart } from '../../../shared/types/Cart';
-import { OrderCreateItem } from '../../../shared/types/Order';
-import { map, take } from 'rxjs';
+import { take } from 'rxjs';
 import { ToastService } from '../swal/toast.service';
+import type { CheckoutMsg } from '../../../shared/types/Checkout';
+import type { Cart } from '../../../shared/types/Cart';
+import type { OrderCreateItem } from '../../../shared/types/Order';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +36,7 @@ export class CheckoutService {
     const orderItems = this.mapCartToOrderItems(cart);
 
     this.orderService.createOrder(orderItems).pipe(take(1)).subscribe(id => {
-       this.whatsAppMessage(true, id);
+      this.whatsAppMessage(true, id);
     });
   };
 
@@ -52,7 +52,7 @@ export class CheckoutService {
     const checkoutMessage = `Nome: ${fullName}\nCPF/CNPJ: ${cpfOrCnpj}\nEmail: ${email}\nEndereço: ${address}`;
 
     this.orderService.createOrder(orderItems).pipe(take(1)).subscribe(id => {
-       this.whatsAppMessage(false, id, checkoutMessage);
+      this.whatsAppMessage(false, id, checkoutMessage);
     });
   };
 

@@ -4,9 +4,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { hasFormError } from '../../../../shared/utils/helpers';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../../core/services/products/products.service';
-import { InputFileComponent } from '../../../../shared/components/input-file/input-file.component';
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TextFieldModule } from '@angular/cdk/text-field';
@@ -15,6 +14,7 @@ import { numberValidator } from '../../../../shared/validators/isNumber.validato
 import { BreakPointService } from '../../../../core/services/breakPoint/break-point.service';
 import { ProductCardComponent } from '../../../../shared/components/product-card/product-card.component';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { InputFileComponent } from './input-file/input-file.component';
 import EasyMDE from 'easymde';
 import type { MatCheckboxChange } from '@angular/material/checkbox';
 import type { Product, ProductForm } from '../../../../shared/types/Product';
@@ -43,7 +43,6 @@ export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnD
   toaster = inject(ToastService);
   breakPointService = inject(BreakPointService);
 
-  location = inject(Location);
   router = inject(Router);
   route = inject(ActivatedRoute);
   destroyRef = inject(DestroyRef);
@@ -124,7 +123,7 @@ export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnD
 
   };
 
-  onCheckboxChange(event: MatCheckboxChange): void {
+  onCheckboxChange(event: MatCheckboxChange):void {
     const categories = this.productForm.get('categories') as FormControl;
     const currentValue = categories.value as string[];
 
@@ -138,7 +137,7 @@ export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnD
     if(currentValue.length === 0 ) categories.markAsTouched();
   };
 
-  onFileSelected(file: File | null) {
+  onFileSelected(file: File | null):void {
     if (file) this.productForm.patchValue({ image: file });
 
     else this.productForm.patchValue({ image: null });
@@ -154,7 +153,6 @@ export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnD
     if(categories.length === 0 ) this.productForm.get('categories')?.markAsTouched();
 
     if (!this.imageValidation(image)) return;
-
 
     if(!this.isEdit) this.saveProduct(formValue);
     else this.editProduct(formValue);
@@ -352,7 +350,7 @@ export class CreateAndEditProductComponent implements OnInit, AfterViewInit, OnD
   };
 
   goBack():void{
-    this.location.back();
+    this.router.navigateByUrl('/admin/produtos');
   };
 
   ngOnDestroy(): void {

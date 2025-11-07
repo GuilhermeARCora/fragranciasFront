@@ -68,6 +68,24 @@
         background-color: #fff;
       }
 
+      .row-concluido {
+        background-color: #E8F5E9 !important;
+        color: #2E7D32;
+        font-weight: 600;
+      }
+
+      .row-pendente {
+        background-color: #FFF8E1 !important;
+        color: #F57F17;
+        font-weight: 600;
+      }
+
+      .row-cancelado {
+        background-color: #FFEBEE !important;
+        color: #C62828;
+        font-weight: 600;
+      }
+
       /* Hover suave */
       .mat-mdc-row:hover {
         background-color: #eaf5ea;
@@ -106,23 +124,8 @@
   transform: translateY(-4px);
 }
 
-.row-concluido {
-  background-color: #189058 !important;
-  color: white;
-}
-
-.row-pendente {
-  background-color: #fdce43 !important;
-  color: black;
-}
-
-.row-cancelado {
-  background-color: #d50314 !important;
-  color: white;
-}
-
 :host ::ng-deep th.mat-mdc-header-cell .mat-sort-header-arrow {
-  color: white !important;  
+  color: white !important;
 }
 
 
