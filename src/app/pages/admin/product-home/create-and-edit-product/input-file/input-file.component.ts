@@ -1,10 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, inject, Input, OnChanges, Output } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { ToastService } from '../../../core/services/swal/toast.service';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { ToastService } from '../../../../../core/services/swal/toast.service';
+import type { OnChanges } from '@angular/core';
 
 @Component({
   selector: 'app-input-file',
@@ -61,7 +62,7 @@ export class InputFileComponent implements OnChanges{
         this.fileSelected.emit(file);
       } else {
         this.toasts.setTimerEnabled(false);
-        this.toasts.error("Insira uma imagem!")
+        this.toasts.error('Insira uma imagem!');
         this.removeFile(event);
       };
     };
@@ -86,7 +87,7 @@ export class InputFileComponent implements OnChanges{
         this.fileSelected.emit(file);
       } else {
         this.toasts.setTimerEnabled(false);
-        this.toasts.error("Insira uma imagem!")
+        this.toasts.error('Insira uma imagem!');
         this.removeFile(new MouseEvent('click'));
       };
     };
@@ -94,7 +95,6 @@ export class InputFileComponent implements OnChanges{
 
   removeFile(event: MouseEvent): void {
     event.preventDefault();
-    event.stopPropagation();
     this.fileName = '';
     this.fileSelected.emit(null);
   };

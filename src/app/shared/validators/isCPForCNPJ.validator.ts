@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors } from '@angular/forms';
+import type { AbstractControl, ValidationErrors } from '@angular/forms';
 
 const validationError = { notCPForCNPJ : true };
 const cpfSize = 11;
@@ -19,12 +19,14 @@ export function cpfCnpjValidator(control: AbstractControl): ValidationErrors | n
   const whichCase = inputLength === cpfSize ? 'CPF' : 'CNPJ';
 
   switch (whichCase) {
-    case 'CPF':
-      const validCPF = isCPF(inputArrOfNums);
-      return validCPF ? null : validationError;
-    case 'CNPJ':
-      const validCNPJ = isCNPJ(inputArrOfNums);
-      return validCNPJ ? null : validationError;
+  case 'CPF': {
+    const validCPF = isCPF(inputArrOfNums);
+    return validCPF ? null : validationError;
+  }
+  case 'CNPJ': {
+    const validCNPJ = isCNPJ(inputArrOfNums);
+    return validCNPJ ? null : validationError;
+  }
   };
 
 };
@@ -41,7 +43,7 @@ function isCPF(arr: number[]):boolean {
 
   const firts9digits = arr.slice(0, 9);
   const firstSum = firts9digits.reduce((acc:number, num:number, i) => {
-    let count = 10 - i;
+    const count = 10 - i;
     acc += (num*count);
 
     return acc;
@@ -51,7 +53,7 @@ function isCPF(arr: number[]):boolean {
 
   const firts9digitsAndFirstVerDigit = [...firts9digits, firstVerifyingDigit];
   const secondSum = firts9digitsAndFirstVerDigit.reduce((acc:number, num:number, i) => {
-    let count = 11 - i;
+    const count = 11 - i;
     acc += (num*count);
 
     return acc;
@@ -73,7 +75,7 @@ function isCNPJ(arr: number[]):boolean {
 
   const firts12digits = arr.slice(0, 12);
   const firstSum = firts12digits.reduce((acc:number, num:number, i) => {
-    let weight = firstWeights[i];
+    const weight = firstWeights[i];
     acc += (num*weight);
 
     return acc;
@@ -83,7 +85,7 @@ function isCNPJ(arr: number[]):boolean {
 
   const firts12digitsAndFirstVerDigit = [...firts12digits, firstVerifyingDigit];
   const secondSum = firts12digitsAndFirstVerDigit.reduce((acc:number, num:number, i) => {
-    let weight = secondWeights[i];
+    const weight = secondWeights[i];
     acc += (num*weight);
 
     return acc;

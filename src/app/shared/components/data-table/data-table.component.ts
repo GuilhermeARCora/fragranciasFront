@@ -1,24 +1,25 @@
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AfterViewInit, Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, Output, ViewChild } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatSort, MatSortModule } from '@angular/material/sort';
 import { MatPaginator, MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
-import { Observable } from 'rxjs';
 import { MatIconModule } from '@angular/material/icon';
 import { CustomPaginatorIntl } from '../../utils/custom-paginator-intl';
 import { CommonModule } from '@angular/common';
 import { PipeRegistryService } from '../../../core/services/pipeRegistry/pipe-registry.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
+import type { Observable } from 'rxjs';
+import type { AfterViewInit, OnInit } from '@angular/core';
 
 export interface ColumnDef {
   key: string;
   label: string;
   visible: boolean;
   pipe?: string;
-  pipeArgs?:any[];
+  pipeArgs?:string[];
 };
 
 @Component({
@@ -40,9 +41,9 @@ export interface ColumnDef {
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
-export class DataTableComponent<T extends Record<string, any>> implements OnInit, AfterViewInit {
+export class DataTableComponent<T extends Record<string, object>> implements OnInit, AfterViewInit {
 
-  @Input({required:true}) data$!: Observable<T[]>;
+  @Input({ required:true }) data$!: Observable<T[]>;
   @Input() displayedColumns: ColumnDef[] = [];
   @Input() useBtnEdit: boolean = true;
   @Input() useBtnActive: boolean = true;
@@ -50,11 +51,11 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
   @Input() useBtnLink: boolean = false;
   @Input() useBtnRemove: boolean = false;
 
-  @Output() edit = new EventEmitter<any>();
-  @Output() active = new EventEmitter<any>();
-  @Output() status = new EventEmitter<any>();
-  @Output() link = new EventEmitter<any>();
-  @Output() remove = new EventEmitter<any>();
+  @Output() edit = new EventEmitter<object>();
+  @Output() active = new EventEmitter<object>();
+  @Output() status = new EventEmitter<object>();
+  @Output() link = new EventEmitter<object>();
+  @Output() remove = new EventEmitter<object>();
 
   dataSource = new MatTableDataSource<T>();
   autoColumns: ColumnDef[] = [];
@@ -100,12 +101,10 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
     return this.displayedColumns ?? this.autoColumns;
   };
 
-  /** Colunas visíveis (se nenhuma for passada, usa as auto geradas) */
   get visibleColumns(): ColumnDef[] {
     return (this.displayedColumns.length > 0 ? this.displayedColumns : this.autoColumns).filter(c => c.visible);
   };
 
-  /** Apenas os nomes das colunas (para o [displayedColumns]) */
   get columnKeys(): string[] {
     return this.visibleColumns.map(c => c.key);
   };
@@ -119,7 +118,7 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
     this.dataSource.filter = '';
   };
 
-  formatValue(column: ColumnDef, value: any): string | null {
+  formatValue(column: ColumnDef, value: string): string | null {
     if (!column.pipe) return value;
     return this.pipeRegistry.apply(column.pipe, value, ...(column.pipeArgs || []));
   };

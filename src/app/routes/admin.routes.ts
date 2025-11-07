@@ -1,8 +1,8 @@
-import { Routes } from '@angular/router';
 import { ShellComponent } from '../pages/admin/shell/shell.component';
 import { loginRedirectGuard } from '../core/guards/loginRedirect/login-redirect.guard';
 import { AuthGuard } from '../core/guards/auth-guard/auth.guard';
 import { RoleGuard } from '../core/guards/role-guard/role.guard';
+import type { Routes } from '@angular/router';
 
 export const AdminRoutes: Routes = [
   {
@@ -26,32 +26,32 @@ export const AdminRoutes: Routes = [
             path: 'painel-admin',
             loadComponent: () =>
               import('../pages/admin/admin-home/admin-home.component').then(c => c.AdminHomeComponent),
-            data: { title: 'Painel Administrativo'}
+            data: { title: 'Painel Administrativo' }
           },
           {
             path:'produtos',
             loadComponent:() => import('../pages/admin/product-home/product-home.component').then(c => c.ProductHomeComponent),
-            data: { title: 'Produtos'}
+            data: { title: 'Produtos' }
           },
           {
             path: 'criar-produto',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
-            data: { title: 'Criar Produto'}
+            data: { title: 'Criar Produto' }
           },
           {
             path: 'editar-produto/:id',
             loadComponent: () =>
               import('../pages/admin/product-home/create-and-edit-product/create-and-edit-product.component').then(c => c.CreateAndEditProductComponent),
-            data: { title: 'Editar Produto'}
+            data: { title: 'Editar Produto' }
           },
           {
             path:'pedidos',
             loadComponent:() => import('../pages/admin/order-home/order-home.component').then(c => c.OrderHomeComponent),
-            data: { title: 'Pedidos'}
+            data: { title: 'Pedidos' }
           }
-        ],
-      },
-    ],
-  },
+        ]
+      }
+    ]
+  }
 ];

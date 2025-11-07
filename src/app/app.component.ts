@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { LoadingService } from './core/services/loading/loading.service';
 import { DefineLayoutService } from './core/services/defineLayout/defineLayout.service';
 import { ScrollTopBtnComponent } from './shared/components/scroll-top-btn/scroll-top-btn.component';
+import { LayoutComponent } from './pages/client/layout/layout.component';
 @Component({
   selector: 'app-root',
   imports: [
@@ -13,7 +14,8 @@ import { ScrollTopBtnComponent } from './shared/components/scroll-top-btn/scroll
     FooterComponent,
     RouterOutlet,
     CommonModule,
-    ScrollTopBtnComponent
+    ScrollTopBtnComponent,
+    LayoutComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'

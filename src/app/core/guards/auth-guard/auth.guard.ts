@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastService } from '../../services/swal/toast.service';
 import { AuthService } from '../../services/auth/auth.service';
+import type { CanMatchFn, UrlTree } from '@angular/router';
 
 export const AuthGuard: CanMatchFn = (): UrlTree | boolean => {
 
@@ -12,7 +13,7 @@ export const AuthGuard: CanMatchFn = (): UrlTree | boolean => {
   const user = auth.currentUser;
 
   if(!user){
-    toaster.error("Você não está logado!");
+    toaster.error('Você não está logado!');
     return router.createUrlTree(['/home']);
   }
 
