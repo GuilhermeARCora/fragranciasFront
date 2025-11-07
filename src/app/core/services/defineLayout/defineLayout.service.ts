@@ -1,7 +1,6 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter, map, startWith, distinctUntilChanged, shareReplay } from 'rxjs';
-import type { Product } from '../../../shared/types/Product';
 
 @Injectable({
   providedIn: 'root'

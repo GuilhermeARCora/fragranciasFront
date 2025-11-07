@@ -43,7 +43,8 @@ interface SummaryCards {
   title: string,
   filter: object,
   value: string | number,
-  route: string
+  route: string,
+  borderColor: string
 };
 @Component({
   selector: 'app-admin-home',
@@ -75,52 +76,60 @@ export class AdminHomeComponent implements OnInit{
 
   readonly summaryCards = computed<SummaryCards[]>(() => [
     {
-      title: 'Pedidos Pendentes',
-      value: this.adminPanelService.ordersStatistics()?.amountStatusPendente ?? 0,
-      filter: { status: 'PENDENTE' },
-      route: 'pedidos'
-    },
-    {
       title: 'Pedidos Concluídos',
       value: this.adminPanelService.ordersStatistics()?.amountStatusConcluido ?? 0,
       filter: { status: 'CONCLUIDO' },
-      route: 'pedidos'
+      route: 'pedidos',
+      borderColor: 'card-sucesso'
+    },
+    {
+      title: 'Pedidos Pendentes',
+      value: this.adminPanelService.ordersStatistics()?.amountStatusPendente ?? 0,
+      filter: { status: 'PENDENTE' },
+      route: 'pedidos',
+      borderColor: 'card-atencao'
     },
     {
       title: 'Pedidos nas últimas 48h',
       value: this.adminPanelService.ordersStatistics()?.amountInTheLastTwoDays ?? 0,
       filter: { daysAgo: 2 },
-      route: 'pedidos'
+      route: 'pedidos',
+      borderColor: 'card-alerta'
     },
     {
       title: 'Pedidos >= R$500',
       value: this.adminPanelService.ordersStatistics()?.amountWithFinalPriceOverFiveHundred ?? 0,
       filter: { totalCurrentPrice: 500 },
-      route: 'pedidos'
+      route: 'pedidos',
+      borderColor: 'card-informacao'
     },
     {
       title: 'Produtos Ativos',
       value: this.adminPanelService.productsStatistics()?.countActiveProds ?? 0,
       filter: { active: true },
-      route: 'produtos'
+      route: 'produtos',
+      borderColor: 'card-sucesso'
     },
     {
       title: 'Produtos Inativos',
       value: this.adminPanelService.productsStatistics()?.countInactiveProds ?? 0,
       filter: { active: false },
-      route: 'produtos'
+      route: 'produtos',
+      borderColor: 'card-informacao'
     },
     {
       title: 'Produtos ativos em promoção',
       value: this.adminPanelService.productsStatistics()?.countInPromo ?? 0,
       filter: { isInPromo: true },
-      route: 'produtos'
+      route: 'produtos',
+      borderColor: 'card-informacao'
     },
     {
       title: 'Maior desconto ativo',
       value: `${this.adminPanelService.productsStatistics()?.greatestDiscount ?? 0}%`,
       filter: { promoPercentage: this.adminPanelService.productsStatistics()?.greatestDiscount ?? 0 },
-      route: 'produtos'
+      route: 'produtos',
+      borderColor: 'card-informacao'
     }
   ]);
 

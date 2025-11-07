@@ -1,7 +1,8 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { ToastService } from '../../services/swal/toast.service';
+import type { CanMatchFn, UrlTree } from '@angular/router';
 
 export const RoleGuard: CanMatchFn = (route): UrlTree | boolean => {
 
@@ -13,12 +14,12 @@ export const RoleGuard: CanMatchFn = (route): UrlTree | boolean => {
   const role = auth.currentUser?.role;
 
   if(!role){
-    toaster.error("Você não está logado!");
+    toaster.error('Você não está logado!');
     return router.createUrlTree(['/home']);
   };
 
   if (!allowed.includes(role)) {
-    toaster.error("Você não possui permissão!");
+    toaster.error('Você não possui permissão!');
     return router.createUrlTree(['/home']);
   };
 

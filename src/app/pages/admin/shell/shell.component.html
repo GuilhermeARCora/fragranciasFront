@@ -17,8 +17,15 @@
         <header style="background-color: var(--white);" class="container-fluid shadow-sm p-4">
 
           <div class="d-flex align-items-center justify-content-between py-3 position-relative">
-            <button class="border-0 bg-transparent ms-md-3" (click)="drawer.toggle()">
-              <mat-icon>menu</mat-icon>
+            <button
+              aria-label="Abrir menu"
+              class="border-0 bg-transparent ms-md-3"
+              (click)="drawer.toggle()"
+              id="btn-menu"
+              type="button"
+              tabindex="1"
+            >
+              <mat-icon aria-hidden="true">menu</mat-icon>
             </button>
 
             <div class="position-absolute top-50 start-50 translate-middle">
@@ -30,7 +37,12 @@
             </div>
 
             <div>
-              <button class="border-0 bg-transparent me-1 me-md-3" (click)="logout()">
+              <button
+                class="border-0 bg-transparent me-1 me-md-3"
+                (click)="logout()"
+                type="button"
+                id="btn-logout"
+              >
                 <mat-icon title="Sair" fontSet="material-symbols-outlined">exit_to_app</mat-icon>
               </button>
             </div>

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import Swal, { SweetAlertIcon } from 'sweetalert2';
+import Swal from 'sweetalert2';
+import type { SweetAlertIcon } from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ToastService {
   private getToast(){
     return Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       showCloseButton: true,
       timer: this.useTimer ? 3500 : undefined,

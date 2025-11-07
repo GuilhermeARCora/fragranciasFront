@@ -1,5 +1,4 @@
 import { Component, DestroyRef, inject, ViewChild } from '@angular/core';
-import { LayoutComponent } from '../layout/layout.component';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -16,7 +15,6 @@ import type { Product } from '../../../shared/types/Product';
   selector: 'app-individual-product',
   imports: [
     CommonModule,
-    LayoutComponent,
     StandardBtnComponent,
     MarkdownPipe
   ],

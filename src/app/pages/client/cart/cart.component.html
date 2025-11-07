@@ -8,140 +8,136 @@
 @let orderTotalDiscount = (orderTotalDiscount$ | async);
 @let orderTotalPixPrice = (orderTotalPixPrice$ | async);
 
-<app-layout>
+<section class="d-md-flex flex-md-row gap-md-3">
 
-  <section class="d-md-flex flex-md-row gap-md-3">
+  <div class="d-flex justify-content-center mt-5 card-items">
 
-    <div class="d-flex justify-content-center mt-5 card-items">
+    <div [ngClass]=" isHandset ? 'd-flex flex-column gap-5' : 'd-flex flex-wrap gap-3 justify-content-evenly'">
+      @if(!viewMode){
+        @for(item of cartService.cartItems() ; track item.product._id){
+        <app-cart-item
+          [product]="item.product"
+          [amount]="item.amount"
+          [isModoView]="viewMode"
+        />
+        }
+      }@else{
+        @for(item of orderItems ; track item._id){
+        <app-cart-item
+          [product]="item"
+          [amount]="item.amount"
+          [isModoView]="viewMode"
+        />
+        }
+      }
+    </div>
 
-      <div [ngClass]=" isHandset ? 'd-flex flex-column gap-5' : 'd-flex flex-wrap gap-3 justify-content-evenly'">
+  </div>
+
+  <div class="d-flex flex-column mt-5 mx-2 rounded-3 cart-info">
+
+    <div class="d-flex flex-column justify-content-between">
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Subtotal</h2>
         @if(!viewMode){
-          @for(item of cartService.cartItems() ; track item.product._id){
-          <app-cart-item
-            [product]="item.product"
-            [amount]="item.amount"
-            [isModoView]="viewMode"
-          />
-          }
-        }@else{
-          @for(item of orderItems ; track item._id){
-          <app-cart-item
-            [product]="item"
-            [amount]="item.amount"
-            [isModoView]="viewMode"
-          />
-          }
+        <p>{{ cartService.cartFullPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+        }@else {
+        <p>{{ orderTotalFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
+        }
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center">
+        <h5>Desconto total</h5>
+        @if(!viewMode){
+          <p>{{cartTotalDiscount() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+        }@else {
+          <p>{{orderTotalDiscount | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
         }
       </div>
 
     </div>
 
-    <div class="d-flex flex-column mt-5 mx-2 rounded-3 cart-info">
+    <hr class="bg-dark border-black">
 
-      <div class="d-flex flex-column justify-content-between">
+    <div class="d-flex flex-column gap-3">
+
+      <div class="d-flex flex-column">
 
         <div class="d-flex justify-content-between align-items-center">
-         <h2>Subtotal</h2>
-         @if(!viewMode){
-          <p>{{ cartService.cartFullPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
-         }@else {
-          <p>{{ orderTotalFullPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR' }}</p>
-         }
+          <h2>Total</h2>
+          @if(!viewMode){
+            <p>{{cartService.cartCurrentPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+          }@else {
+            <p>{{orderTotalCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+          }
         </div>
 
         <div class="d-flex justify-content-between align-items-center">
-          <h5>Desconto total</h5>
+          <h5>Via Pix</h5>
           @if(!viewMode){
-            <p>{{cartTotalDiscount() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+            <p class="pix-price">{{cartService.cartPixPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
           }@else {
-            <p>{{orderTotalDiscount | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
+            <p class="pix-price">{{orderTotalPixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
           }
         </div>
 
       </div>
 
-      <hr class="bg-dark border-black">
+      @if(!viewMode){
+      <div class="d-flex flex-column">
 
-      <div class="d-flex flex-column gap-3">
-
-        <div class="d-flex flex-column">
-
-          <div class="d-flex justify-content-between align-items-center">
-            <h2>Total</h2>
-            @if(!viewMode){
-              <p>{{cartService.cartCurrentPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
-            }@else {
-              <p>{{orderTotalCurrentPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
-            }
-          </div>
-
-          <div class="d-flex justify-content-between align-items-center">
-            <h5>Via Pix</h5>
-            @if(!viewMode){
-              <p class="pix-price">{{cartService.cartPixPriceTotal() | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
-            }@else {
-              <p class="pix-price">{{orderTotalPixPrice | currency:'BRL':'symbol':'1.2-2':'pt-BR'}}</p>
-            }
-          </div>
-
-        </div>
-
-        @if(!viewMode){
-        <div class="d-flex flex-column">
-
-          <div>
-            <button
-              type="button"
-              id="btn-checkout"
-              class="btn btn-success w-100 fw-bold rounded-2"
-              (click)="isClient()"
-            >
-              CHECKOUT
-            </button>
-          </div>
-
-          <div>
-            <button
-              class="btn btn-danger w-100 fw-bold rounded-2 mt-2"
-              type="button"
-              id="btn-reset-cart"
-              (click)="cartService.clearCart()"
-            >
-              ESVAZIAR CARRINHO
-            </button>
-          </div>
-
-          <div>
-            <button
-              class="btn btn-outline-dark w-100 fw-bold rounded-2 mt-2"
-              type="button"
-              id="btn-keep-shopping"
-              (click)="redirectBack()"
-            >
-              CONTINUAR COMPRANDO
-            </button>
-          </div>
-
-        </div>
-        }
-
-        @if(isAdmin && viewMode && orderStatus === 'PENDENTE'){
         <div>
           <button
-            (click)="endOrder()"
             type="button"
-            id="btn-end-order"
-            class="btn btn-warning w-100 fw-bold rounded-2 mt-2"
+            id="btn-checkout"
+            class="btn btn-success w-100 fw-bold rounded-2"
+            (click)="isClient()"
           >
-            FINALIZAR PEDIDO
+            CHECKOUT
           </button>
         </div>
-        }
+
+        <div>
+          <button
+            class="btn btn-danger w-100 fw-bold rounded-2 mt-2"
+            type="button"
+            id="btn-reset-cart"
+            (click)="cartService.clearCart()"
+          >
+            ESVAZIAR CARRINHO
+          </button>
+        </div>
+
+        <div>
+          <button
+            class="btn btn-outline-dark w-100 fw-bold rounded-2 mt-2"
+            type="button"
+            id="btn-keep-shopping"
+            (click)="redirectBack()"
+          >
+            CONTINUAR COMPRANDO
+          </button>
+        </div>
 
       </div>
+      }
+
+      @if(isAdmin && viewMode && orderStatus === 'PENDENTE'){
+      <div>
+        <button
+          (click)="endOrder()"
+          type="button"
+          id="btn-end-order"
+          class="btn btn-warning w-100 fw-bold rounded-2 mt-2"
+        >
+          FINALIZAR PEDIDO
+        </button>
+      </div>
+      }
 
     </div>
 
-  </section>
+  </div>
 
-</app-layout>
+</section>

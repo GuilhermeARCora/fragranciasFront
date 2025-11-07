@@ -1,6 +1,7 @@
 import { inject } from '@angular/core';
-import { CanMatchFn, Router, UrlTree } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
+import type { CanMatchFn, UrlTree } from '@angular/router';
 
 export const loginRedirectGuard: CanMatchFn = (): UrlTree | boolean => {
 

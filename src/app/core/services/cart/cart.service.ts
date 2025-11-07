@@ -1,8 +1,8 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ToastService } from '../swal/toast.service';
 import { Router } from '@angular/router';
-import { Cart, CartItem } from '../../../shared/types/Cart';
-import { Product } from '../../../shared/types/Product';
+import type { Cart, CartItem } from '../../../shared/types/Cart';
+import type { Product } from '../../../shared/types/Product';
 
 @Injectable({
   providedIn: 'root'
@@ -21,6 +21,7 @@ export class CartService {
   readonly cartFullPriceTotal = computed(() => this.cartSignal()?.totalFullPrice ?? 0);
   readonly cartPixPriceTotal = computed(() => this.cartSignal()?.totalPixPrice ?? 0);
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private saveTimeout: any = null;
 
   constructor() {
@@ -110,7 +111,7 @@ export class CartService {
     localStorage.setItem('cart', JSON.stringify(this.empty));
     this.cartSignal.set(this.empty);
 
-    this.toaster.info("Carrinho vazio");
+    this.toaster.info('Carrinho vazio');
     this.router.navigateByUrl('/');
   };
 

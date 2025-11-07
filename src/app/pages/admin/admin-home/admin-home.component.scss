@@ -5,7 +5,6 @@
 /* --- Cards principais --- */
 .dashboard-card {
   background: #ffffff;
-  border-left: 4px solid var(--green);
   transition: transform 0.2s ease-in-out;
   position: relative;
 
@@ -30,6 +29,26 @@
       transform: scale(1.1);
     }
   }
+}
+
+.card-sucesso{
+  border-left: 3px solid #4CAF50;
+  border-top: 3px solid #4CAF50;
+}
+
+.card-atencao{
+  border-left: 3px solid #FBC02D;
+  border-top: 3px solid #FBC02D;
+}
+
+.card-alerta{
+  border-left: 3px solid #E53935;
+  border-top: 3px solid #E53935;
+}
+
+.card-informacao{
+  border-left: 3px solid #2196F3;
+  border-top: 3px solid #2196F3;
 }
 
 /* --- Gráficos --- */
@@ -72,6 +91,11 @@ section {
 
 h2, h5 {
   color: #212529;
+}
+
+.border-green{
+  border-left: 4px solid var(--green);
+  border-top: 4px solid var(--green);
 }
 
 /* --- Responsividade --- */
