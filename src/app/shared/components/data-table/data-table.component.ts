@@ -13,6 +13,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
 import type { Observable } from 'rxjs';
 import type { AfterViewInit, OnInit } from '@angular/core';
+import { ExportBtnsComponent } from '../export-btns/export-btns.component';
 
 export interface ColumnDef {
   key: string;
@@ -33,7 +34,8 @@ export interface ColumnDef {
     MatPaginatorModule,
     MatIconModule,
     FormsModule,
-    MatTooltip
+    MatTooltip,
+    ExportBtnsComponent
   ],
   providers: [
     { provide: MatPaginatorIntl, useFactory: CustomPaginatorIntl }
@@ -41,7 +43,8 @@ export interface ColumnDef {
   templateUrl: './data-table.component.html',
   styleUrl: './data-table.component.scss'
 })
-export class DataTableComponent<T extends Record<string, object>> implements OnInit, AfterViewInit {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export class DataTableComponent<T extends Record<string, any>> implements OnInit, AfterViewInit {
 
   @Input({ required:true }) data$!: Observable<T[]>;
   @Input() displayedColumns: ColumnDef[] = [];
@@ -51,11 +54,11 @@ export class DataTableComponent<T extends Record<string, object>> implements OnI
   @Input() useBtnLink: boolean = false;
   @Input() useBtnRemove: boolean = false;
 
-  @Output() edit = new EventEmitter<object>();
-  @Output() active = new EventEmitter<object>();
-  @Output() status = new EventEmitter<object>();
-  @Output() link = new EventEmitter<object>();
-  @Output() remove = new EventEmitter<object>();
+  @Output() edit = new EventEmitter<T>();
+  @Output() active = new EventEmitter<T>();
+  @Output() status = new EventEmitter<T>();
+  @Output() link = new EventEmitter<T>();
+  @Output() remove = new EventEmitter<T>();
 
   dataSource = new MatTableDataSource<T>();
   autoColumns: ColumnDef[] = [];
@@ -123,23 +126,23 @@ export class DataTableComponent<T extends Record<string, object>> implements OnI
     return this.pipeRegistry.apply(column.pipe, value, ...(column.pipeArgs || []));
   };
 
-  onEdit(element: object):void {
+  onEdit(element: T):void {
     this.edit.emit(element);
   };
 
-  onChangeActive(element: object):void {
+  onChangeActive(element: T):void {
     this.active.emit(element);
   };
 
-  onChangeStatus(element: object):void {
+  onChangeStatus(element: T):void {
     this.status.emit(element);
   };
 
-  onChangeLink(element: object):void {
+  onChangeLink(element: T):void {
     this.link.emit(element);;
   };
 
-  onChangeRemove(element: object):void {
+  onChangeRemove(element: T):void {
     this.remove.emit(element);;
   };
 

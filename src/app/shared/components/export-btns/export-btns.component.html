@@ -1,0 +1,31 @@
+<div class="export-buttons d-flex flex-wrap justify-content-end gap-2">
+  <button
+    (click)="exportToPDF()"
+    id="export-pdf-btn"
+    type="button"
+    class="btn btn-info rounded-3"
+  >
+    <mat-icon fontSet="material-symbols-outlined">picture_as_pdf</mat-icon>
+    PDF
+  </button>
+
+  <button
+    (click)="exportToExcel()"
+    id="export-excel-btn"
+    type="button"
+    class="btn btn-success rounded-3"
+  >
+    <mat-icon fontSet="material-symbols-outlined">table_view</mat-icon>
+    Excel
+  </button>
+
+  <button
+    (click)="exportToCSV()"
+    id="export-csv-btn"
+    type="button"
+    class="btn btn-dark rounded-3"
+  >
+    <mat-icon fontSet="material-symbols-outlined">description</mat-icon>
+    CSV
+  </button>
+</div>

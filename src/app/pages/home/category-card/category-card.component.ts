@@ -5,7 +5,10 @@ import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-category-card',
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
   templateUrl: './category-card.component.html',
   styleUrl: './category-card.component.scss'
 })
