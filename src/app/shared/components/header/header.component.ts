@@ -12,6 +12,7 @@ import { ToastService } from '../../../core/services/swal/toast.service';
 import { InputAutocompleteComponent } from './input-autocomplete/input-autocomplete.component';
 import type { Observable } from 'rxjs';
 import type { ElementRef, OnInit } from '@angular/core';
+
 @Component({
   selector: 'app-header',
   imports: [

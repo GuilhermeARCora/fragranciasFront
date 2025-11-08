@@ -12,7 +12,7 @@ import { OrderService } from '../../../core/services/order/order.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import Swal from 'sweetalert2';
 import type { OnInit } from '@angular/core';
-import type { Order } from '../../../shared/types/Order';
+import type { Order } from '../../../shared/types/order';
 import type { FormGroup } from '@angular/forms';
 
 @Component({

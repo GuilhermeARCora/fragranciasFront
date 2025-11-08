@@ -13,7 +13,7 @@ import { MatInput } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { DisplayCategoryPipe } from '../../../shared/pipes/display-category/display-category.pipe';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import type { Product } from '../../../shared/types/Product';
+import type { Product } from '../../../shared/types/product';
 import type { FormGroup } from '@angular/forms';
 import type { OnInit } from '@angular/core';
 @Component({

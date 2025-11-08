@@ -69,7 +69,7 @@
         </mat-error>
         }
 
-        @if(hasFormError(checkoutForm, 'cpfOrCnpj', 'notCPForCNPJ')){
+        @if(!hasFormError(checkoutForm, 'cpfOrCnpj', 'required') && hasFormError(checkoutForm, 'cpfOrCnpj', 'notCPForCNPJ')){
         <mat-error>
           Insira um CPF ou CNPJ válido!
         </mat-error>
