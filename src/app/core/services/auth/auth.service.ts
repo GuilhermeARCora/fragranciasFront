@@ -5,9 +5,9 @@ import { Router } from '@angular/router';
 import { ToastService } from '../swal/toast.service';
 import { BehaviorSubject, map, switchMap, tap } from 'rxjs';
 import type { Observable } from 'rxjs';
-import type { User } from '../../../shared/types/User';
-import type { LoginPayload } from '../../../shared/types/Authentication';
-import type { ResponseData } from '../../../shared/types/ResponseData';
+import type { User } from '../../../shared/types/user';
+import type { LoginPayload } from '../../../shared/types/authentication';
+import type { ResponseData } from '../../../shared/types/responseData';
 
 @Injectable({
   providedIn: 'root'

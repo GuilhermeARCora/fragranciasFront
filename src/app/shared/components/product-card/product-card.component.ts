@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { StandardBtnComponent } from '../standard-btn/standard-btn.component';
 import { CartService } from '../../../core/services/cart/cart.service';
 import { Router } from '@angular/router';
-import type { Product } from '../../types/Product';
+import type { Product } from '../../types/product';
 
 @Component({
   selector: 'app-product-card',

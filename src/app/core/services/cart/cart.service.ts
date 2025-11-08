@@ -1,8 +1,8 @@
 import { computed, effect, inject, Injectable, signal } from '@angular/core';
 import { ToastService } from '../swal/toast.service';
 import { Router } from '@angular/router';
-import type { Cart, CartItem } from '../../../shared/types/Cart';
-import type { Product } from '../../../shared/types/Product';
+import type { Cart, CartItem } from '../../../shared/types/cart';
+import type { Product } from '../../../shared/types/product';
 
 @Injectable({
   providedIn: 'root'

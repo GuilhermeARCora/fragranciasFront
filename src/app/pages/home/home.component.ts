@@ -11,7 +11,8 @@ import { AutoScrollOnOpenDirective } from '../../shared/directives/autoScrollOnO
 import { ProductsService } from '../../core/services/products/products.service';
 import { map } from 'rxjs';
 import type { OnInit } from '@angular/core';
-import type { CategoryBanner } from '../../shared/types/Banner';
+import type { CategoryBanner } from '../../shared/types/banner';
+
 @Component({
   selector: 'app-home',
   imports: [

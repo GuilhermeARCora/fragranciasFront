@@ -4,8 +4,8 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, map, shareReplay, tap } from 'rxjs';
 import { AdminPanelService } from '../adminPanel/admin-panel.service';
 import type { Observable } from 'rxjs';
-import type { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/Product';
-import type { ResponseData } from '../../../shared/types/ResponseData';
+import type { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/product';
+import type { ResponseData } from '../../../shared/types/responseData';
 @Injectable({
   providedIn: 'root'
 })

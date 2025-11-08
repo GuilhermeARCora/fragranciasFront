@@ -9,7 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StandardBtnComponent } from '../../../shared/components/standard-btn/standard-btn.component';
 import { MarkdownPipe } from '../../../shared/pipes/markdown/markdown.pipe';
 import type { AfterViewInit, ElementRef, OnInit } from '@angular/core';
-import type { Product } from '../../../shared/types/Product';
+import type { Product } from '../../../shared/types/product';
 
 @Component({
   selector: 'app-individual-product',

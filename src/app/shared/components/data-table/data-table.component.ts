@@ -11,9 +11,9 @@ import { CommonModule } from '@angular/common';
 import { PipeRegistryService } from '../../../core/services/pipeRegistry/pipe-registry.service';
 import { FormsModule } from '@angular/forms';
 import { MatTooltip } from '@angular/material/tooltip';
+import { ExportBtnsComponent } from '../export-btns/export-btns.component';
 import type { Observable } from 'rxjs';
 import type { AfterViewInit, OnInit } from '@angular/core';
-import { ExportBtnsComponent } from '../export-btns/export-btns.component';
 
 export interface ColumnDef {
   key: string;

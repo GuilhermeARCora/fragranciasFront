@@ -2,7 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, Input } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
-import type { Product } from '../../../shared/types/Product';
+import type { Product } from '../../../shared/types/product';
 import type { Observable } from 'rxjs';
 
 @Component({

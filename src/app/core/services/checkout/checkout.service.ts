@@ -2,9 +2,9 @@ import { inject, Injectable } from '@angular/core';
 import { OrderService } from '../order/order.service';
 import { take } from 'rxjs';
 import { ToastService } from '../swal/toast.service';
-import type { CheckoutMsg } from '../../../shared/types/Checkout';
-import type { Cart } from '../../../shared/types/Cart';
-import type { OrderCreateItem } from '../../../shared/types/Order';
+import type { CheckoutMsg } from '../../../shared/types/checkout';
+import type { Cart } from '../../../shared/types/cart';
+import type { OrderCreateItem } from '../../../shared/types/order';
 
 @Injectable({
   providedIn: 'root'

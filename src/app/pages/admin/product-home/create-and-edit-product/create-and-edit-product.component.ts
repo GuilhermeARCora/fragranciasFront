@@ -17,7 +17,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { InputFileComponent } from './input-file/input-file.component';
 import EasyMDE from 'easymde';
 import type { MatCheckboxChange } from '@angular/material/checkbox';
-import type { Product, ProductForm } from '../../../../shared/types/Product';
+import type { Product, ProductForm } from '../../../../shared/types/product';
 import type { AfterViewInit, OnDestroy, OnInit } from '@angular/core';
 
 @Component({

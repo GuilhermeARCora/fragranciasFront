@@ -10,7 +10,7 @@ import { hasFormError } from '../../../shared/utils/helpers';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import type { OnInit } from '@angular/core';
-import type { LoginPayload } from '../../../shared/types/Authentication';
+import type { LoginPayload } from '../../../shared/types/authentication';
 
 @Component({
   selector: 'app-login',
