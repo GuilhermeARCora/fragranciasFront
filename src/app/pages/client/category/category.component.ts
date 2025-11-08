@@ -7,7 +7,7 @@ import { ProductCardComponent } from '../../../shared/components/product-card/pr
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
-import type { Product } from '../../../shared/types/Product';
+import type { Product } from '../../../shared/types/product';
 import type { OnInit } from '@angular/core';
 @Component({
   selector: 'app-category',

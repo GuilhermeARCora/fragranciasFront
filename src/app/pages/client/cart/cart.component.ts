@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/cart/cart.service';
 import Swal from 'sweetalert2';
-import type { Order } from '../../../shared/types/Order';
+import type { Order } from '../../../shared/types/order';
 import type { OnInit } from '@angular/core';
 
 @Component({

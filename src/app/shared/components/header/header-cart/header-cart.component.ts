@@ -8,6 +8,7 @@ import { trigger, transition, animate, keyframes, style } from '@angular/animati
 import { ToastService } from '../../../../core/services/swal/toast.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { CartService } from '../../../../core/services/cart/cart.service';
+import type { OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-header-cart',
@@ -38,7 +39,7 @@ import { CartService } from '../../../../core/services/cart/cart.service';
     ])
   ]
 })
-export class HeaderCartComponent {
+export class HeaderCartComponent implements OnInit {
 
   router = inject(Router);
   cartService = inject(CartService);
@@ -54,7 +55,7 @@ export class HeaderCartComponent {
 
   redirectCart(count: number | null):void {
     if (!count) {
-      this.toaster.info("Seu carrinho está vazio");
+      this.toaster.info('Seu carrinho está vazio');
       return;
     };
 
@@ -77,7 +78,7 @@ export class HeaderCartComponent {
       };
 
       prevUnits = currUnits;
-    }, {injector: this.injector});
+    }, { injector: this.injector });
   };
 
 };

@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { BannerService } from '../../../core/services/banner/banner.service';
+import type { OnInit } from '@angular/core';
 @Component({
   selector: 'app-banner',
   imports: [CommonModule],
@@ -10,7 +11,7 @@ import { BannerService } from '../../../core/services/banner/banner.service';
 export class BannerComponent implements OnInit{
 
   bannerService = inject(BannerService);
-  @Input({required:true}) name!: string;
+  @Input({ required:true }) name!: string;
 
   imgUrlSm!:string;
   imgUrlMd!:string;

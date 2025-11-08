@@ -2,8 +2,8 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { finalize, map } from 'rxjs';
-import type { ResponseData } from '../../../shared/types/ResponseData';
-import type { OrdersStatistics, OrdersEvolution, ProductsStatistics } from '../../../shared/types/AdminPanel';
+import type { ResponseData } from '../../../shared/types/responseData';
+import type { OrdersStatistics, OrdersEvolution, ProductsStatistics } from '../../../shared/types/adminPanel';
 
 @Injectable({
   providedIn: 'root'

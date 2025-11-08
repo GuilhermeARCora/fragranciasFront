@@ -4,9 +4,9 @@ import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { AdminPanelService } from '../adminPanel/admin-panel.service';
-import type { Order, OrderCreateItem, OrderFilter, OrderList } from '../../../shared/types/Order';
+import type { Order, OrderCreateItem, OrderFilter, OrderList } from '../../../shared/types/order';
 import type { Observable } from 'rxjs';
-import type { ResponseData } from './../../../shared/types/ResponseData';
+import type { ResponseData } from './../../../shared/types/responseData';
 
 @Injectable({
   providedIn: 'root'

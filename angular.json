@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/fragancias/browser",
+            "outputPath": "dist/fragancias",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -42,7 +42,12 @@
               "node_modules/bootstrap/dist/js/bootstrap.min.js"
             ],
             "allowedCommonJsDependencies": [
-              "sweetalert2"
+              "sweetalert2",
+              "easymde",
+              "exceljs",
+              "file-saver",
+              "pdfmake/build/pdfmake",
+              "pdfmake/build/vfs_fonts"
             ]
           },
           "configurations": {

@@ -10,7 +10,7 @@ import { Router } from '@angular/router';
 import { ProductsService } from '../../../../core/services/products/products.service';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import type { ElementRef, OnInit } from '@angular/core';
-import type { Product } from '../../../types/Product';
+import type { Product } from '../../../types/product';
 import type { Observable } from 'rxjs';
 
 @Component({

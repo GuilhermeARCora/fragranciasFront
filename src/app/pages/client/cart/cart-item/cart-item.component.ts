@@ -4,7 +4,7 @@ import { BreakPointService } from '../../../../core/services/breakPoint/break-po
 import { MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../../../core/services/cart/cart.service';
 import { Router } from '@angular/router';
-import type { Product } from '../../../../shared/types/Product';
+import type { Product } from '../../../../shared/types/product';
 
 @Component({
   selector: 'app-cart-item',

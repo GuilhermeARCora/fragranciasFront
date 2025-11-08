@@ -7,7 +7,7 @@ export class OnlyNumberDirective {
 
   el = inject(ElementRef<HTMLInputElement>);
 
-  @HostListener('input', ['$event'])
+  @HostListener('input')
   onInput():void {
     const input = this.el.nativeElement;
     const value = input.value;
