@@ -63,27 +63,26 @@
       /* Zebra rows */
       .mat-mdc-row:nth-child(even) {
         background-color: #fafafa;
+        font-weight: 600;
       }
       .mat-mdc-row:nth-child(odd) {
         background-color: #fff;
+        font-weight: 600;
       }
 
       .row-concluido {
         background-color: #E8F5E9 !important;
         color: #2E7D32;
-        font-weight: 600;
       }
 
       .row-pendente {
         background-color: #FFF8E1 !important;
         color: #F57F17;
-        font-weight: 600;
       }
 
       .row-cancelado {
         background-color: #FFEBEE !important;
         color: #C62828;
-        font-weight: 600;
       }
 
       /* Hover suave */
@@ -96,8 +95,6 @@
 
   /* Container do filtro */
   .filter-container {
-    display: flex;
-    justify-content: flex-end;
     margin: 0;
     padding: 0;
   }

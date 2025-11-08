@@ -1,4 +1,9 @@
-<div class="filter-container">
+<div class="filter-container d-flex justify-content-between">
+   <app-export-btns
+    [data]="dataSource.filteredData || dataSource.data"
+    [columns]="columnsToDisplay">
+  </app-export-btns>
+
   <mat-form-field class="filter-field" appearance="outline">
     <mat-label>Filtrar</mat-label>
     <input
