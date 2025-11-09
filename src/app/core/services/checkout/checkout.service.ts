@@ -57,7 +57,7 @@ export class CheckoutService {
   };
 
   private whatsAppMessage(isClient:boolean, orderId: string, checkoutMsg?:string){
-    const link = `http://localhost:4200/pedido/${orderId}`;
+    const link = `https://fragranciasdecor.com.br/pedido/${orderId}`;
 
     let message = '';
 
