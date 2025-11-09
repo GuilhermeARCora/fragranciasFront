@@ -1,4 +1,4 @@
-import { Component, DestroyRef, inject, ViewChild } from '@angular/core';
+import { Component, DestroyRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { CartService } from '../../../core/services/cart/cart.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StandardBtnComponent } from '../../../shared/components/standard-btn/standard-btn.component';
 import { MarkdownPipe } from '../../../shared/pipes/markdown/markdown.pipe';
-import type { AfterViewInit, ElementRef, OnInit } from '@angular/core';
+import type { AfterViewInit, OnInit } from '@angular/core';
 import type { Product } from '../../../shared/types/product';
 
 @Component({
@@ -22,8 +22,6 @@ import type { Product } from '../../../shared/types/product';
   styleUrl: './individual-product.component.scss'
 })
 export class IndividualProductComponent implements OnInit, AfterViewInit{
-
-  @ViewChild('image') imageRef!: ElementRef<HTMLImageElement>;
 
   productService = inject(ProductsService);
   cartService = inject(CartService);
@@ -44,7 +42,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
 
   ngAfterViewInit(): void {
     queueMicrotask(() => {
-      this.imageRef?.nativeElement.focus();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     });
   };
 
