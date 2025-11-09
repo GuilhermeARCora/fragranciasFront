@@ -9,27 +9,17 @@
     object-fit: cover;
   }
 
-  // Small screens: taller banners
   @media (max-width: 600px) {
-    aspect-ratio: 4 / 3; // mobile mais alto
+    aspect-ratio: 4 / 3;
   }
 
-  // Medium screens
-  @media (min-width: 601px) and (max-width: 1200px) {
+  @media (min-width: 601px) and (max-width: 1000px) {
     aspect-ratio: 16 / 9;
   }
 
-  // Large screens: shorter, wider banners
-  @media (min-width: 1201px) {
+  @media (min-width: 1001px) {
     border-radius: 20px;
-    width: 70vw;
+    width: 100%;
     aspect-ratio: 3 / 1;
   }
 }
-
-
-
-
-
-
-

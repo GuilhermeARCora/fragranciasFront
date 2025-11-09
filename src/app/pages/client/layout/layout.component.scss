@@ -1,10 +1,11 @@
-@media (min-width: 1200px) {
+@media (min-width: 900px) {
   .layout {
     display: flex;
     flex-direction: column;
     justify-content: center; // eixo Y
     align-items: center;     // eixo X
     width: 70vw;
+    max-width: 75vw;
     min-height: 100vh;
     margin: 0 auto; // centraliza o próprio layout
   }
