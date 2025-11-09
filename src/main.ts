@@ -11,5 +11,4 @@ import localePtExtra from '@angular/common/locales/extra/pt';
 register();
 registerLocaleData(localePt, 'pt-BR', localePtExtra);
 
-bootstrapApplication(AppComponent, appConfig)
-  .catch((err) => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) => console.error(err));

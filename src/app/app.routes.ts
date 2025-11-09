@@ -14,7 +14,13 @@ export const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    data: {
+      title: 'Fragrâncias Decor - Perfumes e Decoração',
+      description: 'Descubra perfumes e itens de decoração únicos na Fragrâncias Decor. Envio rápido e qualidade garantida.',
+      image: 'https://fragranciasdecor.com.br/assets/img/logo.webp',
+      keywords: 'perfumes, decoração, aromatizadores, fragrâncias, loja online'
+    }
   },
   {
     path: 'admin',
