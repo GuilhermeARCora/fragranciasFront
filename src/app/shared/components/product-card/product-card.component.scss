@@ -134,4 +134,18 @@
   color: #666;
 }
 
+:host-context(swiper-slide) .product-image img {
+  width: 100%;
+  height: auto;
+  max-width: 100%;
+  object-fit: contain;
+  display: block;
+  aspect-ratio: 1 / 1;
+}
 
+:host-context(swiper-slide) .product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
