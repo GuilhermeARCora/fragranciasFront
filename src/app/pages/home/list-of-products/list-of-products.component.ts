@@ -4,7 +4,7 @@ import { ProductsService } from '../../../core/services/products/products.servic
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import type { AfterViewInit, ElementRef } from '@angular/core';
 import type { Product } from '../../../shared/types/product';
-import { combineLatest, debounceTime, filter, fromEvent, type Observable } from 'rxjs';
+import { debounceTime, filter, type Observable } from 'rxjs';
 import type { SwiperContainer } from 'swiper/element';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -29,44 +29,30 @@ export class ListOfProductsComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.products$
       .pipe(
-        filter(p => !!p && p.length > 0),
+        filter((p) => !!p && p.length > 0),
         debounceTime(200),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        this.waitImagesAndUpdate();
+        // pequeno atraso para o Angular pintar a tela
+        setTimeout(() => this.reflowAndUpdate(), 300);
       });
   }
 
-  private waitImagesAndUpdate(): void {
-    const container = this.swiperEl.nativeElement as HTMLElement;
-    const imgs = Array.from(container.querySelectorAll('img'));
+  private reflowAndUpdate(): void {
+    const swiperEl = this.swiperEl.nativeElement as any;
+    if (!swiperEl) return;
 
-    if (imgs.length === 0) {
-      this.safeUpdate();
-      return;
-    }
+    const swiper = swiperEl.swiper;
+    if (!swiper) return;
 
-    // Espera todas as imagens terminarem de carregar
-    const imageLoads$ = imgs.map(img => fromEvent(img, 'load'));
+    // 🔥 Safari às vezes não atualiza o layout até forçarmos um reflow
+    swiperEl.style.display = 'none';
+    void swiperEl.offsetHeight; // força reflow
+    swiperEl.style.display = '';
 
-    combineLatest(imageLoads$)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => {
-        this.safeUpdate();
-      });
-
-    // Se já estavam cacheadas
-    if (imgs.every(img => img.complete)) {
-      this.safeUpdate();
-    }
-  }
-
-  private safeUpdate(): void {
+    // agora reatualiza o swiper
     this.zone.runOutsideAngular(() => {
-      const swiper = this.swiperEl?.nativeElement?.swiper;
-      if (!swiper) return;
-
       requestAnimationFrame(() => {
         swiper.update();
         swiper.slideTo(0);
