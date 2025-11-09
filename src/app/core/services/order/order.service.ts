@@ -25,11 +25,7 @@ export class OrderService {
 
   createOrder(items: OrderCreateItem[]): Observable<string>{
     return this.http.post<ResponseData<Order>>(`${this.apiUrl}${this.path}/`, { items }).pipe(
-      map(v => v.data._id),
-      tap(() => {
-        this.adminPanelService.refreshStatistics();
-        this.adminPanelService.refreshOrdersEvolution();
-      })
+      map(v => v.data._id)
     );
   };
 
