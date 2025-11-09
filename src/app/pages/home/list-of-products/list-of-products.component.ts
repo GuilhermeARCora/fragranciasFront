@@ -1,10 +1,10 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, inject, Input, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, DestroyRef, inject, Input, NgZone, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductsService } from '../../../core/services/products/products.service';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import type { AfterViewInit, ElementRef } from '@angular/core';
 import type { Product } from '../../../shared/types/product';
-import { debounceTime, tap, timer, type Observable } from 'rxjs';
+import { combineLatest, debounceTime, filter, fromEvent, type Observable } from 'rxjs';
 import type { SwiperContainer } from 'swiper/element';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
@@ -24,29 +24,54 @@ export class ListOfProductsComponent implements AfterViewInit {
   @Input({ required:true }) products$!: Observable<Product[]>;
   productService = inject(ProductsService);
   destroyRef = inject(DestroyRef);
+  zone = inject(NgZone);
 
   ngAfterViewInit(): void {
-    // Delay reativo para garantir renderização estável
-    timer(400)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(() => this.forceUpdate());
-
-    // Quando os produtos chegam, refaz update com debounce
     this.products$
       .pipe(
-        debounceTime(250),
-        tap(() => timer(150).subscribe(() => this.forceUpdate())),
+        filter(p => !!p && p.length > 0),
+        debounceTime(200),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe();
+      .subscribe(() => {
+        this.waitImagesAndUpdate();
+      });
   }
 
-  forceUpdate(): void {
-    const swiper = this.swiperEl?.nativeElement?.swiper;
-    if (!swiper) return;
+  private waitImagesAndUpdate(): void {
+    const container = this.swiperEl.nativeElement as HTMLElement;
+    const imgs = Array.from(container.querySelectorAll('img'));
 
-    swiper.update();
-    swiper.slideTo(0);
+    if (imgs.length === 0) {
+      this.safeUpdate();
+      return;
+    }
+
+    // Espera todas as imagens terminarem de carregar
+    const imageLoads$ = imgs.map(img => fromEvent(img, 'load'));
+
+    combineLatest(imageLoads$)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.safeUpdate();
+      });
+
+    // Se já estavam cacheadas
+    if (imgs.every(img => img.complete)) {
+      this.safeUpdate();
+    }
+  }
+
+  private safeUpdate(): void {
+    this.zone.runOutsideAngular(() => {
+      const swiper = this.swiperEl?.nativeElement?.swiper;
+      if (!swiper) return;
+
+      requestAnimationFrame(() => {
+        swiper.update();
+        swiper.slideTo(0);
+      });
+    });
   }
 
 };
