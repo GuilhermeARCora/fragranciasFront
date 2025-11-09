@@ -11,9 +11,16 @@
 
 .product-image {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
+  align-items: center;
+  max-width: 100%;
+  overflow: hidden;
 
   img {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    display: block;
     min-width: fit-content;
     max-height: 30rem;
     object-fit: contain;
