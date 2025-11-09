@@ -22,13 +22,18 @@
     aspect-ratio: 2 / 1;
   }
 
+  @media (min-width: 900px){
+    width: clamp(12rem, 24vw, 21rem);
+    aspect-ratio: 2 / 1;
+  }
+
   @media (min-width: 1000px) {
     width: clamp(19rem, 28vw, 21rem);
     aspect-ratio: 2 / 1;
   }
 
   @media (min-width: 1200px) {
-    width: clamp(24rem, 36vw, 26rem);
+    width: clamp(21rem, 27vw, 26rem);
     aspect-ratio: 2 / 1;
   }
 }
@@ -56,6 +61,11 @@
     width: 100%;
   }
 
+  @media (min-width: 900px) and (max-width: 999px) {
+    top: -6%;
+    width: 90%;
+  }
+
   @media (min-width: 1000px) {
     top: -9%;
     width: 80%;
@@ -81,6 +91,11 @@
     width: 80%;
   }
 
+  @media (min-width: 900px) and (max-width: 999px) {
+    top: 10%;
+    width: 80%;
+  }
+
   @media (min-width: 1000px) {
     top: 8%;
     width: 65%;
@@ -95,6 +110,11 @@
   @media (min-width: 768px) {
     top: 10%;
     width: 100%;
+  }
+
+  @media (min-width: 900px) and (max-width: 999px) {
+    top: 10%;
+    width: 90%;
   }
 
   @media (min-width: 1000px) {
