@@ -40,21 +40,6 @@
 
         <div class="row w-100">
 
-          <mat-form-field appearance="outline">
-            <mat-label>Nome</mat-label>
-            <input
-              matInput
-              type="text"
-              id="field-name"
-              formControlName="name"
-              placeholder="Digite o nome"
-            >
-          </mat-form-field>
-
-        </div>
-
-        <div class="row w-100">
-
         <mat-form-field appearance="outline">
           <mat-label>Código</mat-label>
           <input
@@ -192,6 +177,9 @@
         (active)="changeActive($event)"
         [useBtnRemove]="true"
         (remove)="removeProduct($event)"
+        [useBtnLink]="true"
+        (link)="redirectToProduct($event)"
+        [isProductList]="true"
       >
     </app-data-table>
   </div>

@@ -62,7 +62,6 @@ export class ProductHomeComponent implements OnInit{
 
   createForm(): void{
     this.productForm = this.formBuilder.group({
-      name:[''],
       cod:[''],
       fullPrice:[''],
       promoPercentage:[''],
@@ -177,7 +176,6 @@ export class ProductHomeComponent implements OnInit{
   resetForm():void {
     this.productForm.reset({
       active: true,
-      name:'',
       cod:'',
       fullPrice:'',
       promoPercentage:'',
@@ -192,6 +190,12 @@ export class ProductHomeComponent implements OnInit{
     if (event.key === '-' || event.key === 'Subtract') {
       event.preventDefault();
     };
+  };
+
+  redirectToProduct(product: Product):void{
+    const productId = product._id;
+
+    this.router.navigateByUrl(`/produto/${productId}`);
   };
 
 };
