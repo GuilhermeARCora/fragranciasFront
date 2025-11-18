@@ -130,3 +130,19 @@
     }
   }
 }
+
+.end-of-list {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.end-of-list .separator {
+  flex: 1;
+  height: 1px;
+  background: rgba(0,0,0,0.2);
+}
+

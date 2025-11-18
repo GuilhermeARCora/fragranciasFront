@@ -3,7 +3,6 @@ import { BehaviorSubject, map, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { AdminPanelService } from '../adminPanel/admin-panel.service';
 import type { Order, OrderCreateItem, OrderFilter, OrderList } from '../../../shared/types/order';
 import type { Observable } from 'rxjs';
 import type { ResponseData } from './../../../shared/types/responseData';
@@ -18,7 +17,6 @@ export class OrderService {
   path = 'orders';
 
   router = inject(Router);
-  adminPanelService = inject(AdminPanelService);
 
   private ordersSubject = new BehaviorSubject<Order[]>([]);
   readonly orders$ = this.ordersSubject.asObservable();
@@ -30,21 +28,11 @@ export class OrderService {
   };
 
   completeOrder(orderId:string): Observable<ResponseData<Order>>{
-    return this.http.patch<ResponseData<Order>>(`${this.apiUrl}${this.path}/${orderId}/status`, { status : 'CONCLUIDO' }).pipe(
-      tap(() => {
-        this.adminPanelService.refreshStatistics();
-        this.adminPanelService.refreshOrdersEvolution();
-      })
-    );
+    return this.http.patch<ResponseData<Order>>(`${this.apiUrl}${this.path}/${orderId}/status`, { status : 'CONCLUIDO' });
   };
 
   cancelOrder(orderId:string): Observable<ResponseData<Order>>{
-    return this.http.patch<ResponseData<Order>>(`${this.apiUrl}${this.path}/${orderId}/status`, { status : 'CANCELADO' }).pipe(
-      tap(() => {
-        this.adminPanelService.refreshStatistics();
-        this.adminPanelService.refreshOrdersEvolution();
-      })
-    );
+    return this.http.patch<ResponseData<Order>>(`${this.apiUrl}${this.path}/${orderId}/status`, { status : 'CANCELADO' });
   };
 
   findOneOrder(orderId:string): Observable<Order>{

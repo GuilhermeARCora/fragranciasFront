@@ -53,6 +53,7 @@ export class DataTableComponent<T extends Record<string, any>> implements OnInit
   @Input() useBtnStatus: boolean = false;
   @Input() useBtnLink: boolean = false;
   @Input() useBtnRemove: boolean = false;
+  @Input() isProductList: boolean = false;
 
   @Output() edit = new EventEmitter<T>();
   @Output() active = new EventEmitter<T>();
