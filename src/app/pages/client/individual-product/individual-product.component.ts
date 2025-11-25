@@ -8,6 +8,10 @@ import { CartService } from '../../../core/services/cart/cart.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { StandardBtnComponent } from '../../../shared/components/standard-btn/standard-btn.component';
 import { MarkdownPipe } from '../../../shared/pipes/markdown/markdown.pipe';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatListModule } from '@angular/material/list';
 import type { AfterViewInit, OnInit } from '@angular/core';
 import type { Product } from '../../../shared/types/product';
 
@@ -16,7 +20,11 @@ import type { Product } from '../../../shared/types/product';
   imports: [
     CommonModule,
     StandardBtnComponent,
-    MarkdownPipe
+    MarkdownPipe,
+    MatIconModule,
+    MatTooltipModule,
+    MatMenuModule,
+    MatListModule
   ],
   templateUrl: './individual-product.component.html',
   styleUrl: './individual-product.component.scss'
@@ -78,6 +86,19 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
       this.amount--;
 
     };
+  };
+
+  shareWhatsapp(): void {
+    let message = '';
+    const title = 'Conheça esse produto da loja Fragrâncias Decor';
+    const url = encodeURIComponent(window.location.href);
+    message = `${title}%0A%0A${url}`;
+    window.open(`https://wa.me/?text=${message}`, '_blank');
+  };
+
+  copyLink(): void {
+    navigator.clipboard.writeText(window.location.href);
+    alert('Link copiado!');
   };
 
 };

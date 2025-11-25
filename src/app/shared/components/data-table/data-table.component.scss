@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 
 :host {
-  /* Estilos da tabela via design tokens */
+
   @include mat.table-overrides((
     background-color: #fff,
     header-headline-color: #fff,
@@ -12,7 +12,6 @@
     row-item-container-height: 46px
   ));
 
-  /* Estilos do paginator via design tokens */
   @include mat.paginator-overrides((
     container-background-color: var(--green),
     container-text-color: #fff,

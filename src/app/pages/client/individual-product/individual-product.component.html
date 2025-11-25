@@ -2,6 +2,35 @@
 
 <section class="card-product d-flex flex-column gap-3 p-md-5 mt-md-5">
 
+  <div>
+    <button
+      type="button"
+      id="btn-share-product"
+      mat-icon-button
+      [matMenuTriggerFor]="shareMenu"
+      class="btn btn-outline-dark share-btn"
+    >
+      <mat-icon class="d-flex">open_in_new</mat-icon>
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <mat-menu #shareMenu="matMenu" class="share-menu">
+
+    <button mat-menu-item (click)="shareWhatsapp()">
+      <img src="assets/icon/whatsApp.webp" width="30" height="30" class="me-2" alt="Icon WhatsApp"/>
+      <span>WhatsApp</span>
+    </button>
+
+  <mat-divider></mat-divider>
+
+    <button mat-menu-item (click)="copyLink()">
+      <mat-icon>link</mat-icon>
+      <span>Copiar link</span>
+    </button>
+
+  </mat-menu>
+
   <div class="d-flex justify-content-evenly">
 
     <div class="product-image mb-2">
@@ -35,7 +64,7 @@
 
       </div>
 
-      <div class="d-flex gap-3 flex-row">
+      <div class="d-flex align-items-baseline gap-3 flex-row">
 
         <div class="quantity-selector">
 

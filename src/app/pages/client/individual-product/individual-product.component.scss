@@ -7,6 +7,21 @@
   border-top: 3px solid var(--green);
   font-family: var(--mer);
   color: var(--black);
+  position: relative;
+
+  .share-btn {
+    position: absolute;
+    top: 0.8rem;
+    left: 0.8rem;
+    border-color: var(--green);
+    color: var(--green);
+
+    &:hover {
+      background-color: var(--green);
+      color: white;
+      border-color: var(--green);
+    }
+  }
 }
 
 .product-image {
