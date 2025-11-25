@@ -119,3 +119,11 @@ a {
     margin: 1rem 0;
   }
 }
+
+.share-menu {
+  @include mat.menu-overrides((
+    container-shape: 12px,
+    divider-color: grey,
+    container-color:white
+  ));
+}
