@@ -59,6 +59,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(paramMap => {
         this.id = paramMap.get('id');
+        this.amount = 1;
         this.getProduct();
       });
   };
@@ -98,7 +99,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
 
   copyLink(): void {
     navigator.clipboard.writeText(window.location.href);
-    alert('Link copiado!');
+    this.toaster.success('link copiado!');
   };
 
 };
