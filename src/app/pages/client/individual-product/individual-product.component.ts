@@ -98,7 +98,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
 
   copyLink(): void {
     navigator.clipboard.writeText(window.location.href);
-    alert('Link copiado!');
+    this.toaster.success('link copiado!');
   };
 
 };
