@@ -59,6 +59,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(paramMap => {
         this.id = paramMap.get('id');
+        this.amount = 1;
         this.getProduct();
       });
   };
