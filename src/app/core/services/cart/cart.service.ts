@@ -39,7 +39,7 @@ export class CartService {
     });
   };
 
-  private getCartFromLocalStorage():Cart | null{
+  getCartFromLocalStorage():Cart | null{
     try{
       const cartStr = localStorage.getItem('cart');
       if (!cartStr || cartStr === 'undefined') return null;
