@@ -134,17 +134,27 @@ export class AdminHomeComponent implements OnInit{
   ]);
 
   readonly ordersChartLabels = ['Pendentes', 'Concluídos', 'Cancelados'];
-  readonly ordersChartData = computed<ChartConfiguration<'doughnut'>['data']>(() => ({
-    labels: this.ordersChartLabels,
-    datasets: [{
-      data: [
-        this.adminPanelService.ordersStatistics()?.amountStatusPendente ?? 0,
-        this.adminPanelService.ordersStatistics()?.amountStatusConcluido ?? 0,
-        this.adminPanelService.ordersStatistics()?.amountStatusCancelado ?? 0
-      ],
-      backgroundColor: ['#ffca28', '#0f877b', '#da0000ff']
-    }]
-  }));
+  readonly ordersChartData = computed<ChartConfiguration<'doughnut'>['data']>(() => {
+    const stats = this.adminPanelService.ordersStatistics();
+
+    const values = [
+      stats?.amountStatusPendente ?? 0,
+      stats?.amountStatusConcluido ?? 0,
+      stats?.amountStatusCancelado ?? 0
+    ];
+
+    const allZero = values.every(v => v === 0);
+
+    return {
+      labels: this.ordersChartLabels,
+      datasets: [{
+        data: allZero ? [1] : values,
+        backgroundColor: allZero
+          ? ['#bdbdbd']
+          : ['#ffca28', '#0f877b', '#da0000ff']
+      }]
+    };
+  });
 
   // 🟣 Gráfico de produtos por categoria
   productsChartLabels = ['Aromatizadores', 'AutoCuidado', 'Casa e Bem Estar', 'Destaque'];
