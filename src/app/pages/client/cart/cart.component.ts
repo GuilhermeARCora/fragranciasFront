@@ -13,12 +13,14 @@ import { CartService } from '../../../core/services/cart/cart.service';
 import Swal from 'sweetalert2';
 import type { Order } from '../../../shared/types/order';
 import type { OnInit } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-cart',
   imports: [
     CommonModule,
-    CartItemComponent
+    CartItemComponent,
+    MatIconModule
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
