@@ -91,32 +91,35 @@
           <button
             type="button"
             id="btn-checkout"
-            class="btn btn-success w-100 fw-bold rounded-2"
+            class="btn btn-success w-100 fw-bold rounded-2 d-flex align-items-center justify-content-center gap-2"
             (click)="isClient()"
           >
-            CHECKOUT
+            <mat-icon>shopping_cart_checkout</mat-icon>
+            <p class="text-white fw-bold">FINALIZAR COMPRA</p>
           </button>
         </div>
 
         <div>
           <button
-            class="btn btn-danger w-100 fw-bold rounded-2 mt-2"
+            class="btn btn-danger w-100 fw-bold rounded-2 mt-2 d-flex align-items-center justify-content-center gap-2"
             type="button"
             id="btn-reset-cart"
             (click)="cartService.clearCart()"
           >
-            ESVAZIAR CARRINHO
+            <mat-icon>remove_shopping_cart</mat-icon>
+            <p class="text-white fw-bold">ESVAZIAR CARRINHO</p>
           </button>
         </div>
 
         <div>
           <button
-            class="btn btn-outline-dark w-100 fw-bold rounded-2 mt-2"
+            class="btn btn-outline-dark w-100 fw-bold rounded-2 mt-2 d-flex align-items-center justify-content-center gap-2"
             type="button"
             id="btn-keep-shopping"
             (click)="redirectBack()"
           >
-            CONTINUAR COMPRANDO
+            <mat-icon>add_shopping_cart</mat-icon>
+            <p class="text-black fw-bold">CONTINUAR COMPRANDO</p>
           </button>
         </div>
 
