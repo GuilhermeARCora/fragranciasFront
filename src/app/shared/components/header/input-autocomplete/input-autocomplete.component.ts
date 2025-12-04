@@ -53,9 +53,24 @@ export class InputAutocompleteComponent implements OnInit{
     ]).pipe(
       map(([products, search]) => {
         if (!search) return products;
-        return products.filter(p => p.name.toLowerCase().includes(search));
+        const term = this.normalize(search);
+        const terms = term.split(/\s+/);
+
+        return products.filter(p => {
+          const name = this.normalize(p.name ?? '');
+          const desc = this.normalize(p.description ?? '');
+          const text = `${name} ${desc}`;
+          return terms.every(t => text.includes(t));
+        });
       })
     );
+  };
+
+  private normalize(text: string): string {
+    return text
+      .toLowerCase()
+      .normalize('NFD') // separa letras dos acentos
+      .replace(/[\u0300-\u036f]/g, ''); // remove acentos
   };
 
   @ViewChild('input') input!: ElementRef<HTMLInputElement>;
