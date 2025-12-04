@@ -1,13 +1,13 @@
 import { OrderService } from './../../../core/services/order/order.service';
 import { Component, computed, DestroyRef, inject } from '@angular/core';
 import { BehaviorSubject, map, switchMap } from 'rxjs';
-import { CommonModule, Location } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { BreakPointService } from '../../../core/services/breakPoint/break-point.service';
 import { ToastService } from '../../../core/services/swal/toast.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { CheckoutService } from '../../../core/services/checkout/checkout.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { CartService } from '../../../core/services/cart/cart.service';
 import Swal from 'sweetalert2';
@@ -20,7 +20,8 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [
     CommonModule,
     CartItemComponent,
-    MatIconModule
+    MatIconModule,
+    RouterLink
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
@@ -38,7 +39,6 @@ export class CartComponent implements OnInit{
   destroyRef = inject(DestroyRef);
   router = inject(Router);
   route = inject(ActivatedRoute);
-  location = inject(Location);
 
   cartTotalDiscount = computed(() => {
     const cart = this.cartService.cartSignal();
@@ -56,7 +56,7 @@ export class CartComponent implements OnInit{
   readonly orderTotalDiscount$ = this.order$.pipe(map(order => order?.totalDiscount));
   readonly orderTotalPixPrice$ = this.order$.pipe(map(order => order?.totalPixPrice));
 
-  viewMode:boolean = (false);
+  viewMode:boolean = false;
 
   ngOnInit(): void {
     this.isOrder();
@@ -86,15 +86,13 @@ export class CartComponent implements OnInit{
       icon: 'question',
       showCancelButton: true,
       confirmButtonText: 'Sim, já sou!',
-      cancelButtonText: 'Não, preciso fazer o checkout',
+      cancelButtonText: 'Não, preciso preencher meus dados',
       confirmButtonColor: '#1b7d0c',
       cancelButtonColor: '#d33'
     }).then(result => {
       if (result.isConfirmed) {
 
         this.checkoutService.alreadyAClient();
-        this.toaster.setTimerEnabled(false);
-        this.toaster.success('Carrinho enviado para o WhatsApp com sucesso!');
       } else if (result.dismiss === Swal.DismissReason.cancel) {
 
         this.router.navigateByUrl('/checkout');
@@ -114,8 +112,9 @@ export class CartComponent implements OnInit{
     });
   };
 
-  redirectBack():void{
-    this.location.back();
+  copyLink(): void {
+    navigator.clipboard.writeText(window.location.href);
+    this.toaster.success('link copiado!');
   };
 
 };

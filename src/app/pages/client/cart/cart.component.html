@@ -95,7 +95,7 @@
             (click)="isClient()"
           >
             <mat-icon>shopping_cart_checkout</mat-icon>
-            <p class="text-white fw-bold">FINALIZAR COMPRA</p>
+            <span class="text-white fw-bold">FINALIZAR COMPRA</span>
           </button>
         </div>
 
@@ -107,20 +107,19 @@
             (click)="cartService.clearCart()"
           >
             <mat-icon>remove_shopping_cart</mat-icon>
-            <p class="text-white fw-bold">ESVAZIAR CARRINHO</p>
+            <span class="text-white fw-bold">ESVAZIAR CARRINHO</span>
           </button>
         </div>
 
         <div>
-          <button
-            class="btn btn-outline-dark w-100 fw-bold rounded-2 mt-2 d-flex align-items-center justify-content-center gap-2"
-            type="button"
-            id="btn-keep-shopping"
-            (click)="redirectBack()"
+          <a
+            routerLink="/"
+            id="link-home"
+            class="btn btn-outline-dark d-flex align-items-center mt-2 justify-content-center gap-2"
           >
             <mat-icon>add_shopping_cart</mat-icon>
-            <p class="text-black fw-bold">CONTINUAR COMPRANDO</p>
-          </button>
+            <span>CONTINUAR COMPRANDO</span>
+          </a>
         </div>
 
       </div>
@@ -135,6 +134,20 @@
           class="btn btn-warning w-100 fw-bold rounded-2 mt-2"
         >
           FINALIZAR PEDIDO
+        </button>
+      </div>
+      }
+
+      @if(viewMode){
+      <div>
+        <button
+          (click)="copyLink()"
+          type="button"
+          id="btn-end-order"
+          class="btn btn-success w-100 fw-bold rounded-2 mt-2 d-flex gap-2 align-items-center justify-content-center"
+        >
+          <mat-icon>link</mat-icon>
+          <span>Copiar link do pedido</span>
         </button>
       </div>
       }
