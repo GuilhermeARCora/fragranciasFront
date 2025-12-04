@@ -60,9 +60,6 @@ export class CheckoutComponent implements OnInit {
 
   onSubmit():void{
     this.checkoutService.newClient(this.checkoutForm.value);
-    this.toaster.setTimerEnabled(false);
-    this.toaster.success('Informações enviadas para o WhatsApp com sucesso!');
-    this.router.navigateByUrl('/');
   };
 
 };
