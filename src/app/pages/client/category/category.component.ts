@@ -29,6 +29,7 @@ export class CategoryComponent implements OnInit{
 
   page:number = 1;
   amount:number = 0;
+  firstLoad:boolean = true;
 
   products = signal<Product[]>([]);
 
@@ -49,7 +50,8 @@ export class CategoryComponent implements OnInit{
   setProducts(page = 1):void{
     this.productService.getProductsByCategory(this.categoryFromURl, page).subscribe(v => {
       const products = v.data.products;
-      if(products.length === 0) return this.toaster.info('Todos os produtos já foram listados');
+      if(products.length === 0 && !this.firstLoad) return this.toaster.info('Todos os produtos já foram listados');
+      this.firstLoad = false;
 
       const currentProducts = this.products();
       this.products.set([...currentProducts,...products]);

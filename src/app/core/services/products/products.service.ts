@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BehaviorSubject, map, shareReplay, tap } from 'rxjs';
+import { BehaviorSubject, map, of, tap } from 'rxjs';
 import type { Observable } from 'rxjs';
 import type { Product, ProductFilters, ProductForm, ProductsList } from '../../../shared/types/product';
 import type { ResponseData } from '../../../shared/types/responseData';
@@ -88,11 +88,24 @@ export class ProductsService {
     );
   };
 
-  getLastAddedProducts():Observable<Product[]>{
-    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/latest`).pipe(
-      map( res => res.data.products),
-      shareReplay(1)
-    );
+  getLastAddedProducts(): Observable<Product[]> {
+    const cached = this.getLastAddedProductsSession();
+
+    if (cached) return of(cached);
+
+    return this.http
+      .get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/latest`)
+      .pipe(
+        map(res => res.data.products),
+        tap(products =>
+          sessionStorage.setItem('lastAdded', JSON.stringify(products))
+        )
+      );
+  };
+
+  getLastAddedProductsSession(): Product[] | null{
+    const stored = sessionStorage.getItem('lastAdded');
+    return stored ? JSON.parse(stored) : null;
   };
 
   getProductsByCategory(category: string, page = 1): Observable<ResponseData<ProductsList>> {
@@ -101,12 +114,24 @@ export class ProductsService {
     return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/category/${category}`, { params });
   };
 
-  searchAutoComplete(filter : string): Observable<Product[]>{
-    const params = new HttpParams().set('q', filter);
+  getDestaques(category = 'destaque', page = 1): Observable<Product[]>{
+    const params = new HttpParams().set('page', page);
+    const cached = this.getDestaquesProductsSession();
 
-    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/searchAutoComplete`, { params }).pipe(
-      map(v => v.data.products)
-    );
+    if (cached) return of(cached);
+
+    return this.http.get<ResponseData<ProductsList>>(`${this.apiUrl}${this.path}/category/${category}`, { params })
+      .pipe(
+        map(v => v.data.products),
+        tap(products =>
+          sessionStorage.setItem('destaques', JSON.stringify(products))
+        )
+      );
+  }
+
+  getDestaquesProductsSession(): Product[] | null{
+    const stored = sessionStorage.getItem('destaques');
+    return stored ? JSON.parse(stored) : null;
   };
 
 };
