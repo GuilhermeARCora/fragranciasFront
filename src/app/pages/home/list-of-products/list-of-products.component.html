@@ -18,7 +18,7 @@
   pagination='{"clickable": true}'
   class="novidades-swiper"
 >
-@for(produto of (products$ | async); track produto._id){
+@for(produto of products; track produto._id){
   <swiper-slide>
     <app-product-card [product]="produto" />
   </swiper-slide>
