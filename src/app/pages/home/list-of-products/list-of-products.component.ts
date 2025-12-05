@@ -2,7 +2,6 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCardComponent } from '../../../shared/components/product-card/product-card.component';
 import type { Product } from '../../../shared/types/product';
-import { type Observable } from 'rxjs';
 
 @Component({
   selector: 'app-list-of-products',
@@ -16,6 +15,6 @@ import { type Observable } from 'rxjs';
 })
 export class ListOfProductsComponent {
 
-  @Input({ required:true }) products$!: Observable<Product[]>;
+  @Input({ required:true }) products!: Product[] | null;
 
 };

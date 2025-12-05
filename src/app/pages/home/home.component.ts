@@ -9,7 +9,6 @@ import { PoliticasComponent } from './politicas/politicas.component';
 import { AtendimentoAoClienteComponent } from './atendimento-ao-cliente/atendimento-ao-cliente.component';
 import { AutoScrollOnOpenDirective } from '../../shared/directives/autoScrollOnOpen/auto-scroll-on-open.directive';
 import { ProductsService } from '../../core/services/products/products.service';
-import { map } from 'rxjs';
 import type { CategoryBanner } from '../../shared/types/banner';
 import { ListOfProductsComponent } from './list-of-products/list-of-products.component';
 
@@ -56,9 +55,7 @@ export class HomeComponent {
     }
   ];
 
-  productsDestaque$ = this.productService
-    .getProductsByCategory('destaque')
-    .pipe(map(v => v.data.products));
+  productsDestaque$ = this.productService.getDestaques();
 
   productsLatest$ = this.productService.getLastAddedProducts();
 

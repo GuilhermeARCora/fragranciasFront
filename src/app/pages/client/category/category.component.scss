@@ -10,3 +10,29 @@
   color: var(--green);
   border-color: var(--green);
 }
+
+.empty-card {
+  margin: 3rem auto;
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+  border: 1px dashed rgba(0,0,0,0.2);
+  border-radius: 12px;
+  text-align: center;
+  opacity: 0.85;
+}
+
+.empty-card mat-icon {
+  font-size: 48px;
+  color: var(--green);
+  height: max-content;
+  width: max-content;
+}
+
+.empty-card p {
+  font-family: var(--mer);
+  font-size: 1.1rem;
+  color: var(--green);
+  margin: 0;
+}
+

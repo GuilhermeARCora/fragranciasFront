@@ -11,12 +11,19 @@
     </div>
 
     <div [ngClass]="!isHandset ? ['d-flex', 'flex-wrap', 'gap-4', 'justify-content-center'] : []">
-      @for(produto of products(); track produto._id){
-        <app-product-card
-          class="d-flex py-2"
-          [product]="produto"
-          [isCategory]="true">
-        </app-product-card>
+      @if(products().length !== 0){
+        @for(produto of products(); track produto._id){
+          <app-product-card
+            class="d-flex py-2"
+            [product]="produto"
+            [isCategory]="true">
+          </app-product-card>
+        }
+      }@else {
+        <div class="empty-card">
+          <mat-icon>search_off</mat-icon>
+          <p>Nenhum produto encontrado nesta categoria</p>
+        </div>
       }
     </div>
 

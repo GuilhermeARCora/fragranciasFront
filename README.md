@@ -29,7 +29,7 @@ It delivers a modern and responsive e-commerce experience, integrating seamlessl
 
 ### 🏠 Home
 - Banner
-- Highlights & newest products
+- Highlights & newest products in **SessionStorage**
 - Category navigation
 - Informational sections (policies, about us, contact)
 

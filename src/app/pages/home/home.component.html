@@ -1,4 +1,5 @@
-@let produtosDestaque = productsDestaque$ | async;
+@let productsLatest = productsLatest$ | async;
+@let prodctsDestaque = productsDestaque$ | async;
 
   <app-banner [name]="'home'"/>
 
@@ -24,7 +25,7 @@
 
     </section>
 
-    @if(produtosDestaque && produtosDestaque.length > 0){
+    @if(prodctsDestaque && prodctsDestaque.length > 0){
     <section>
       <div class="text-start">
         <h1 class="title">Destaques</h1>
@@ -32,7 +33,7 @@
 
       <div class="pt-4">
         <app-list-of-products
-          [products$]="productsDestaque$"
+          [products]="prodctsDestaque"
         />
       </div>
     </section>
@@ -45,7 +46,7 @@
 
       <div class="pt-4">
         <app-list-of-products
-          [products$]="productsLatest$"
+          [products]="productsLatest"
         />
       </div>
     </section>
