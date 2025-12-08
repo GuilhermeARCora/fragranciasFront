@@ -67,7 +67,7 @@ export class IndividualProductComponent implements OnInit, AfterViewInit{
   getProduct():void {
     const productState = history.state['product'] as Product | undefined;
 
-    if(productState){
+    if(productState && productState.description){
       this.product$ = of(productState);
     }else{
       this.product$ = this.productService.getOneProduct(this.id);

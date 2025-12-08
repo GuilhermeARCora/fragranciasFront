@@ -72,10 +72,14 @@ export class CartComponent implements OnInit{
   };
 
   getOrder(orderId: string):void{
-    this.OrderService.findOneOrder(orderId).pipe(
-      takeUntilDestroyed(this.destroyRef)
-    ).subscribe(order => {
-      this.orderSubject.next(order);
+    this.OrderService.findOneOrder(orderId).subscribe({
+      next:(order) => {
+        this.orderSubject.next(order);
+      },
+      error:() => {
+        this.toaster.warning('Este pedido não existe mais');
+        this.router.navigateByUrl('/');
+      }
     });
   };
 
