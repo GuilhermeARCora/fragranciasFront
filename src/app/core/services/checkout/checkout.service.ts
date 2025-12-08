@@ -44,10 +44,13 @@ export class CheckoutService {
     this.orderService.createOrder(orderItems).pipe(take(1)).subscribe(id => {
       const wasBlocked = this.whatsAppMessage(true, id);
 
-      if (wasBlocked) this.showFallbackModalForClient(id);
+      if (wasBlocked) {
+        this.showFallbackModalForClient(id);
+        this.router.navigateByUrl(`/pedido/${id}`);
+      }
       else {
         this.toaster.setTimerEnabled(false);
-        this.toaster.success('Carrinho enviado para o WhatsApp com sucesso!');
+        this.toaster.success('Pedido gerado com sucesso!');
         this.router.navigateByUrl(`/pedido/${id}`);
       };
 
@@ -76,7 +79,7 @@ export class CheckoutService {
       }
       else {
         this.toaster.setTimerEnabled(false);
-        this.toaster.success('Carrinho enviado para o WhatsApp com sucesso!');
+        this.toaster.success('Pedido gerado com sucesso!');
         this.router.navigateByUrl(`/pedido/${id}`);
       };
 
