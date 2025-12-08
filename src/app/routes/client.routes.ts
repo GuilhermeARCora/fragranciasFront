@@ -32,7 +32,7 @@ export const ClientRoutes:Routes = [
     path:'pedido/:id',
     loadComponent: () => import('../pages/client/cart/cart.component').then(c => c.CartComponent),
     data: {
-      title: 'Pedido - Fragrâncias Decor',
+      title: 'Pedido',
       description: 'Veja meu pedido!',
       image: 'https://fragranciasdecor.com.br/assets/img/logo.png',
       keywords: 'pedido, fragrâncias, auto cuidado, casa e bem-estar'
