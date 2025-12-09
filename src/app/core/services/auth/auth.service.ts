@@ -20,7 +20,7 @@ export class AuthService {
   router = inject(Router);
   toast = inject(ToastService);
 
-  private userSubject = new BehaviorSubject<User | null>(null);
+  userSubject = new BehaviorSubject<User | null>(null);
   public readonly user$ = this.userSubject.asObservable();
 
   login(form: LoginPayload): Observable<User> {
