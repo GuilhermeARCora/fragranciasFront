@@ -18,7 +18,7 @@ export class OrderService {
 
   router = inject(Router);
 
-  private ordersSubject = new BehaviorSubject<Order[]>([]);
+  ordersSubject = new BehaviorSubject<Order[]>([]);
   readonly orders$ = this.ordersSubject.asObservable();
 
   createOrder(items: OrderCreateItem[]): Observable<string>{
