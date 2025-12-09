@@ -27,7 +27,6 @@ export interface OrderList {
   orders: Order[];
   amount: number;
 };
-
 export interface OrderFilter {
   _id?: string;
   status?: string;
