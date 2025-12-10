@@ -14,7 +14,7 @@ export class ProductsService {
   http = inject(HttpClient);
   path = 'products';
 
-  private productsSubject = new BehaviorSubject<Product[]>([]);
+  productsSubject = new BehaviorSubject<Product[]>([]);
   public readonly products$ = this.productsSubject.asObservable();
 
   createProduct(product :ProductForm):Observable<ResponseData<Product>>{
